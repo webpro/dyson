@@ -4,7 +4,7 @@ var dyson = require('./lib/dyson'),
     ncp = require('ncp'),
     path = require('path');
 
-if(process.argv.length === 4) {
+if(process.argv.length > 2) {
 
     var arg1 = process.argv[2];
     var arg2 = process.argv[3];
