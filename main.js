@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var dyson = require('./lib/dyson'),
-    ncp = require('ncp'),
+    ncp = require('ncp').ncp,
     path = require('path');
 
 if(process.argv.length > 2) {
@@ -11,11 +11,11 @@ if(process.argv.length > 2) {
 
     if(arg1 === 'init') {
 
-        ncp.copy(path.resolve(__dirname + '/dummy'), path.resolve(arg2), function(err){
+        ncp(path.resolve(__dirname + '/dummy'), path.resolve(arg2), function(err){
             if (err) {
                 console.error(err);
             } else {
-                console.log('Copied dummy files to', arg2)
+                console.log('Copied dummy files to', arg2);
             }
         });
 
