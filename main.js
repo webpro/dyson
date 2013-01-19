@@ -24,7 +24,7 @@ if(process.argv.length > 2) {
         var port = arg2 || 3000;
         var configDir = arg1 === 'demo' ? path.resolve(__dirname + '/demo') : path.resolve(arg1);
 
-        dyson.load(configDir, port);
+        dyson.bootstrap(configDir, port);
 
         console.log('Dyson listening at port', port);
 
