@@ -206,17 +206,44 @@ Would result in a `404` when requesting `/feature/999`.
 
 ## Get started
 
+### Quick demo
+
     npm install dyson -g
-    dyson init [dir]
-    dyson [dir] 3000
-    # Check http://localhost:3000/dummy
 
-Copies a dummy instance at `dir`, including the `/get`, `/post`, `/put`, `/delete` subdirs, and one dummy config object in each. Dyson scans these folders for configuration files when started.
-
-### Demo
-
-Or run `dyson demo 3000` to play around and serve some demo JSON responses at these endpoints:
+Run `dyson demo` to play around and serve some demo JSON responses at these endpoints:
 
     http://localhost:3000/employee/1
     http://localhost:3000/users
     http://localhost:3000/features
+
+### Without global installation
+
+Add `dyson` and some `"scripts"` to `devDependencies` in package.json:
+
+    "devDependencies": {
+        "dyson": "~0.0.2"
+    },
+    "scripts": {
+        "dyson-init": "node ./node_modules/.bin/dyson init .",
+        "dyson": "node ./node_modules/.bin/dyson . 3000"
+    }
+
+Then run this once:
+
+    npm install
+    npm run-script dyson-init
+
+The `dyson-init` script copies a dummy instance in the current folder, meaning the `/get`, `/post`, `/put`, `/delete` subdirs, and one dummy config object in each. Dyson scans these folders for configuration files when started.
+
+Then you can do `npm run-script dyson` to run dyson, and have it available at e.g. `http://localhost:3000/dummy`.
+
+You don't need to add `dyson` to your `devDependencies` if you don't use the generators.
+
+### With global installation
+
+Global installation doesn't require adding `"scripts"` to package.json. Add `dyson` to your `devDependencies`, then run this once:
+
+    npm install
+    dyson init [dir]
+
+Then you can do `dyson [dir]` to run dyson (in any of your projects).
