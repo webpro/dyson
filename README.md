@@ -16,6 +16,26 @@ When developing client-side applications, usually either static JSON dummy files
 
 This is where dyson comes in. Get a full fake server for your application up and running in minutes.
 
+Here's a complete service endpoint configuration file:
+
+    var g = require('../../lib/generators');
+    module.exports = {
+        path: '/user/:id',
+        template: {
+            id: function(params) {
+                return params.id;
+            },
+            name: g.name
+        }
+    }
+
+That's all. A request to `/user/412` would return:
+
+    {
+        "id": 412,
+        "name": "John"
+    }
+
 ## Overview
 
 * Easy configuration, extensive options
@@ -28,34 +48,29 @@ This is where dyson comes in. Get a full fake server for your application up and
 
 ## Configuration
 
-Configuration happens by simple objects. Here's a complete service configuration file:
+Configuration of endpoints happens by simple objects:
 
-    module.exports = {
+    {
         path: '/user/:id',
         template: {
             id: function(params) {
                 return params.id;
             },
-            name: generator.name
+            name: g.name,
+            address: {
+            	zip: g.zipUS,
+            	city: g.city
+            }
         }
-    }
-
-That's all. A request to `/user/412` would return:
-
-    {
-        "id": 412,
-        "name": "John"
     }
 
 The `path` string is the usual argument provided to [Express](http://expressjs.com/api.html#app.VERB), as in `app.get(path, callback);`.
 
-The `template` object is a hash of values that behave in the following way:
+The `template` object is a hash of values behaving in the following way:
 
-* function: the function will be invoked
-    * with arguments _(params, query)_
-    * in context of config instance object (created from template as prototype)
+* function: the function will be invoked with arguments _(params, query)_
+* string, boolean, number, array: returned as-is
 * object: will be recursively iterated
-* anything else will be returned as-is (e.g. string, boolean, number, array)
 
 ## Generators
 
