@@ -247,3 +247,10 @@ Global installation doesn't require adding `"scripts"` to package.json. Add `dys
     dyson init [dir]
 
 Then you can do `dyson [dir]` to run dyson (in any of your projects).
+
+## Development & run tests
+
+    git clone git@github.com:webpro/dyson.git
+    cd dyson
+    npm install
+    npm test
