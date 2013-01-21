@@ -1,7 +1,6 @@
 var get = require('../lib/get');
 
-var configDir = __dirname + '/../dummy',
-    configDirGet = configDir + '/get';
+var configDirGet = __dirname + '/dummy/get';
 
 describe('get', function() {
 

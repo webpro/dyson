@@ -1,7 +1,7 @@
 var request = require('supertest'),
     dyson = require('../lib/dyson');
 
-var configDir = __dirname + '/../dummy';
+var configDir = __dirname + '/dummy';
 
 describe('dyson', function() {
 
@@ -41,6 +41,8 @@ describe('dyson', function() {
             var configs = dyson.getConfigurations(configDir);
 
             configs.should.be.a('object').and.have.keys('delete', 'get', 'post', 'put');
+
+            configs.get[0].should.have.property('path', 'template', 'callback');
 
         });
     });
