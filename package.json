@@ -2,7 +2,7 @@
     "name": "dyson",
     "version": "0.0.2",
     "description": "Node server for dynamic, fake JSON.",
-    "keywords": "dynamic dummy JSON response server API",
+    "keywords": ["dynamic", "dummy", "JSON", "response", "server", "API"],
     "author": {
         "name": "Lars Kappert",
         "email": "lars@webpro.nl"
@@ -27,6 +27,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://webpro@github.com/webpro/dyson.git"
+        "url": "https://github.com/webpro/dyson"
     }
 }
