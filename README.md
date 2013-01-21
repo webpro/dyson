@@ -46,6 +46,8 @@ That's all. A request to `/user/412` would return:
 * Supports GET, POST, PUT, DELETE (and OPTIONS)
 * Supports CORS
 
+[![Build Status](https://travis-ci.org/webpro/dyson.png)](https://travis-ci.org/webpro/dyson)
+
 ## Configuration
 
 Configuration of endpoints happens by simple objects:
