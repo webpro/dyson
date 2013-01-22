@@ -55,7 +55,7 @@ Configuration of endpoints happens by simple objects:
     {
         path: '/user/:id',
         template: {
-            id: function(params) {
+            id: function(params, query, body) {
                 return params.id;
             },
             name: g.name,
@@ -70,7 +70,7 @@ The `path` string is the usual argument provided to [Express](http://expressjs.c
 
 The `template` object is a hash of values behaving in the following way:
 
-* function: the function will be invoked with arguments _(params, query)_
+* function: the function will be invoked with arguments _(params, query, body)_
 * string, boolean, number, array: returned as-is
 * object: will be recursively iterated
 
@@ -118,16 +118,20 @@ The default values for the configuration objects:
             return _.random(2,10);
         },
         collection: false,
-        callback: handleRequest
+        callback: response.generate,
+        render: response.render
     };
 
 
 * `cache:true` means that multiple requests to the same path will result in the same response
 * `size:function` is the number of objects in the collection
 * `callback:function`
-    * the provided default function is doing the hard work for GET requests (but can be overridden)
+    * the provided default function is doing the hard work (but can be overridden)
     * it is used as middleware in Express
     * must set `res.body` and call `next()` to render response
+* `render:function`
+    * the default function to render the response (basically `res.send(200, res.body);`)
+    * also used as middleware in Express
 
 ## Containers
 
@@ -173,23 +177,6 @@ And an example response:
 Basic support for "combined" requests is available, by means of a comma separated path fragment.
 
 For example, a request to `/user/5,13` will result in an array of the responses from `/user/5` and `/user/13`.
-
-## POST, PUT, DELETE
-
-Configuration objects are just like those for GET, but the `callback` (Express middleware) should be defined.
-
-An example config object for `/login`:
-
-    {
-        path: '/login',
-        callback: function(req, res, next) {
-            res.body = {
-                "username": req.body.username,
-                "success": req.body.password === 'password1'
-            };
-            next();
-        }
-    }
 
 ## Status codes
 
