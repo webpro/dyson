@@ -1,8 +1,6 @@
 var request = require('supertest'),
     dyson = require('../lib/dyson');
 
-var configDir = __dirname + '/dummy';
-
 describe('dyson', function() {
 
     describe('.registerServices', function() {
@@ -14,10 +12,12 @@ describe('dyson', function() {
                 path: '/user',
                 template: {
                     id: 1
-                }
+                },
+                callback: function(){}
             }],
             'post': [{
-                path: '/user'
+                path: '/user',
+                callback: function(){}
             }]
         };
 
@@ -34,29 +34,19 @@ describe('dyson', function() {
         });
     });
 
-    describe('.getConfigurations [integration] ', function() {
-
-        it('should return configuration for each method found', function() {
-
-            var configs = dyson.getConfigurations(configDir);
-
-            configs.should.be.a('object').and.have.keys('delete', 'get', 'post', 'put');
-
-            configs.get[0].should.have.property('path');
-            configs.get[0].should.have.property('template');
-            configs.get[0].should.have.property('callback');
-
-        });
-    });
-
-    describe('routes [integration]', function() {
+    describe('routes', function() {
 
         var app,
+            render,
             configs;
 
         before(function() {
 
             app = dyson.initExpress();
+
+            render = function(req, res) {
+                res.send(200, res.body);
+            };
 
             configs = {
                 'get': [{
@@ -73,14 +63,16 @@ describe('dyson', function() {
                             name: this.template.name
                         };
                         next();
-                    }
+                    },
+                    render: render
                 }],
                 'post': [{
                     path: '/user',
                     callback: function(req, res, next) {
                         res.body = {saved: true};
                         next();
-                    }
+                    },
+                    render: render
                 }]
             };
 
@@ -99,5 +91,5 @@ describe('dyson', function() {
             request(app).post('/user').expect(200, {"saved": true}, done);
 
         });
-    })
+    });
 });

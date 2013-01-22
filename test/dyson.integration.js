@@ -1,74 +1,10 @@
 var request = require('supertest'),
     dyson = require('../lib/dyson'),
-    defaults = require('../lib/get/defaults');
+    defaults = require('../lib/defaults');
 
-describe('get.defaults', function() {
+describe('dyson', function() {
 
-    describe('.assign', function() {
-
-        it('should apply defaults (and not overwrite existing values)', function() {
-
-            var config = {
-                path: '',
-                template: {}
-            };
-
-            defaults.assign(config);
-
-            config.should.have.property('cache').and.be.a('boolean');
-            config.should.have.property('size');
-            config.should.have.property('collection').and.be.a('boolean');
-            config.should.have.property('callback').and.be.a('function');
-
-            config.should.have.property('path').and.equal(config.path);
-            config.should.have.property('template').and.equal(config.template);
-
-        });
-    });
-
-    describe('.setValues', function() {
-
-        it('should render data based on template', function() {
-
-            var template = {
-                myFunction: function() {
-                    return 'my function';
-                },
-                myString: 'my string',
-                myBoolean: true,
-                myNumber: 42,
-                myArray: [1,2,3],
-                myObject: {
-                    myNestedObject: {
-                        myOtherFunction: function() {
-                            return 'my other function'
-                        },
-                        myOtherString: 'my other string'
-                    }
-                }
-            };
-
-            var actual = defaults.setValues(template);
-
-            var expected = {
-                myFunction: 'my function',
-                myString: 'my string',
-                myBoolean: true,
-                myNumber: 42,
-                myArray: [1,2,3],
-                myObject: {
-                    myNestedObject: {
-                        myOtherFunction: 'my other function',
-                        myOtherString: 'my other string'
-                    }
-                }
-            };
-
-            actual.should.eql(expected);
-        })
-    })
-
-    describe('routes [integration]', function() {
+    describe('.registerServices [integration]', function() {
 
         var app,
             configs;
@@ -107,7 +43,7 @@ describe('get.defaults', function() {
                 }]
             };
 
-            defaults.assign(configs.get);
+            defaults.assign(configs.get, 'get');
 
             dyson.registerServices(app, configs);
 
