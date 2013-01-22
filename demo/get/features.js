@@ -31,9 +31,7 @@ var features = {
     size: function() {
         return _.random(5,10);
     },
-    template: function() {
-        return feature.template
-    },
+    template: feature.template,
     container: {
         meta: function(params, query, data) {
             return {
