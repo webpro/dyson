@@ -13,11 +13,13 @@ describe('dyson', function() {
                 template: {
                     id: 1
                 },
-                callback: function(){}
+                callback: function(){},
+                render: function(){}
             }],
             'post': [{
                 path: '/user',
-                callback: function(){}
+                callback: function(){},
+                render: function(){}
             }]
         };
 
