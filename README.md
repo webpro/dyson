@@ -19,6 +19,7 @@ This is where dyson comes in. Get a full fake server for your application up and
 Here's a complete service endpoint configuration file:
 
     var g = require('../../lib/generators');
+    
     module.exports = {
         path: '/user/:id',
         template: {
@@ -74,9 +75,9 @@ The `template` object is a hash of values behaving in the following way:
 * string, boolean, number, array: returned as-is
 * object: will be recursively iterated
 
-## Generators
+## Fake data generators
 
-Some data generators are included (examples behind):
+Some generators are included (examples behind):
 
 * `id` - returns `_.uniqueId();`
 * `name` - 'John', 'Olivia`
@@ -84,6 +85,27 @@ Some data generators are included (examples behind):
 * `address.zipUS` - '53142', '71238'
 * `address.zipNL` - '4715 FW', '7551 VT'
 * `time.byQuarter` - '14:45', '9:00'
+
+A library like [Faker.js](https://github.com/marak/Faker.js/)  is a great add-on to dyson:
+
+    var Faker = require('./Faker');
+    
+    module.exports = {
+        path: '/user/:id',
+        template: {
+            id: function(params) {
+                return params.id;
+            },
+            name: function() {
+                return Faker.Name.findName();
+            },
+            email: function() {
+                return Faker.Internet.email();
+            }
+        }
+    }
+
+Feel free to send in pull requests for generic fake data generators, or roll your own custom library of data generators, to suit your specific project needs.
 
 ## Collections
 
@@ -205,37 +227,42 @@ Run `dyson demo` to play around and serve some demo JSON responses at these endp
     http://localhost:3000/users
     http://localhost:3000/features
 
+### Global installation
+
+This is the recommended usage.
+
+    npm install -g dyson
+
 ### Without global installation
 
-Add `dyson` and some `"scripts"` to `devDependencies` in package.json:
+Add dyson to `devDependencies` and some `scripts` to package.json:
 
     "devDependencies": {
-        "dyson": "~0.0.2"
+        "dyson": "~0.0.3"
     },
     "scripts": {
         "dyson-init": "node ./node_modules/.bin/dyson init .",
         "dyson": "node ./node_modules/.bin/dyson . 3000"
     }
 
-Then run this once:
+### Project
 
-    npm install
-    npm run-script dyson-init
+In any project you can generate some dummy templates to get started:
 
-The `dyson-init` script copies a dummy instance in the current folder, meaning the `/get`, `/post`, `/put`, `/delete` subdirs, and one dummy config object in each. Dyson scans these folders for configuration files when started.
-
-Then you can do `npm run-script dyson` to run dyson, and have it available at e.g. `http://localhost:3000/dummy`.
-
-You don't need to add `dyson` to your `devDependencies` if you don't use the generators.
-
-### With global installation
-
-Global installation doesn't require adding `"scripts"` to package.json. Add `dyson` to your `devDependencies`, then run this once:
-
-    npm install
     dyson init [dir]
 
-Then you can do `dyson [dir]` to run dyson (in any of your projects).
+This script copies dummy config objects in the `[dir]/get`, `[dir]/post`, `[dir]/put`, `[dir]/delete` subdirs. These folders are scanned for configuration files when dyson is started:
+
+    dyson [dir]
+
+To expose the services configured in `[dir]` at `http://localhost:3000`.
+
+The equivalents of the previous project commands without dyson globally installed are:
+
+    npm run-script dyson-init
+    npm run-script dyson
+
+To use the data generators, dyson needs to be added to the `devDependencies`.
 
 ## Development & run tests
 
