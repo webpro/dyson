@@ -52,30 +52,32 @@ describe('dyson', function() {
         it('should respond with a cached response', function(done) {
 
             request(app).get('/cache').end(function(err, res) {
-
-                res.body.should.eql({"id": 0});
-
-                request(app).get('/cache').expect(200, {"id": 0}, done);
-
+                request(app).get('/cache').expect(200, res.body, done);
             });
 
         });
 
         it('should respond with a non-cached response', function(done) {
 
+            var response;
+
             request(app).get('/nocache').end(function(err, res) {
 
-                res.body.should.eql({"id": 1});
+                response = res.body;
 
-                request(app).get('/nocache').expect(200, {"id": 2}, done);
-
+                request(app).get('/nocache').expect(200).end(function(err, res) {
+                    res.body.should.not.eql(response);
+                    done();
+                });
             });
-
         });
 
         it('should respond with a collection', function(done) {
 
-            request(app).get('/collection').expect(200, [{"id": 3}, {"id": 4}]).end(done);
+            request(app).get('/collection').expect(200).end(function(err, res) {
+                res.body.should.be.an.instanceOf(Array).and.have.length(2);
+                done();
+            });
 
         });
 
