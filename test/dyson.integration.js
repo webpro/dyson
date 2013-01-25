@@ -36,6 +36,9 @@ describe('dyson', function() {
                         id: dyson.generators.id
                     }
                 }, {
+                    path: '/combined/:id',
+                    template: {}
+                }, {
                     path: '/randomTime',
                     template: {
                         time: dyson.generators.time.byQuarter
@@ -76,6 +79,15 @@ describe('dyson', function() {
 
             request(app).get('/collection').expect(200).end(function(err, res) {
                 res.body.should.be.an.instanceOf(Array).and.have.length(2);
+                done();
+            });
+
+        });
+
+        it('should respond with a collection (combined request)', function(done) {
+
+            request(app).get('/combined/1,2,3').expect(200).end(function(err, res) {
+                res.body.should.be.an.instanceOf(Array).and.have.length(3);
                 done();
             });
 
