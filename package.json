@@ -15,7 +15,8 @@
         "express": "3.x",
         "lodash": "~0.10",
         "when": "~1.7",
-        "ncp": "~0.2.6"
+        "ncp": "~0.2.6",
+        "canvas": "~1.0.0"
     },
     "devDependencies": {
         "mocha": "1.8.1",

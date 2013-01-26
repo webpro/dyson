@@ -19,7 +19,7 @@ This is where dyson comes in. Get a full fake server for your application up and
 Here's a complete service endpoint configuration file:
 
     var g = require('../../lib/generators');
-    
+
     module.exports = {
         path: '/user/:id',
         template: {
@@ -85,11 +85,12 @@ Some generators are included (examples behind):
 * `address.zipUS` - '53142', '71238'
 * `address.zipNL` - '4715 FW', '7551 VT'
 * `time.byQuarter` - '14:45', '9:00'
+* `image({ width: 300, height: 300, text: '300x300', bgColor: '999', fgColor: '666' })` — base64 encoded string of png
 
 A library like [Faker.js](https://github.com/marak/Faker.js/)  is a great add-on to dyson:
 
     var Faker = require('./Faker');
-    
+
     module.exports = {
         path: '/user/:id',
         template: {
@@ -220,6 +221,8 @@ Would result in a `404` when requesting `/feature/999`.
 ### Quick demo
 
     npm install dyson -g
+
+Note: To generate images [node-canvas](https://github.com/LearnBoost/node-canvas) is used. Check out [wiki](https://github.com/LearnBoost/node-canvas/wiki/_pages) to find install guide for your particular system.
 
 Run `dyson demo` to play around and serve some demo JSON responses at these endpoints:
 

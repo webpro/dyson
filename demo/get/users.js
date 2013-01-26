@@ -5,6 +5,7 @@ var user = {
     template: {
         id: g.id,
         user: g.name,
+        avatar: g.image({ width: 150, height: 150 }),
         city: g.address.city
     }
 };
