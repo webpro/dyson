@@ -85,6 +85,8 @@ Some generators are included (examples behind):
 * `address.zipUS` - '53142', '71238'
 * `address.zipNL` - '4715 FW', '7551 VT'
 * `time.byQuarter` - '14:45', '9:00'
+* `image.src` - 'http://localhost:3000/image/150x150'
+* `image.base64` - 'data:image/png;base64,iVBORw0KGgoAAAANSUh...'
 
 A library like [Faker.js](https://github.com/marak/Faker.js/)  is a great add-on to dyson:
 
@@ -129,6 +131,37 @@ This will give a response with an array of users (default array length is random
             "name": "Olivia"
         }
     ]
+
+## Images
+
+By default, there's a dummy image service included at /image. E.g. a request to `image/300x200` gives an image with given dimensions.
+
+Next to this, there are generators to provide either a url to an image, or a base64 string representation of an image:
+
+    avatar: function() {
+        // Returns 'http://localhost:3000/image/150x150'
+        return g.image.src({width:150, height: 150});
+    },
+
+    imageBase64: function() {
+        // Returns 'data:image/png;base64,iVBORw0KGgoAAAANSUh...'
+        return g.image.base64({width:200, height: 200});
+    },
+
+    extendedBase64: function() {
+        // Proxy, see http://dummyimage.com/ for documentation
+        return g.image.base64({path:'/200x300&text=dummyimage.com+rocks!'});
+    },
+
+    customBase64: function() {
+        // Return base64 image string from a custom image service
+        return g.image.base64({
+            host: 'http://lorempixel.com',
+            path: '/150/150/abstract/' + g.random(10)
+        });
+    }
+
+The default service for both the service at `/image` and the base64 images is [Dynamic Dummy Image Generator](http://dummyimage.com/) by [Russell Heimlich](http://twitter.com/kingkool68).
 
 ## Defaults
 
