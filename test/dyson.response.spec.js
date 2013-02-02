@@ -1,12 +1,13 @@
 var request = require('supertest'),
     dyson = require('../lib/dyson'),
+    when = require('when'),
     configDefaults = require('../lib/response');
 
 describe('dyson.response', function() {
 
     describe('.setValues', function() {
 
-        it('should render data based on template', function() {
+        it('should render data based on template', function(done) {
 
             var template = {
                 myFunction: function() {
@@ -23,10 +24,15 @@ describe('dyson.response', function() {
                         },
                         myOtherString: 'my other string'
                     }
+                },
+                myPromise: function() {
+                    var deferred = when.defer();
+                    setTimeout(function() {
+                        deferred.resolve('my promise');
+                    }, 10);
+                    return deferred.promise;
                 }
             };
-
-            var actual = configDefaults.setValues(template);
 
             var expected = {
                 myFunction: 'my function',
@@ -39,10 +45,16 @@ describe('dyson.response', function() {
                         myOtherFunction: 'my other function',
                         myOtherString: 'my other string'
                     }
-                }
+                },
+                myPromise: 'my promise'
             };
 
-            actual.should.eql(expected);
+            configDefaults.setValues(template).then(function(actual) {
+
+                actual.should.eql(expected);
+                done();
+
+            });
         })
     });
 });
