@@ -27,11 +27,15 @@ describe('dyson', function() {
 
             dyson.registerServices(app, configs);
 
-            app.routes.get[0].path.should.equal('/user');
-            app.routes.get[0].method.should.equal('get');
+            var route;
 
-            app.routes.post[0].path.should.equal('/user');
-            app.routes.post[0].method.should.equal('post');
+            route = app.routes.get[app.routes.get.length-1];
+            route.path.should.equal('/user');
+            route.method.should.equal('get');
+
+            route = app.routes.post[app.routes.post.length-1];
+            route.path.should.equal('/user');
+            route.method.should.equal('post');
 
         });
     });
