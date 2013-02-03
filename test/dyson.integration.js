@@ -102,5 +102,15 @@ describe('dyson', function() {
 
             });
         });
+
+        it('should respond with an image', function(done) {
+
+            request(app).get('/image/300x200').end(function(errors, res) {
+
+                res.headers['content-type'].should.equal('image/png');
+                done();
+
+            });
+        });
     })
 });

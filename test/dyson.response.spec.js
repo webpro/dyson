@@ -7,6 +7,14 @@ describe('dyson.response', function() {
 
     describe('.setValues', function() {
 
+        it('should return a promise', function() {
+
+            var actual = configDefaults.setValues({});
+
+            actual.should.have.property('then');
+            actual.then.should.be.a('function');
+        });
+
         it('should render data based on template', function(done) {
 
             var template = {
@@ -16,15 +24,58 @@ describe('dyson.response', function() {
                 myString: 'my string',
                 myBoolean: true,
                 myNumber: 42,
-                myArray: [1,2,3],
+                myArray: [1,2,3]
+            };
+
+            var expected = {
+                myFunction: 'my function',
+                myString: 'my string',
+                myBoolean: true,
+                myNumber: 42,
+                myArray: [1,2,3]
+            };
+
+            configDefaults.setValues(template).then(function(actual) {
+
+                actual.should.eql(expected);
+                done();
+
+            });
+        });
+
+        it('should parse template objects iteratively', function(done) {
+
+            var template = {
                 myObject: {
                     myNestedObject: {
-                        myOtherFunction: function() {
+                        myDeepFunction: function() {
                             return 'my other function'
                         },
-                        myOtherString: 'my other string'
+                        myDeepString: 'my other string'
                     }
-                },
+                }
+            };
+
+            var expected = {
+                myObject: {
+                    myNestedObject: {
+                        myDeepFunction: 'my other function',
+                        myDeepString: 'my other string'
+                    }
+                }
+            };
+
+            configDefaults.setValues(template).then(function(actual) {
+
+                actual.should.eql(expected);
+                done();
+
+            });
+        });
+
+        it('should replace a promise with its resolved value', function(done) {
+
+            var template = {
                 myPromise: function() {
                     var deferred = when.defer();
                     setTimeout(function() {
@@ -35,17 +86,6 @@ describe('dyson.response', function() {
             };
 
             var expected = {
-                myFunction: 'my function',
-                myString: 'my string',
-                myBoolean: true,
-                myNumber: 42,
-                myArray: [1,2,3],
-                myObject: {
-                    myNestedObject: {
-                        myOtherFunction: 'my other function',
-                        myOtherString: 'my other string'
-                    }
-                },
                 myPromise: 'my promise'
             };
 
@@ -55,6 +95,6 @@ describe('dyson.response', function() {
                 done();
 
             });
-        })
+        });
     });
 });

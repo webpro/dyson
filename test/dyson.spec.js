@@ -1,40 +1,41 @@
-var request = require('supertest'),
-    dyson = require('../lib/dyson');
+var dyson = require('../lib/dyson'),
+    request = require('supertest'),
+    express = require('express');
 
 describe('dyson', function() {
 
+    var app = express();
+
     describe('.registerServices', function() {
 
-        var app = dyson.initExpress();
-
-        var configs = {
-            'get': [{
-                path: '/user',
-                template: {
-                    id: 1
-                },
-                callback: function(){},
-                render: function(){}
-            }],
-            'post': [{
-                path: '/user',
-                callback: function(){},
-                render: function(){}
-            }]
-        };
-
         it('should add routes to Express', function() {
+
+            var configs = {
+                get: [{
+                    path: '/endpointA',
+                    template: {
+                        id: 1
+                    },
+                    callback: function(){},
+                    render: function(){}
+                }],
+                post: [{
+                    path: '/endpointB',
+                    callback: function(){},
+                    render: function(){}
+                }]
+            };
 
             dyson.registerServices(app, configs);
 
             var route;
 
             route = app.routes.get[app.routes.get.length-1];
-            route.path.should.equal('/user');
+            route.path.should.equal('/endpointA');
             route.method.should.equal('get');
 
             route = app.routes.post[app.routes.post.length-1];
-            route.path.should.equal('/user');
+            route.path.should.equal('/endpointB');
             route.method.should.equal('post');
 
         });
@@ -42,20 +43,14 @@ describe('dyson', function() {
 
     describe('routes', function() {
 
-        var app,
-            render,
-            configs;
-
         before(function() {
 
-            app = dyson.initExpress();
-
-            render = function(req, res) {
+            var render = function(req, res) {
                 res.send(200, res.body);
             };
 
-            configs = {
-                'get': [{
+            var configs = {
+                get: [{
                     path: '/user/:id',
                     template: {
                         id: function(params) {
@@ -72,7 +67,7 @@ describe('dyson', function() {
                     },
                     render: render
                 }],
-                'post': [{
+                post: [{
                     path: '/user',
                     callback: function(req, res, next) {
                         res.body = {saved: true};
