@@ -18,8 +18,8 @@ This is where dyson comes in. Get a full fake server for your application up and
 
 Here's a complete service endpoint configuration file:
 
-    var g = require('../../lib/generators');
-    
+    var g = require('dyson-generators');
+
     module.exports = {
         path: '/user/:id',
         template: {
@@ -77,37 +77,17 @@ The `template` object is a hash of values behaving in the following way:
 
 ## Fake data generators
 
-Some generators are included (examples behind):
+To use the data generators (e.g. `g.name`), run:
 
-* `id` - returns `_.uniqueId();`
-* `name` - 'John', 'Olivia`
-* `address.city` - 'Mexico City', 'Beijing'
-* `address.zipUS` - '53142', '71238'
-* `address.zipNL` - '4715 FW', '7551 VT'
-* `time.byQuarter` - '14:45', '9:00'
-* `image.src` - 'http://localhost:3000/image/150x150'
-* `image.base64` - 'data:image/png;base64,iVBORw0KGgoAAAANSUh...'
+    npm install dyson-generators --save-dev
 
-A library like [Faker.js](https://github.com/marak/Faker.js/)  is a great add-on to dyson:
+Or manually include [dyson-generators](http://github.com/webpro/dyson-generators) in package.json:
 
-    var Faker = require('./Faker');
-    
-    module.exports = {
-        path: '/user/:id',
-        template: {
-            id: function(params) {
-                return params.id;
-            },
-            name: function() {
-                return Faker.Name.findName();
-            },
-            email: function() {
-                return Faker.Internet.email();
-            }
-        }
+    "devDependencies": {
+        "dyson-generators": "~0.1"
     }
 
-Feel free to send in pull requests for generic fake data generators, or roll your own custom library of data generators, to suit your specific project needs.
+and `npm install` to add it. Please refer to [dyson-generators](http://github.com/webpro/dyson-generators) for usage and examples.
 
 ## Collections
 
@@ -134,34 +114,9 @@ This will give a response with an array of users (default array length is random
 
 ## Images
 
-By default, there's a dummy image service included at /image. E.g. a request to `image/300x200` gives an image with given dimensions.
+In addition to configured endpoints, dyson registers a [dummy image service](http://github.com/webpro/dyson-image) at `/image`. E.g. a request to `image/300x200` gives an image with given dimensions.
 
-Next to this, there are generators to provide either a url to an image, or a base64 string representation of an image:
-
-    avatar: function() {
-        // Returns 'http://localhost:3000/image/150x150'
-        return g.image.src({width:150, height: 150});
-    },
-
-    imageBase64: function() {
-        // Returns 'data:image/png;base64,iVBORw0KGgoAAAANSUh...'
-        return g.image.base64({width:200, height: 200});
-    },
-
-    extendedBase64: function() {
-        // Proxy, see http://dummyimage.com/ for documentation
-        return g.image.base64({path:'/200x300&text=dummyimage.com+rocks!'});
-    },
-
-    customBase64: function() {
-        // Return base64 image string from a custom image service
-        return g.image.base64({
-            host: 'http://lorempixel.com',
-            path: '/150/150/abstract/' + g.random(10)
-        });
-    }
-
-The default service for both the service at `/image` and the base64 images is [Dynamic Dummy Image Generator](http://dummyimage.com/) by [Russell Heimlich](http://twitter.com/kingkool68).
+This service is a proxy to [Dynamic Dummy Image Generator](http://dummyimage.com/) by [Russell Heimlich](http://twitter.com/kingkool68).
 
 ## Defaults
 
@@ -250,33 +205,19 @@ Would result in a `404` when requesting `/feature/999`.
 
 ## Get started
 
-### Quick demo
+### Installation
 
-    npm install dyson -g
+    npm install -g dyson
+
+Local installation is unsupported.
+
+### Quick demo
 
 Run `dyson demo` to play around and serve some demo JSON responses at these endpoints:
 
     http://localhost:3000/employee/1
     http://localhost:3000/users
     http://localhost:3000/features
-
-### Global installation
-
-This is the recommended usage.
-
-    npm install -g dyson
-
-### Without global installation
-
-Add dyson to `devDependencies` and some `scripts` to package.json:
-
-    "devDependencies": {
-        "dyson": "~0.0.3"
-    },
-    "scripts": {
-        "dyson-init": "node ./node_modules/.bin/dyson init .",
-        "dyson": "node ./node_modules/.bin/dyson . 3000"
-    }
 
 ### Project
 
@@ -290,12 +231,10 @@ This script copies dummy config objects in the `[dir]/get`, `[dir]/post`, `[dir]
 
 To expose the services configured in `[dir]` at `http://localhost:3000`.
 
-The equivalents of the previous project commands without dyson globally installed are:
+### Note
 
-    npm run-script dyson-init
-    npm run-script dyson
-
-To use the data generators, dyson needs to be added to the `devDependencies`.
+Your configuration files are just regular Node modules. Dyson is installed globally as a server; when started it reads those modules local to your project.
+So if you need any module in e.g. your configuration templates, then you should add them to your project (`package.json`), and `require()` them in configuration files (like in the first example above).
 
 ## Development & run tests
 
