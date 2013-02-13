@@ -1,4 +1,4 @@
-var g = require('../../lib/generators'),
+var g = require('dyson-generators'),
     _ = require('lodash');
 
 var feature = {

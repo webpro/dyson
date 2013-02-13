@@ -17,7 +17,8 @@
         "mmmagic": "~0.2",
         "lodash": "~0.10",
         "when": "~1.7",
-        "ncp": "~0.2.6"
+        "ncp": "~0.2.6",
+        "dyson-generators": "~0.1"
     },
     "devDependencies": {
         "mocha": "1.8.1",

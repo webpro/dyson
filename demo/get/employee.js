@@ -1,4 +1,4 @@
-var g = require('../../lib/generators');
+var g = require('dyson-generators');
 
 module.exports = {
 	path: '/employee/:id',

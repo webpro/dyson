@@ -1,6 +1,7 @@
 var request = require('supertest'),
     dyson = require('../lib/dyson'),
-    defaults = require('../lib/defaults');
+    defaults = require('../lib/defaults'),
+    _ = require('lodash');
 
 describe('dyson', function() {
 
@@ -20,29 +21,24 @@ describe('dyson', function() {
                 'get': [{
                     path: '/cache',
                     template: {
-                        id: dyson.generators.id
+                        id: _.uniqueId
                     }
                 }, {
                     path: '/nocache',
                     cache: false,
                     template: {
-                        id: dyson.generators.id
+                        id: _.uniqueId
                     }
                 }, {
                     path: '/collection',
                     collection: true,
                     size: 2,
                     template: {
-                        id: dyson.generators.id
+                        id: _.uniqueId
                     }
                 }, {
                     path: '/combined/:id',
                     template: {}
-                }, {
-                    path: '/randomTime',
-                    template: {
-                        time: dyson.generators.time.byQuarter
-                    }
                 }]
             };
 
@@ -91,16 +87,6 @@ describe('dyson', function() {
                 done();
             });
 
-        });
-
-        it('should respond with a randomly generated time', function(done) {
-
-            request(app).get('/randomTime').end(function(errors, res) {
-
-                res.body.time.should.match(/^[012][0-9]:[0134][05]$/);
-                done();
-
-            });
         });
 
         it('should respond with an image', function(done) {
