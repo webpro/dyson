@@ -13,11 +13,10 @@
     },
     "dependencies": {
         "express": "3.x",
-        "request": "~2.12",
-        "mmmagic": "~0.2",
         "lodash": "~0.10",
         "when": "~1.7",
         "ncp": "~0.2.6",
+        "dyson-image": "~0.1",
         "dyson-generators": "~0.1"
     },
     "devDependencies": {
