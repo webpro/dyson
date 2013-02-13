@@ -12,12 +12,8 @@ module.exports = {
                 path: '/150/150/abstract/' + g.random(10)
             });
         },
-        imgSrc: function() {
-            return g.image.src({width:150, height: 150});
-        },
-        imgSrc_custom: function() {
-            return 'http://placekitten.com/200/300';
-        },
+        imgSrc: 'http://localhost:3000/image/150x150',
+        imgSrc_external: 'http://placekitten.com/200/300',
         status: 'OK'
     }
 };
