@@ -15,14 +15,14 @@
         "express": "3.x",
         "lodash": "~0.10",
         "when": "~1.7",
-        "ncp": "~0.2.6",
-        "dyson-image": "~0.1",
-        "dyson-generators": "~0.1"
+        "ncp": "~0.2.6"
     },
     "devDependencies": {
         "mocha": "1.8.1",
         "should": "1.2.1",
-        "supertest": "0.5.1"
+        "supertest": "0.5.1",
+        "dyson-generators": "~0.1",
+        "dyson-image": "~0.1"
     },
     "scripts": {
         "test": "make test"
