@@ -8,7 +8,7 @@ describe('dyson.config.defaults', function() {
         it('should apply defaults (and not overwrite existing values)', function() {
 
             var config = {
-                path: '',
+                path: '/test',
                 template: {}
             };
 
