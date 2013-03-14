@@ -88,5 +88,15 @@ describe('dyson', function() {
             });
 
         });
+
+        it('should respond with a 204 for an OPTIONS request', function(done) {
+
+            request(app).options('/').expect(204).end(function(err, res) {
+                res.headers['access-control-allow-methods'].should.equal('GET,PUT,POST,DELETE');
+                res.headers['access-control-allow-origin'].should.equal('*');
+                done();
+            });
+
+        });
     })
 });
