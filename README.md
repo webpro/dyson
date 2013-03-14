@@ -10,9 +10,9 @@ Node server for dynamic, fake JSON.
 
 ## Introduction
 
-Dyson allows you to define endpoints at a `path` and return JSON based on `template` object.
+Dyson allows you to define endpoints at a `path` and return JSON based on a `template` object.
 
-When developing client-side applications, usually either static JSON dummy files are used, or an actual server, backend, datastore, API, you name it. Sometimes static files are too static, and sometimes an actual server is not available, not accessible, or too tedious to setup.
+When developing client-side applications, for data usually either static JSON files are used, or an actual server, backend, datastore, API, you name it. Sometimes static files are too static, and sometimes an actual server is not available, not accessible, or too tedious to setup.
 
 This is where dyson comes in. Get a full fake server for your application up and running in minutes.
 
@@ -41,17 +41,18 @@ That's all. A request to `/user/412` would return:
 
 * Easy configuration, extensive options
 * Dynamic responses
-    * Base response on request path or parameters (e.g. simulate login scenario's based on username)
-    * Respond with different status code (e.g. 404) for specific requests (e.g. 404 for `?id=999`)
+    * Responses may depend on request path or parameters (e.g. simulate different login scenarios based on username)
+    * Respond with different status code for specific requests (e.g. 404 for `?id=999`)
     * Includes random data generators
 * Supports GET, POST, PUT, DELETE (and OPTIONS)
 * Supports CORS
+* Includes dummy image generator (from any image service)
 
 [![Build Status](https://travis-ci.org/webpro/dyson.png)](https://travis-ci.org/webpro/dyson)
 
 ## Configuration
 
-Configuration of endpoints happens by simple objects:
+Configure endpoints using simple objects:
 
     {
         path: '/user/:id',
@@ -69,11 +70,12 @@ Configuration of endpoints happens by simple objects:
 
 The `path` string is the usual argument provided to [Express](http://expressjs.com/api.html#app.VERB), as in `app.get(path, callback);`.
 
-The `template` object is a hash of values behaving in the following way:
+The `template` object may contain properties of the following types:
 
 * function: the function will be invoked with arguments _(params, query, body)_
 * string, boolean, number, array: returned as-is
 * object: will be recursively iterated
+* promise: if the function is a promise, it will be replaced with the resolving value
 
 ## Fake data generators
 
@@ -114,7 +116,7 @@ This will give a response with an array of users (default array length is random
 
 ## Images
 
-In addition to configured endpoints, dyson registers a [dummy image service](http://github.com/webpro/dyson-image) at `/image`. E.g. a request to `image/300x200` gives an image with given dimensions.
+In addition to configured endpoints, dyson registers a [dummy image service](http://github.com/webpro/dyson-image) at `/image`. E.g. requesting `/image/300x200` serves an image with given dimensions.
 
 This service is a proxy to [Dynamic Dummy Image Generator](http://dummyimage.com/) by [Russell Heimlich](http://twitter.com/kingkool68).
 
@@ -137,15 +139,15 @@ The default values for the configuration objects:
 * `size:function` is the number of objects in the collection
 * `callback:function`
     * the provided default function is doing the hard work (but can be overridden)
-    * it is used as middleware in Express
+    * used as middleware in Express
     * must set `res.body` and call `next()` to render response
 * `render:function`
     * the default function to render the response (basically `res.send(200, res.body);`)
-    * also used as middleware in Express
+    * used as middleware in Express
 
 ## Containers
 
-The response data can be wrapped in a `container` object. Functions in the `container` object are invoked with arguments _(params, query, data)_:
+The response data can be stored anywhere in the response in a `container` object. Functions in the `container` object are invoked with arguments _(params, query, data)_:
 
     {
         path: '/users',
@@ -155,8 +157,13 @@ The response data can be wrapped in a `container` object. Functions in the `cont
                 userCount: data.length
             },
             data: {
-                here: function(params, query, data) {
-                    return data;
+                all: [],
+                the: {
+                    way: {
+                        here: function(params, query, data) {
+                            return data;
+                        }
+                    }
                 }
             }
         }
@@ -168,17 +175,23 @@ And an example response:
         "meta": {
             "userCount": 2
         },
-        "data": {
-            "here": [
-                {
-                    "id": 412,
-                    "name": "John"
-                },
-                {
-                    "id": 218,
-                    "name": "Olivia"
+            data: {
+                all: [],
+                the: {
+                    way: {
+                        here: [
+                            {
+                                "id": 412,
+                                "name": "John"
+                            },
+                            {
+                                "id": 218,
+                                "name": "Olivia"
+                            }
+                        ]
+                    }
                 }
-            ]
+            }
         }
     }
 
@@ -229,12 +242,12 @@ This script copies dummy config objects in the `[dir]/get`, `[dir]/post`, `[dir]
 
     dyson [dir]
 
-To expose the services configured in `[dir]` at `http://localhost:3000`.
+This starts the services configured in `[dir]` at `http://localhost:3000`.
 
 ### Note
 
-Your configuration files are just regular Node modules. Dyson is installed globally as a server; when started it reads those modules local to your project.
-So if you need any module in e.g. your configuration templates, then you should add them to your project (`package.json`), and `require()` them in configuration files (like in the first example above).
+Your configuration files are just regular Node modules. Dyson is installed globally as a server; when started it reads those configuration modules local to your project.
+So if you need any module in your configuration, then you should add them to your project (`package.json`), and `require()` them in configuration files (e.g. [dyson-generators](#fake-data-generators)).
 
 ## Development & run tests
 
