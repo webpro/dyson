@@ -1,6 +1,7 @@
 var request = require('supertest'),
     dyson = require('../lib/dyson'),
     when = require('when'),
+    _ = require('lodash'),
     configDefaults = require('../lib/response');
 
 describe('dyson.response', function() {
@@ -37,7 +38,7 @@ describe('dyson.response', function() {
 
             configDefaults.setValues(template).then(function(actual) {
 
-                actual.should.eql(expected);
+                _.isEqual(actual, expected).should.equal(true);
                 done();
 
             });
@@ -67,7 +68,7 @@ describe('dyson.response', function() {
 
             configDefaults.setValues(template).then(function(actual) {
 
-                actual.should.eql(expected);
+                _.isEqual(actual, expected).should.equal(true);
                 done();
 
             });
@@ -91,7 +92,7 @@ describe('dyson.response', function() {
 
             configDefaults.setValues(template).then(function(actual) {
 
-                actual.should.eql(expected);
+                _.isEqual(actual, expected).should.equal(true);
                 done();
 
             });
