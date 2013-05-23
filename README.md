@@ -8,6 +8,8 @@ Node server for dynamic, fake JSON.
     dyson demo
     # Check http://localhost:3000/features
 
+There may be errors coming from gyp/mmmagic (in dyson-image) during installation on Windows. These can be ignored, since a fallback dependency is in place.
+
 ## Introduction
 
 Dyson allows you to define endpoints at a `path` and return JSON based on a `template` object.
