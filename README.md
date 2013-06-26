@@ -2,40 +2,19 @@
 
 Node server for dynamic, fake JSON.
 
-## Give it to me, now
-
     npm install -g dyson
     dyson demo
     # Check http://localhost:3000/features
 
 ## Introduction
 
-Dyson allows you to define endpoints at a `path` and return JSON based on a `template` object.
+Dyson allows you to define endpoints at a `path` and return JSON based on a `template` object:
+
+![input-output](http://webpro.github.com/dyson/input-output.png)
 
 When developing client-side applications, for data usually either static JSON files are used, or an actual server, backend, datastore, API, you name it. Sometimes static files are too static, and sometimes an actual server is not available, not accessible, or too tedious to setup.
 
 This is where dyson comes in. Get a full fake server for your application up and running in minutes.
-
-Here's a complete service endpoint configuration file:
-
-    var g = require('dyson-generators');
-
-    module.exports = {
-        path: '/user/:id',
-        template: {
-            id: function(params) {
-                return params.id;
-            },
-            name: g.name
-        }
-    }
-
-That's all. A request to `/user/412` would return:
-
-    {
-        "id": 412,
-        "name": "John"
-    }
 
 ## Overview
 
@@ -44,9 +23,12 @@ That's all. A request to `/user/412` would return:
     * Responses may depend on request path or parameters (e.g. simulate different login scenarios based on username)
     * Respond with different status code for specific requests (e.g. 404 for `?id=999`)
     * Includes random data generators
+* Supports RESTful applications
 * Supports GET, POST, PUT, DELETE (and OPTIONS)
 * Supports CORS
-* Includes dummy image generator (from any image service)
+* Includes dummy image generator
+    * Use any external or local image service (included)
+    * Supports base64 encoded image strings
 
 [![Build Status](https://travis-ci.org/webpro/dyson.png)](https://travis-ci.org/webpro/dyson)
 
@@ -77,42 +59,7 @@ The `template` object may contain properties of the following types:
 * object: will be recursively iterated
 * promise: if the function is a promise, it will be replaced with the resolving value
 
-## Fake data generators
-
-To use the data generators (e.g. `g.name`), run:
-
-    npm install dyson-generators --save-dev
-
-Or manually include [dyson-generators](http://github.com/webpro/dyson-generators) in package.json:
-
-    "devDependencies": {
-        "dyson-generators": "~0.1"
-    }
-
-and `npm install` to add it. Please refer to [dyson-generators](http://github.com/webpro/dyson-generators) for usage and examples.
-
-## Collections
-
-Same as examples above, but override the `collection` property:
-
-    {
-        path: '/users',
-        collection: true,
-        template: user.template
-    }
-
-This will give a response with an array of users (default array length is random between 2 and 10):
-
-    [
-        {
-            "id": 412,
-            "name": "John"
-        },
-        {
-            "id": 218,
-            "name": "Olivia"
-        }
-    ]
+Note: the `template` can also be a _function_ returning the actual data. The function is invoked with arguments _(params, query, body)_.
 
 ## Images
 
@@ -137,6 +84,7 @@ The default values for the configuration objects:
 
 * `cache:true` means that multiple requests to the same path will result in the same response
 * `size:function` is the number of objects in the collection
+* `collection:true` will return a collection
 * `callback:function`
     * the provided default function is doing the hard work (but can be overridden)
     * used as middleware in Express
@@ -145,9 +93,17 @@ The default values for the configuration objects:
     * the default function to render the response (basically `res.send(200, res.body);`)
     * used as middleware in Express
 
+## Fake data generators
+
+Install the data generators (e.g. `g.name`) in your project to use them:
+
+    npm install dyson-generators --save-dev
+
+Please refer to [dyson-generators](http://github.com/webpro/dyson-generators) for usage and examples.
+
 ## Containers
 
-The response data can be stored anywhere in the response in a `container` object. Functions in the `container` object are invoked with arguments _(params, query, data)_:
+Containers can help if you need to send along some meta data, or wrap the response data in a specific way. Just use the `container` object, and return the `data` where you want it. Functions in the `container` object are invoked with arguments _(params, query, data)_:
 
     {
         path: '/users',
@@ -175,21 +131,20 @@ And an example response:
         "meta": {
             "userCount": 2
         },
-            data: {
-                all: [],
-                the: {
-                    way: {
-                        here: [
-                            {
-                                "id": 412,
-                                "name": "John"
-                            },
-                            {
-                                "id": 218,
-                                "name": "Olivia"
-                            }
-                        ]
-                    }
+        data: {
+            all: [],
+            the: {
+                way: {
+                    here: [
+                        {
+                            "id": 412,
+                            "name": "John"
+                        },
+                        {
+                            "id": 218,
+                            "name": "Olivia"
+                        }
+                    ]
                 }
             }
         }
@@ -222,7 +177,7 @@ Would result in a `404` when requesting `/feature/999`.
 
     npm install -g dyson
 
-Local installation is unsupported.
+Note: You need to install dyson as a global module, but configuration files are local to your project.
 
 ### Quick demo
 
@@ -238,16 +193,11 @@ In any project you can generate some dummy templates to get started:
 
     dyson init [dir]
 
-This script copies dummy config objects in the `[dir]/get`, `[dir]/post`, `[dir]/put`, `[dir]/delete` subdirs. These folders are scanned for configuration files when dyson is started:
+This script copies dummy config files to `[dir]/get/`, `[dir]/post/`, `[dir]/put/`, and `[dir]/delete/`. These folders are scanned for configuration files when dyson is started:
 
     dyson [dir]
 
 This starts the services configured in `[dir]` at `http://localhost:3000`.
-
-### Note
-
-Your configuration files are just regular Node modules. Dyson is installed globally as a server; when started it reads those configuration modules local to your project.
-So if you need any module in your configuration, then you should add them to your project (`package.json`), and `require()` them in configuration files (e.g. [dyson-generators](#fake-data-generators)).
 
 ## Development & run tests
 
