@@ -205,3 +205,7 @@ This starts the services configured in `[dir]` at `http://localhost:3000`.
     cd dyson
     npm install
     npm test
+
+## License
+
+[MIT](http://webpro.mit-license.org)
