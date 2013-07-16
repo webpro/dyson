@@ -9,7 +9,7 @@
     },
     "main": "./lib/dyson.js",
     "bin": {
-        "dyson": "./main.js"
+        "dyson": "./bin/dyson.js"
     },
     "dependencies": {
         "express": "3.x",
