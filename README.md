@@ -2,9 +2,12 @@
 
 Node server for dynamic, fake JSON.
 
-    npm install -g dyson
-    dyson demo
-    # Check http://localhost:3000/features
+``` bash
+npm install -g dyson
+dyson demo
+```
+
+Check out [localhost:3000/employee/312](http://localhost:3000/employee/312) or [localhost:3000/features/50/?foo=bar](http://localhost:3000/features/50/?foo=bar).
 
 ## Introduction
 
@@ -36,19 +39,21 @@ This is where dyson comes in. Get a full fake server for your application up and
 
 Configure endpoints using simple objects:
 
-    {
-        path: '/user/:id',
-        template: {
-            id: function(params, query, body) {
-                return params.id;
-            },
-            name: g.name,
-            address: {
-            	zip: g.zipUS,
-            	city: g.city
-            }
+``` javascript
+{
+    path: '/user/:id',
+    template: {
+        id: function(params, query, body) {
+            return params.id;
+        },
+        name: g.name,
+        address: {
+            zip: g.zipUS,
+            city: g.city
         }
     }
+}
+```
 
 The `path` string is the usual argument provided to [Express](http://expressjs.com/api.html#app.VERB), as in `app.get(path, callback);`.
 
@@ -71,16 +76,17 @@ This service is a proxy to [Dynamic Dummy Image Generator](http://dummyimage.com
 
 The default values for the configuration objects:
 
-    {
-        cache: true,
-        size: function() {
-            return _.random(2,10);
-        },
-        collection: false,
-        callback: response.generate,
-        render: response.render
-    };
-
+``` javascript
+{
+    cache: true,
+    size: function() {
+        return _.random(2,10);
+    },
+    collection: false,
+    callback: response.generate,
+    render: response.render
+};
+```
 
 * `cache:true` means that multiple requests to the same path will result in the same response
 * `size:function` is the number of objects in the collection
@@ -97,7 +103,9 @@ The default values for the configuration objects:
 
 Install the data generators (e.g. `g.name`) in your project to use them:
 
-    npm install dyson-generators --save-dev
+``` bash
+npm install dyson-generators --save-dev
+```
 
 Please refer to [dyson-generators](http://github.com/webpro/dyson-generators) for usage and examples.
 
@@ -105,50 +113,54 @@ Please refer to [dyson-generators](http://github.com/webpro/dyson-generators) fo
 
 Containers can help if you need to send along some meta data, or wrap the response data in a specific way. Just use the `container` object, and return the `data` where you want it. Functions in the `container` object are invoked with arguments _(params, query, data)_:
 
-    {
-        path: '/users',
-        template: user.template,
-        container: {
-            meta: function(params, query, data) {
-                userCount: data.length
-            },
-            data: {
-                all: [],
-                the: {
-                    way: {
-                        here: function(params, query, data) {
-                            return data;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-And an example response:
-
-    {
-        "meta": {
-            "userCount": 2
+``` javascript
+{
+    path: '/users',
+    template: user.template,
+    container: {
+        meta: function(params, query, data) {
+            userCount: data.length
         },
         data: {
             all: [],
             the: {
                 way: {
-                    here: [
-                        {
-                            "id": 412,
-                            "name": "John"
-                        },
-                        {
-                            "id": 218,
-                            "name": "Olivia"
-                        }
-                    ]
+                    here: function(params, query, data) {
+                        return data;
+                    }
                 }
             }
         }
     }
+}
+```
+
+And an example response:
+
+``` javascript
+{
+    "meta": {
+        "userCount": 2
+    },
+    data: {
+        all: [],
+        the: {
+            way: {
+                here: [
+                    {
+                        "id": 412,
+                        "name": "John"
+                    },
+                    {
+                        "id": 218,
+                        "name": "Olivia"
+                    }
+                ]
+            }
+        }
+    }
+}
+```
 
 ## Combined requests
 
@@ -162,12 +174,16 @@ By default, all responses are sent with a status code `200` (and the `Content-Ty
 
 This can be completely overridden with the `status` property, e.g.:
 
+``` javascript
+{
     path: '/feature/:foo?',
     status: function(req, res) {
         if(req.params.foo === '999') {
             res.send(404, 'Feature not found');
         }
     }
+}
+```
 
 Would result in a `404` when requesting `/feature/999`.
 
@@ -175,7 +191,9 @@ Would result in a `404` when requesting `/feature/999`.
 
 ### Installation
 
-    npm install -g dyson
+``` bash
+npm install -g dyson
+```
 
 Note: You need to install dyson as a global module, but configuration files are local to your project.
 
@@ -183,28 +201,34 @@ Note: You need to install dyson as a global module, but configuration files are 
 
 Run `dyson demo` to play around and serve some demo JSON responses at these endpoints:
 
-    http://localhost:3000/employee/1
-    http://localhost:3000/users
-    http://localhost:3000/features
+* [localhost:3000/employee/1](http://localhost:3000/employee/1)
+* [localhost:3000/users](http://localhost:3000/users)
+* [localhost:3000/features](http://localhost:3000/users)
 
 ### Project
 
 In any project you can generate some dummy templates to get started:
 
-    dyson init [dir]
+``` bash
+dyson init [dir]
+```
 
 This script copies dummy config files to `[dir]/get/`, `[dir]/post/`, `[dir]/put/`, and `[dir]/delete/`. These folders are scanned for configuration files when dyson is started:
 
-    dyson [dir]
+``` bash
+dyson [dir]
+```
 
-This starts the services configured in `[dir]` at `http://localhost:3000`.
+This starts the services configured in `[dir]` at [localhost:3000](http://localhost:3000).
 
 ## Development & run tests
 
-    git clone git@github.com:webpro/dyson.git
-    cd dyson
-    npm install
-    npm test
+``` bash
+git clone git@github.com:webpro/dyson.git
+cd dyson
+npm install
+npm test
+```
 
 ## License
 
