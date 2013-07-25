@@ -1,0 +1,7 @@
+safe: true
+lsi: false
+pygments: true
+markdown: redcarpet
+
+redcarpet:
+    extensions: ["autolink"]
