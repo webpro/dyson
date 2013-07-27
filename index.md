@@ -1,5 +1,6 @@
 ---
 layout: index
+title: dyson
 ---
 
 # dyson
