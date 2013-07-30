@@ -1,3 +1,4 @@
+layouts: ./webpro.github.io/_layouts
 safe: true
 lsi: false
 pygments: true

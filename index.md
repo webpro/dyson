@@ -1,5 +1,6 @@
 ---
 layout: index
+type: project
 title: dyson
 ---
 
