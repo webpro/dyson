@@ -13,8 +13,6 @@ describe('dyson.config.loader', function() {
             configs.should.be.a('object').and.have.keys('delete', 'get', 'post', 'put');
 
             configs.get[0].should.have.property('path');
-            configs.get[0].should.have.property('template');
-            configs.get[0].should.have.property('callback');
 
         });
     });
