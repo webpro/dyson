@@ -4,10 +4,9 @@ Node server for dynamic, fake JSON.
 
 ``` bash
 npm install -g dyson
-dyson demo
 ```
 
-Check out [localhost:3000/employee/312](http://localhost:3000/employee/312) or [localhost:3000/features/50/?foo=bar](http://localhost:3000/features/50/?foo=bar).
+Check out some [demo services](http://dyson.jit.su).
 
 ## Introduction
 
@@ -197,14 +196,6 @@ npm install -g dyson
 
 Note: You need to install dyson as a global module, but configuration files are local to your project.
 
-### Quick demo
-
-Run `dyson demo` to play around and serve some demo JSON responses at these endpoints:
-
-* [localhost:3000/employee/1](http://localhost:3000/employee/1)
-* [localhost:3000/users](http://localhost:3000/users)
-* [localhost:3000/features](http://localhost:3000/users)
-
 ### Project
 
 In any project you can generate some dummy templates to get started:
@@ -220,6 +211,10 @@ dyson [dir]
 ```
 
 This starts the services configured in `[dir]` at [localhost:3000](http://localhost:3000).
+
+### Demo
+
+For a demo project, see [webpro/dyson-demo](https://github.com/webpro/dyson-demo). This demo is also [running at nodejitsu](http://dyson.jit.su).
 
 ## Development & run tests
 
