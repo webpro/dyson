@@ -22,7 +22,10 @@ This is where dyson comes in. Get a full fake server for your application up and
 
 * Easy configuration, extensive options
 * Dynamic responses
-    * Responses may depend on request path or parameters (e.g. simulate different login scenarios based on username)
+    * Responses can use request data (e.g. to simulate different login scenarios based on username):
+        * Request path
+        * GET/POST parameters
+        * Cookies
     * Respond with different status code for specific requests (e.g. 404 for `?id=999`)
     * Includes random data generators
 * Supports RESTful applications
@@ -58,12 +61,12 @@ The `path` string is the usual argument provided to [Express](http://expressjs.c
 
 The `template` object may contain properties of the following types:
 
-* function: the function will be invoked with arguments _(params, query, body)_
+* function: the function will be invoked with arguments _(params, query, body, cookies)_
 * string, boolean, number, array: returned as-is
 * object: will be recursively iterated
 * promise: if the function is a promise, it will be replaced with the resolving value
 
-Note: the `template` can also be a _function_ returning the actual data. The function is invoked with arguments _(params, query, body)_.
+Note: the `template` can also be a _function_ returning the actual data. The template function itself is also invoked with arguments _(params, query, body, cookies)_.
 
 ## Images
 
@@ -214,7 +217,7 @@ This starts the services configured in `[dir]` at [localhost:3000](http://localh
 
 ### Demo
 
-For a demo project, see [webpro/dyson-demo](https://github.com/webpro/dyson-demo). This demo is also [running at nodejitsu](http://dyson.jit.su).
+For a demo project, see [webpro/dyson-demo](https://github.com/webpro/dyson-demo). This demo is also [running at nodejitsu](http://dyson.nodejitsu.com).
 
 ## Development & run tests
 
