@@ -189,9 +189,7 @@ This can be completely overridden with the `status` property, e.g.:
 
 Would result in a `404` when requesting `/feature/999`.
 
-## Get started
-
-### Installation
+## Installation
 
 ``` bash
 npm install -g dyson
@@ -214,6 +212,8 @@ dyson [dir]
 ```
 
 This starts the services configured in `[dir]` at [localhost:3000](http://localhost:3000).
+
+You can also provide an alternative port number by just adding it as a second argument (e.g. `dyson path/ 8181`).
 
 ### Demo
 
