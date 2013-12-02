@@ -8,6 +8,7 @@ describe('dyson', function() {
     describe('.registerServices [integration]', function() {
 
         var app,
+            options = {},
             configs;
 
         before(function() {
@@ -44,7 +45,7 @@ describe('dyson', function() {
 
             defaults.assign(configs.get, 'get');
 
-            dyson.registerServices(app, configs);
+            dyson.registerServices(app, options, configs);
 
         });
 
@@ -81,6 +82,8 @@ describe('dyson', function() {
         });
 
         it('should respond with a collection (combined request)', function(done) {
+
+            dyson.options.set({multiRequest: ','});
 
             request(app).get('/combined/1,2,3').expect(200).end(function(err, res) {
                 res.body.should.be.an.instanceOf(Array).and.have.length(3);

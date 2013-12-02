@@ -4,7 +4,8 @@ var dyson = require('../lib/dyson'),
 
 describe('dyson', function() {
 
-    var app = express();
+    var app = express(),
+        options = {};
 
     describe('.registerServices', function() {
 
@@ -26,7 +27,7 @@ describe('dyson', function() {
                 }]
             };
 
-            dyson.registerServices(app, configs);
+            dyson.registerServices(app, options, configs);
 
             var route;
 
@@ -77,7 +78,7 @@ describe('dyson', function() {
                 }]
             };
 
-            dyson.registerServices(app, configs);
+            dyson.registerServices(app, options, configs);
 
         });
 
