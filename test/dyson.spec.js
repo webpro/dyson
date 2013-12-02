@@ -31,11 +31,11 @@ describe('dyson', function() {
 
             var route;
 
-            route = app.routes.get[app.routes.get.length-1];
+            route = app.routes.get[0];
             route.path.should.equal('/endpointA');
             route.method.should.equal('get');
 
-            route = app.routes.post[app.routes.post.length-1];
+            route = app.routes.post[0];
             route.path.should.equal('/endpointB');
             route.method.should.equal('post');
 
