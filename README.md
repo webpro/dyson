@@ -12,7 +12,7 @@ Check out some [demo services](http://dyson.jit.su).
 
 Dyson allows you to define endpoints at a `path` and return JSON based on a `template` object:
 
-![input-output](http://webpro.github.com/dyson/input-output.svg)
+![input-output](http://webpro.github.com/dyson/input-output.png)
 
 When developing client-side applications, for data usually either static JSON files are used, or an actual server, backend, datastore, API, you name it. Sometimes static files are too static, and sometimes an actual server is not available, not accessible, or too tedious to setup.
 
