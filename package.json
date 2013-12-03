@@ -17,7 +17,7 @@
         "when": "~2.2.1",
         "ncp": "~0.4.2",
         "cors": "~1.0.1",
-        "http-proxy": "~0.10.3"
+        "request": "~2.27.0"
 	},
     "devDependencies": {
         "mocha": "1.14.0",
