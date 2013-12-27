@@ -28,7 +28,7 @@ This is where dyson comes in. Get a full fake server for your application up and
         * Cookies
     * Respond with different status code for specific requests (e.g. 404 for `?id=999`)
     * Includes random data generators
-* Supports RESTful applications
+* Supports to proxy non-configured endpoints to actual services
 * Supports GET, POST, PUT, DELETE (and OPTIONS)
 * Supports CORS
 * Includes dummy image generator
@@ -37,7 +37,7 @@ This is where dyson comes in. Get a full fake server for your application up and
 
 [![Build Status](https://travis-ci.org/webpro/dyson.png)](https://travis-ci.org/webpro/dyson)
 
-## Configuration
+## Endpoint Configuration
 
 Configure endpoints using simple objects:
 
@@ -170,6 +170,8 @@ Basic support for "combined" requests is available, by means of a comma separate
 
 For example, a request to `/user/5,13` will result in an array of the responses from `/user/5` and `/user/13`.
 
+The `,` delimiter can be [configured](project-configuration) (or disabled).
+
 ## Status codes
 
 By default, all responses are sent with a status code `200` (and the `Content-Type: application/json` header).
@@ -218,6 +220,22 @@ You can also provide an alternative port number by just adding it as a second ar
 ### Demo
 
 For a demo project, see [webpro/dyson-demo](https://github.com/webpro/dyson-demo). This demo is also [running at nodejitsu](http://dyson.nodejitsu.com).
+
+## Project Configuration
+
+Optionally, you can put a `dyson.json` file next to the configuration folders (inside `[dir]`). It enables to configure some behavior of dyson:
+
+``` javascript
+{
+	"multiRequest": ",",
+	"proxy": true,
+	"proxyHost": "http://dyson.jit.su",
+	"proxyPort": 8080
+}
+```
+
+* Setting `multiRequest` to `false` disables the [combined requests](#combined-requests) feature.
+* By default, the `proxy` is set to `false`
 
 ## Development & run tests
 
