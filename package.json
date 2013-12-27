@@ -1,8 +1,8 @@
 {
     "name": "dyson",
-    "version": "0.1.7",
+    "version": "0.2.0",
     "description": "Node server for dynamic, fake JSON.",
-    "keywords": ["JSON", "data", "dynamic", "dummy", "fake", "response", "server", "API", "REST", "generator"],
+    "keywords": ["JSON", "data", "dynamic", "dummy", "fake", "response", "server", "API", "REST", "generator", "proxy"],
     "author": {
         "name": "Lars Kappert",
         "email": "lars@webpro.nl"
