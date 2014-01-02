@@ -249,3 +249,5 @@ npm test
 ## License
 
 [MIT](http://webpro.mit-license.org)
+
+![Analytics](https://ga-beacon.appspot.com/UA-17415234-3/dyson/readme?pixel)
