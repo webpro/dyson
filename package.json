@@ -1,41 +1,53 @@
 {
-    "name": "dyson",
-    "version": "0.2.0",
-    "description": "Node server for dynamic, fake JSON.",
-    "keywords": ["JSON", "data", "dynamic", "dummy", "fake", "response", "server", "API", "REST", "generator", "proxy"],
-    "author": {
-        "name": "Lars Kappert",
-        "email": "lars@webpro.nl"
-    },
-    "main": "./lib/dyson.js",
-    "bin": {
-        "dyson": "./bin/dyson.js"
-    },
-    "dependencies": {
-        "express": "~3.4.6",
-        "lodash": "~1.3.1",
-        "when": "~2.2.1",
-        "ncp": "~0.4.2",
-        "cors": "~1.0.1",
-        "request": "~2.27.0"
-	},
-    "devDependencies": {
-        "mocha": "1.14.0",
-        "should": "1.3.0",
-        "supertest": "0.8.2",
-        "dyson-generators": "~0.1",
-        "dyson-image": "~0.1"
-    },
-    "scripts": {
-        "test": "make test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/webpro/dyson"
-    },
-    "engines": {
-        "node": ">=0.8"
-    },
-    "preferGlobal": true,
-    "license": "MIT"
+  "name": "dyson",
+  "version": "0.2.1",
+  "description": "Node server for dynamic, fake JSON.",
+  "keywords": [
+    "JSON",
+    "data",
+    "dynamic",
+    "dummy",
+    "fake",
+    "response",
+    "server",
+    "API",
+    "REST",
+    "generator",
+    "proxy"
+  ],
+  "author": {
+    "name": "Lars Kappert",
+    "email": "lars@webpro.nl"
+  },
+  "main": "./lib/dyson.js",
+  "bin": {
+    "dyson": "./bin/dyson.js"
+  },
+  "dependencies": {
+    "express": "~3.4.6",
+    "lodash": "~1.3.1",
+    "when": "~2.2.1",
+    "ncp": "~0.4.2",
+    "cors": "~1.0.1",
+    "request": "~2.27.0"
+  },
+  "devDependencies": {
+    "mocha": "1.14.0",
+    "should": "1.3.0",
+    "supertest": "0.8.2",
+    "dyson-generators": "~0.1",
+    "dyson-image": "~0.1"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webpro/dyson"
+  },
+  "engines": {
+    "node": ">=0.8"
+  },
+  "preferGlobal": true,
+  "license": "MIT"
 }
