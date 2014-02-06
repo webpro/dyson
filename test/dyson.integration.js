@@ -39,6 +39,13 @@ describe('dyson', function() {
                         id: _.uniqueId
                     }
                 }, {
+                    path: '/size-as-function',
+                    collection: true,
+                    size: function(params, query) {
+                        return query.count;
+                    },
+                    template: {}
+                }, {
                     path: '/combined/:id',
                     template: {}
                 }]
@@ -77,6 +84,15 @@ describe('dyson', function() {
 
             request(app).get('/collection').expect(200).end(function(err, res) {
                 res.body.should.be.an.instanceOf(Array).and.have.length(2);
+                done();
+            });
+
+        });
+
+        it('should respond with a collection where size is a function', function(done) {
+
+            request(app).get('/size-as-function?count=3').expect(200).end(function(err, res) {
+                res.body.should.have.length(3);
                 done();
             });
 
