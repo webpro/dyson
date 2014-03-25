@@ -34,6 +34,7 @@ This is where dyson comes in. Get a full fake server for your application up and
 * Includes dummy image generator
     * Use any external or local image service (included)
     * Supports base64 encoded image strings
+* Supports required parameter validation
 
 [![Build Status](https://travis-ci.org/webpro/dyson.png)](https://travis-ci.org/webpro/dyson)
 
