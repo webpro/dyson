@@ -25,8 +25,8 @@
   },
   "dependencies": {
     "express": "^4.1.0",
-    "when": "~2.2.1",
     "lodash": "^2.4.1",
+    "when": "^3.1.0",
     "ncp": "^0.5.1",
     "cors": "^2.2.0",
     "request": "^2.34.0",
