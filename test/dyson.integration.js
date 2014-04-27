@@ -16,9 +16,6 @@ describe('dyson', function() {
 
             app = dyson.initExpress();
 
-            // The `dyson.generators.id` method returns a new, unique id when it is called starting at 0 (it's actually _.uniqueId).,
-            // this comes in handy when testing whether a response was cached or not.
-
             configs = {
                 'get': [{
                     path: '/cache',
