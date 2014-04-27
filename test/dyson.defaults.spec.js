@@ -14,10 +14,10 @@ describe('dyson.config.defaults', function() {
 
             defaults.assign(config, 'get');
 
-            config.should.have.property('cache').and.be.a('boolean');
+            config.should.have.property('cache').and.be.type('boolean');
             config.should.have.property('size');
-            config.should.have.property('collection').and.be.a('boolean');
-            config.should.have.property('callback').and.be.a('function');
+            config.should.have.property('collection').and.be.type('boolean');
+            config.should.have.property('callback').and.be.type('function');
 
             config.should.have.property('path').and.equal(config.path);
             config.should.have.property('template').and.equal(config.template);

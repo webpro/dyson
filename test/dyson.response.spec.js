@@ -13,7 +13,7 @@ describe('dyson.response', function() {
             var actual = configDefaults.setValues({});
 
             actual.should.have.property('then');
-            actual.then.should.be.a('function');
+            actual.then.should.be.type('function');
         });
 
         it('should render data based on template', function(done) {
