@@ -60,9 +60,10 @@ describe('dyson', function() {
                         name: 'John'
                     },
                     callback: function(req, res, next) {
+                        var template = configs.get[0].template;
                         res.body = {
-                            id: this.template.id(req.params),
-                            name: this.template.name
+                            id: template.id(req.params),
+                            name: template.name
                         };
                         next();
                     },

@@ -23,5 +23,28 @@ describe('dyson.config.defaults', function() {
             config.should.have.property('template').and.equal(config.template);
 
         });
+
+        it('should bind config methods to the config', function() {
+
+            var config = {
+                path: '/test',
+                template: {},
+                callback: function() {
+                    this._counter++;
+                    return this;
+                },
+                render: function() {
+                    this._counter++;
+                },
+                _counter: 0
+            };
+
+            defaults.assign(config, 'get');
+
+            config.callback().render();
+
+            config._counter.should.equal(2);
+
+        });
     });
 });
