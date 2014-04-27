@@ -1,6 +1,7 @@
 var dyson = require('../lib/dyson'),
     request = require('supertest'),
-    express = require('express');
+    express = require('express'),
+    sinon = require('sinon');
 
 describe('dyson', function() {
 
@@ -9,35 +10,49 @@ describe('dyson', function() {
 
     describe('.registerServices', function() {
 
-        it('should add routes to Express', function() {
+        it('should add GET route to Express', function() {
 
-            var configs = {
+            var spy = sinon.spy(app, 'get');
+
+            var config = {
                 get: [{
-                    path: '/endpointA',
-                    template: {
-                        id: 1
-                    },
-                    callback: function(){},
-                    render: function(){}
-                }],
-                post: [{
-                    path: '/endpointB',
+                    path: '/endpoint',
                     callback: function(){},
                     render: function(){}
                 }]
             };
 
-            dyson.registerServices(app, options, configs);
+            dyson.registerServices(app, options, config);
 
-            var route;
+            spy.callCount.should.equal(1);
+            spy.firstCall.args[0].should.equal(config.get[0].path);
+            spy.firstCall.args[2].should.equal(config.get[0].callback);
+            spy.firstCall.args[3].should.equal(config.get[0].render);
 
-            route = app.routes.get[0];
-            route.path.should.equal('/endpointA');
-            route.method.should.equal('get');
+            app.get.restore();
 
-            route = app.routes.post[0];
-            route.path.should.equal('/endpointB');
-            route.method.should.equal('post');
+        });
+
+        it('should add POST route to Express', function() {
+
+            var spy = sinon.spy(app, 'post');
+
+            var config = {
+                post: [{
+                    path: '/endpoint',
+                    callback: function(){},
+                    render: function(){}
+                }]
+            };
+
+            dyson.registerServices(app, options, config);
+
+            spy.callCount.should.equal(1);
+            spy.firstCall.args[0].should.equal(config.post[0].path);
+            spy.firstCall.args[2].should.equal(config.post[0].callback);
+            spy.firstCall.args[3].should.equal(config.post[0].render);
+
+            app.post.restore();
 
         });
     });
