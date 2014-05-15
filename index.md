@@ -109,13 +109,19 @@ The default values for the configuration objects:
 
 ## Fake data generators
 
-Install the data generators (e.g. `g.name`) in your project to use them:
+You can use _anything_ to generate data. Here are some suggestions:
+
+* [Faker.js](https://github.com/marak/Faker.js/)
+* [Chance.js](http://chancejs.com/)
+* [dyson-generators](http://github.com/webpro/dyson-generators)
+
+Just install the generator(s) in your project to use them in your templates:
 
 ``` bash
 npm install dyson-generators --save-dev
 ```
 
-Please refer to [dyson-generators](http://github.com/webpro/dyson-generators) for usage and examples.
+Please refer to the project pages for usage and examples (here's one [using dyson-generators](https://github.com/webpro/dyson/blob/master/dummy/get/fake.js)).
 
 ## Containers
 
