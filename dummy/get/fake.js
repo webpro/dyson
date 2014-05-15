@@ -4,9 +4,9 @@
 var g = require('dyson-generators');
 
 module.exports = {
-	path: '/fake',
-	template: {
-		id: g.id,
+    path: '/fake',
+    template: {
+        id: g.id,
         name: g.name,
         address: {
             city: g.address.city,

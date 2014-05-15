@@ -17,38 +17,45 @@ describe('dyson', function() {
             app = dyson.initExpress();
 
             configs = {
-                'get': [{
-                    path: '/cache',
-                    template: {
-                        id: _.uniqueId
-                    }
-                }, {
-                    path: '/nocache',
-                    cache: false,
-                    template: {
-                        id: _.uniqueId
-                    }
-                }, {
-                    path: '/collection',
-                    collection: true,
-                    size: 2,
-                    template: {
-                        id: _.uniqueId
-                    }
-                }, {
-                    path: '/size-as-function',
-                    collection: true,
-                    size: function(params, query) {
-                        return query.count;
+                'get': [
+                    {
+                        path: '/cache',
+                        template: {
+                            id: _.uniqueId
+                        }
                     },
-                    template: {}
-                }, {
-                    path: '/combined/:id',
-                    template: {}
-                }, {
-                    path: '/require-para',
-                    requireParameters: ['name']
-                }]
+                    {
+                        path: '/nocache',
+                        cache: false,
+                        template: {
+                            id: _.uniqueId
+                        }
+                    },
+                    {
+                        path: '/collection',
+                        collection: true,
+                        size: 2,
+                        template: {
+                            id: _.uniqueId
+                        }
+                    },
+                    {
+                        path: '/size-as-function',
+                        collection: true,
+                        size: function(params, query) {
+                            return query.count;
+                        },
+                        template: {}
+                    },
+                    {
+                        path: '/combined/:id',
+                        template: {}
+                    },
+                    {
+                        path: '/require-para',
+                        requireParameters: ['name']
+                    }
+                ]
             };
 
             defaults.assign(configs.get, 'get');
@@ -108,7 +115,6 @@ describe('dyson', function() {
             });
 
         });
-
 
         it('should respond with a 204 for an OPTIONS request', function(done) {
 

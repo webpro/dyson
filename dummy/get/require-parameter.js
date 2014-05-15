@@ -1,10 +1,10 @@
 var g = require('dyson-generators');
 
 module.exports = {
-	path: '/requirepara',
-  requireParameters: ["client_id"],
-	template: {
-		id: g.id,
+    path: '/requirepara',
+    requireParameters: ["client_id"],
+    template: {
+        id: g.id,
         name: g.name,
         address: {
             city: g.address.city,

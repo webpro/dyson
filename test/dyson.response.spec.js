@@ -25,7 +25,7 @@ describe('dyson.response', function() {
                 myString: 'my string',
                 myBoolean: true,
                 myNumber: 42,
-                myArray: [1,2,3]
+                myArray: [1, 2, 3]
             };
 
             var expected = {
@@ -33,7 +33,7 @@ describe('dyson.response', function() {
                 myString: 'my string',
                 myBoolean: true,
                 myNumber: 42,
-                myArray: [1,2,3]
+                myArray: [1, 2, 3]
             };
 
             configDefaults.setValues(template).then(function(actual) {

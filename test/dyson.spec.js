@@ -15,11 +15,13 @@ describe('dyson', function() {
             var spy = sinon.spy(app, 'get');
 
             var config = {
-                get: [{
-                    path: '/endpoint',
-                    callback: function(){},
-                    render: function(){}
-                }]
+                get: [
+                    {
+                        path: '/endpoint',
+                        callback: function() {},
+                        render: function() {}
+                    }
+                ]
             };
 
             dyson.registerServices(app, options, config);
@@ -38,11 +40,13 @@ describe('dyson', function() {
             var spy = sinon.spy(app, 'post');
 
             var config = {
-                post: [{
-                    path: '/endpoint',
-                    callback: function(){},
-                    render: function(){}
-                }]
+                post: [
+                    {
+                        path: '/endpoint',
+                        callback: function() {},
+                        render: function() {}
+                    }
+                ]
             };
 
             dyson.registerServices(app, options, config);
@@ -66,32 +70,36 @@ describe('dyson', function() {
             };
 
             var configs = {
-                get: [{
-                    path: '/user/:id',
-                    template: {
-                        id: function(params) {
-                            return params.id;
+                get: [
+                    {
+                        path: '/user/:id',
+                        template: {
+                            id: function(params) {
+                                return params.id;
+                            },
+                            name: 'John'
                         },
-                        name: 'John'
-                    },
-                    callback: function(req, res, next) {
-                        var template = configs.get[0].template;
-                        res.body = {
-                            id: template.id(req.params),
-                            name: template.name
-                        };
-                        next();
-                    },
-                    render: render
-                }],
-                post: [{
-                    path: '/user',
-                    callback: function(req, res, next) {
-                        res.body = {saved: true};
-                        next();
-                    },
-                    render: render
-                }]
+                        callback: function(req, res, next) {
+                            var template = configs.get[0].template;
+                            res.body = {
+                                id: template.id(req.params),
+                                name: template.name
+                            };
+                            next();
+                        },
+                        render: render
+                    }
+                ],
+                post: [
+                    {
+                        path: '/user',
+                        callback: function(req, res, next) {
+                            res.body = {saved: true};
+                            next();
+                        },
+                        render: render
+                    }
+                ]
             };
 
             dyson.registerServices(app, options, configs);
