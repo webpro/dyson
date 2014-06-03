@@ -40,6 +40,26 @@ describe('dyson', function() {
                         }
                     },
                     {
+                        path: '/collection-as-function',
+                        collection: function() {
+                            return true;
+                        },
+                        size: 2,
+                        template: {
+                            id: _.uniqueId
+                        }
+                    },
+                    {
+                        path: '/collection-as-function-negative',
+                        collection: function() {
+                            return false;
+                        },
+                        size: 2,
+                        template: {
+                            id: _.uniqueId
+                        }
+                    },
+                    {
                         path: '/size-as-function',
                         collection: true,
                         size: function(params, query) {
@@ -91,6 +111,24 @@ describe('dyson', function() {
 
             request(app).get('/collection').expect(200).end(function(err, res) {
                 res.body.should.be.an.instanceOf(Array).and.have.length(2);
+                done();
+            });
+
+        });
+
+        it('should respond with a collection (function)', function(done) {
+
+            request(app).get('/collection-as-function').expect(200).end(function(err, res) {
+                res.body.should.be.an.instanceOf(Array).and.have.length(2);
+                done();
+            });
+
+        });
+
+        it('should respond with a collection (function, negative)', function(done) {
+
+            request(app).get('/collection-as-function-negative').expect(200).end(function(err, res) {
+                res.body.should.be.an.instanceOf(Object).and.have.property('id');
                 done();
             });
 
