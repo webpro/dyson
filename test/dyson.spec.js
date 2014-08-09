@@ -10,6 +10,18 @@ describe('dyson', function() {
 
     describe('.registerServices', function() {
 
+        before(function() {
+            dyson.registerServices(app, options, {
+                get: [
+                    {
+                        path: '/',
+                        callback: function() {},
+                        render: function() {}
+                    }
+                ]
+            });
+        });
+
         it('should add GET route to Express', function() {
 
             var spy = sinon.spy(app, 'get');
