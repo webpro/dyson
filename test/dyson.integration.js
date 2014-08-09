@@ -157,7 +157,7 @@ describe('dyson', function() {
         it('should respond with a 204 for an OPTIONS request', function(done) {
 
             request(app).options('/').expect(204).end(function(err, res) {
-                res.headers['access-control-allow-methods'].should.equal('GET,HEAD,PUT,POST,DELETE');
+                res.headers['access-control-allow-methods'].should.equal('GET,HEAD,PUT,PATCH,POST,DELETE');
                 res.headers['access-control-allow-credentials'].should.equal('true');
                 // The next actual value is 'undefined', should be req.header('Origin') (probably an issue with supertest)
                 // res.headers['access-control-allow-origin'].should.equal('*');
@@ -168,7 +168,7 @@ describe('dyson', function() {
 
         it('should respond with 400 bad request if required parameter not found', function(done) {
             request(app).get('/require-para').expect(400).end(function(err, res) {
-                res.body.error.should.include("(name) not found");
+                res.body.error.should.containEql("(name) not found");
 
                 // with required parameter
                 request(app).get('/require-para?name=Tim').expect(200).end(function(err, res) {

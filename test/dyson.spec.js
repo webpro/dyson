@@ -66,7 +66,7 @@ describe('dyson', function() {
         before(function() {
 
             var render = function(req, res) {
-                res.send(200, res.body);
+                res.status(200).send(res.body)
             };
 
             var configs = {
