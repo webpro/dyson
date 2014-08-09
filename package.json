@@ -1,6 +1,6 @@
 {
   "name": "dyson",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Node server for dynamic, fake JSON.",
   "keywords": [
     "JSON",
