@@ -1,7 +1,7 @@
 var g = require('dyson-generators');
 
 module.exports = {
-    path: '/requirepara',
+    path: '/requireparams',
     requireParameters: ["client_id"],
     template: {
         id: g.id,
