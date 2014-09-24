@@ -259,6 +259,7 @@ npm test
 * [Stubbing Network Calls (Api) Using Dyson for Emberjs Apps](http://nepalonrails.com/blog/2014/03/stubbing-network-calls-api-using-dyson-for-emberjs-apps/)
 * [Our Ember.js Toolchain](http://nebulab.it/blog/our-ember-js-toolchain)
 * [Dyson, construye un servidor de pruebas que devuelva fake JSON para simular una API](http://www.genbetadev.com/herramientas/dyson-construye-un-servidor-de-pruebas-que-devuelva-fake-json-para-simular-una-api)
+* [Mockear la capa back con Dyson](http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=DysonFakeJSON)
 
 ## License
 
