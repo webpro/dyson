@@ -8,9 +8,9 @@ node_js:
 env:
   global:
     - GHPAGES=".gh-pages"
-    - secure: "ZguNnybtl6L0Ww7IO8+wol2r/OZcr39ADAm+sT3hYDHbMV7z5SMP2oJLT4jyeudPMhpdyrkGUygjMY6ofAj6QjFEjhWXIJNnRR5eh0sMDBD3+aa/UnDq0zymMt/VCeg0JPN+RpizwLnEv+i/QfoWmAsZwpLheKGUW+//GP8CsYk="
+    - secure: eo9Bm/Kk2ftRky5uG0ucmHWzSRruHfB/mXqFUolkR9vzOrrKKnxm4a5pWnW2mGsh93u9M6mXc9zya0QsFiu0Z1+aWm+gk875U2kyEeIjPm+vyOUs0r3TWsJ5zAtbl8ZJ2C3XjwYi4DSP31YCDLW8fH6c7Ia86QoBl6rh2L32+64=
 
-after_success:
+after_script:
   - "git config --global user.email \"travis@travis-ci.org\" && git config --global user.name \"travis-ci\""
   - "git clone --branch=gh-pages https://${GH_TOKEN}@github.com/webpro/dyson.git $GHPAGES"
   - "cat $GHPAGES/index.yml README.md > $GHPAGES/index.md"
