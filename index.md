@@ -16,7 +16,7 @@ Check out some [demo services](http://dyson.jit.su).
 
 ## Introduction
 
-Dyson allows you to define endpoints at a `path` and return JSON based on a `template` object:
+Dyson allows you to define JSON endpoints based on a simple `template` object:
 
 ![input-output](http://webpro.github.com/dyson/input-output.png)
 
@@ -40,6 +40,7 @@ This is where dyson comes in. Get a full fake server for your application up and
 * Includes dummy image generator
     * Use any external or local image service (included)
     * Supports base64 encoded image strings
+* Supports required parameter validation
 
 [![Build Status](https://travis-ci.org/webpro/dyson.png)](https://travis-ci.org/webpro/dyson)
 
@@ -122,6 +123,7 @@ npm install dyson-generators --save-dev
 ```
 
 Please refer to the project pages for usage and examples (here's one [using dyson-generators](https://github.com/webpro/dyson/blob/master/dummy/get/fake.js)).
+
 
 ## Containers
 
@@ -258,6 +260,15 @@ npm install
 npm test
 ```
 
+## Articles about dyson
+
+* [Stubbing Network Calls (Api) Using Dyson for Emberjs Apps](http://nepalonrails.com/blog/2014/03/stubbing-network-calls-api-using-dyson-for-emberjs-apps/)
+* [Our Ember.js Toolchain](http://nebulab.it/blog/our-ember-js-toolchain)
+* [Dyson, construye un servidor de pruebas que devuelva fake JSON para simular una API](http://www.genbetadev.com/herramientas/dyson-construye-un-servidor-de-pruebas-que-devuelva-fake-json-para-simular-una-api)
+* [Mockear la capa back con Dyson](http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=DysonFakeJSON)
+
 ## License
 
 [MIT](http://webpro.mit-license.org)
+
+![Analytics](https://ga-beacon.appspot.com/UA-17415234-3/dyson/readme?pixel)
