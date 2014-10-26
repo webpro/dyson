@@ -1,8 +1,4 @@
 layouts: ./webpro.github.io/_layouts
-safe: true
-lsi: false
-pygments: true
 markdown: redcarpet
-
 redcarpet:
     extensions: ["autolink"]
