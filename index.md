@@ -14,6 +14,11 @@ npm install -g dyson
 
 Check out some [demo services](http://dyson.jit.su).
 
+[![Build Status](https://img.shields.io/travis/webpro/dyson.svg?style=flat)](https://travis-ci.org/webpro/dyson)
+[![npm package](https://img.shields.io/npm/v/dyson.svg?style=flat)](https://www.npmjs.com/package/dyson)
+[![dependencies](https://img.shields.io/david/webpro/dyson.svg?style=flat)](https://david-dm.org/webpro/dyson)
+![npm version](https://img.shields.io/node/v/dyson.svg?style=flat)
+
 ## Introduction
 
 Dyson allows you to define JSON endpoints based on a simple `template` object:
@@ -41,8 +46,6 @@ This is where dyson comes in. Get a full fake server for your application up and
     * Use any external or local image service (included)
     * Supports base64 encoded image strings
 * Supports required parameter validation
-
-[![Build Status](https://travis-ci.org/webpro/dyson.png)](https://travis-ci.org/webpro/dyson)
 
 ## Endpoint Configuration
 
