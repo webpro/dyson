@@ -10,7 +10,7 @@ describe('dyson.config.loader', function() {
 
             var configs = loader.load(configDir);
 
-            configs.should.be.type('object').and.have.keys('delete', 'get', 'post', 'put');
+            configs.should.be.an.Object.and.have.keys('delete', 'get', 'post', 'put');
 
             configs.get[0].should.have.property('path');
 

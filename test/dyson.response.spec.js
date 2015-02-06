@@ -13,7 +13,7 @@ describe('dyson.response', function() {
             var actual = configDefaults.setValues({});
 
             actual.should.have.property('then');
-            actual.then.should.be.type('function');
+            actual.then.should.be.a.Function;
         });
 
         it('should render data based on template', function(done) {
@@ -37,7 +37,7 @@ describe('dyson.response', function() {
             };
 
             configDefaults.setValues(template).then(function(actual) {
-                _.isEqual(actual, expected).should.equal(true);
+                actual.should.eql(expected);
                 done();
 
             });
@@ -60,8 +60,8 @@ describe('dyson.response', function() {
             ];
 
             configDefaults.setValues(template).then(function(actual) {
-                _.isArray(actual).should.equal(true);
-                _.isEqual(actual, expected).should.equal(true);
+                actual.should.be.an.Array;
+                actual.should.eql(expected);
                 done();
 
             }); 
@@ -91,7 +91,7 @@ describe('dyson.response', function() {
 
             configDefaults.setValues(template).then(function(actual) {
 
-                _.isEqual(actual, expected).should.equal(true);
+                actual.should.eql(expected);
                 done();
 
             });
@@ -115,7 +115,7 @@ describe('dyson.response', function() {
 
             configDefaults.setValues(template).then(function(actual) {
 
-                _.isEqual(actual, expected).should.equal(true);
+                actual.should.eql(expected);
                 done();
 
             });
