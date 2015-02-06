@@ -44,8 +44,20 @@ describe('dyson.response', function() {
         });
 
         it('should return an array', function(done) {
-            var template = [function(){return "my function";},2,3];
-            var expected = ["my function", 2,3];
+
+            var template = [
+                function() {
+                    return 'my function';
+                },
+                2,
+                {}
+            ];
+
+            var expected = [
+                'my function',
+                2,
+                {}
+            ];
 
             configDefaults.setValues(template).then(function(actual) {
                 _.isArray(actual).should.equal(true);
