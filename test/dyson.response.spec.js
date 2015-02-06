@@ -37,11 +37,22 @@ describe('dyson.response', function() {
             };
 
             configDefaults.setValues(template).then(function(actual) {
-
                 _.isEqual(actual, expected).should.equal(true);
                 done();
 
             });
+        });
+
+        it('should return an array', function(done) {
+            var template = [function(){return "my function";},2,3];
+            var expected = ["my function", 2,3];
+
+            configDefaults.setValues(template).then(function(actual) {
+                _.isArray(actual).should.equal(true);
+                _.isEqual(actual, expected).should.equal(true);
+                done();
+
+            }); 
         });
 
         it('should parse template objects iteratively', function(done) {
