@@ -85,6 +85,7 @@ The default values for the configuration objects:
 ``` javascript
 {
     cache: true,
+    proxy: false,
     size: function() {
         return _.random(2,10);
     },
@@ -95,6 +96,7 @@ The default values for the configuration objects:
 ```
 
 * `cache:true` means that multiple requests to the same path will result in the same response
+* `proxy:false` means that requests to this file can be skipped and sent to the configured proxy
 * `size:function` is the number of objects in the collection
 * `collection:true` will return a collection
 * `callback:function`
