@@ -62,7 +62,7 @@ describe('dyson.response', function() {
                 actual.should.eql(expected);
                 done();
 
-            }); 
+            });
         });
 
         it('should parse template objects iteratively', function(done) {
