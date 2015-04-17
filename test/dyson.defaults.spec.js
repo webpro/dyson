@@ -1,6 +1,4 @@
-var request = require('supertest'),
-    should = require('should'),
-    defaults = require('../lib/defaults');
+var defaults = require('../lib/defaults');
 
 describe('dyson.config.defaults', function() {
 

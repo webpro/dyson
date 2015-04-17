@@ -1,7 +1,5 @@
-var request = require('supertest'),
-    dyson = require('../lib/dyson'),
+var dyson = require('../lib/dyson'),
     when = require('when'),
-    _ = require('lodash'),
     configDefaults = require('../lib/response');
 
 describe('dyson.response', function() {
