@@ -1,7 +1,5 @@
-var request = require('supertest'),
-    dyson = require('../lib/dyson'),
+var dyson = require('../lib/dyson'),
     when = require('when'),
-    _ = require('lodash'),
     configDefaults = require('../lib/response');
 
 describe('dyson.response', function() {
@@ -64,7 +62,7 @@ describe('dyson.response', function() {
                 actual.should.eql(expected);
                 done();
 
-            }); 
+            });
         });
 
         it('should parse template objects iteratively', function(done) {

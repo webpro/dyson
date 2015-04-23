@@ -15,5 +15,16 @@ describe('dyson.config.loader', function() {
             configs.get[0].should.have.property('path');
 
         });
+
+        it('should return configurations from nested directories', function() {
+
+            var configs = loader.load(configDir);
+
+            configs.get.should.have.length(3);
+
+            configs.get[2].should.have.property('path').and.equal('/dummy-three');
+
+        });
+
     });
 });
