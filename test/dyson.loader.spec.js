@@ -24,6 +24,8 @@ describe('dyson.config.loader', function() {
 
             configs.get[2].should.have.property('path').and.equal('/dummy-three');
 
+            configs.patch[0].should.have.property('path').and.equal('/dummy-four');
+
         });
 
     });

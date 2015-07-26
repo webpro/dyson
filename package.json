@@ -31,6 +31,7 @@
     "lodash": "3.7.0",
     "ncp": "2.0.0",
     "request": "2.55.0",
+    "require-directory": "^2.1.1",
     "static-favicon": "2.0.0-alpha",
     "when": "3.7.2"
   },
