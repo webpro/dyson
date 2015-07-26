@@ -3,21 +3,21 @@
   "version": "0.5.0",
   "description": "Node server for dynamic, fake JSON.",
   "keywords": [
-    "JSON",
-    "data",
-    "dynamic",
-    "dummy",
-    "fake",
-    "response",
-    "server",
     "API",
+    "JSON",
     "REST",
+    "data",
+    "dummy",
+    "dynamic",
+    "fake",
     "generator",
-    "proxy"
+    "proxy",
+    "response",
+    "server"
   ],
   "author": {
-    "name": "Lars Kappert",
-    "email": "lars@webpro.nl"
+    "email": "lars@webpro.nl",
+    "name": "Lars Kappert"
   },
   "main": "./lib/dyson.js",
   "bin": {
