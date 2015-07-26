@@ -40,7 +40,7 @@ This is where dyson comes in. Get a full fake server for your application up and
     * Respond with different status code for specific requests (e.g. 404 for `?id=999`)
     * Includes random data generators
 * Supports to proxy non-configured endpoints to actual services
-* Supports GET, POST, PUT, DELETE (and OPTIONS)
+* Supports GET, POST, PUT, DELETE, PATCH (and OPTIONS)
 * Supports CORS
 * Includes dummy image generator
     * Use any external or local image service (included)
@@ -54,6 +54,7 @@ Configure endpoints using simple objects:
 ``` javascript
 {
     path: '/user/:id',
+    method: 'GET',
     template: {
         id: function(params, query, body) {
             return params.id;
@@ -220,13 +221,15 @@ Note: You need to install dyson as a global module, but configuration files are 
 
 ### Project
 
-In any project you can generate some dummy templates to get started:
+For convenience, you could generate some dummy templates to get started inside a project directory:
 
 ``` bash
 dyson init [dir]
 ```
 
-This script copies dummy config files to `[dir]/get/`, `[dir]/post/`, `[dir]/put/`, and `[dir]/delete/`. These folders are scanned for configuration files when dyson is started:
+This script copies dummy config files to `[dir]/get/`, `[dir]/post/`, `[dir]/put/`, and `[dir]/delete/`.
+
+You can put your configuration files anywhere, but either the configuration must have the `method` property set or the configuration file must be inside a directory representing the method (e.g. `stubs/get/sub/endpoint.js`). Then start the server:
 
 ``` bash
 dyson [dir]
