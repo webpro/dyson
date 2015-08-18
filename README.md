@@ -3,10 +3,10 @@
 Node server for dynamic, fake JSON.
 
 ``` bash
-npm install -g dyson
+npm install dyson
 ```
 
-Check out some [demo services](http://dyson.jit.su).
+See [installation notes](#installation). Check out some [demo services](http://dyson.jit.su).
 
 [![Build Status](https://img.shields.io/travis/webpro/dyson.svg?style=flat)](https://travis-ci.org/webpro/dyson)
 [![npm package](https://img.shields.io/npm/v/dyson.svg?style=flat)](https://www.npmjs.com/package/dyson)
@@ -207,21 +207,27 @@ Would result in a `404` when requesting `/feature/999`.
 
 ## Installation
 
+The recommended way to install dyson is to install it locally and put it in your `package.json`:
+
+``` bash
+npm install dyson
+```
+
+Then you can use it from an `npm-script` in `package.json` using e.g. `npm run mocks`:
+
+``` json
+"scripts": {
+    "mocks": "dyson stubs"
+}
+```
+
+You can also install dyson globally to start it from anywhere:
+
 ``` bash
 npm install -g dyson
 ```
 
-Note: You need to install dyson as a global module, but configuration files are local to your project.
-
 ### Project
-
-For convenience, you could generate some dummy templates to get started inside a project directory:
-
-``` bash
-dyson init [dir]
-```
-
-This script copies dummy config files to `[dir]/get/`, `[dir]/post/`, `[dir]/put/`, and `[dir]/delete/`.
 
 You can put your configuration files anywhere, but either the configuration must have the `method` property set or the configuration file must be inside a directory representing the method (e.g. `stubs/get/sub/endpoint.js`). Then start the server:
 
@@ -232,6 +238,16 @@ dyson [dir]
 This starts the services configured in `[dir]` at [localhost:3000](http://localhost:3000).
 
 You can also provide an alternative port number by just adding it as a second argument (e.g. `dyson path/ 8181`).
+
+### `dyson init`
+
+For convenience, you could generate some dummy templates to get started inside a project directory:
+
+``` bash
+dyson init [dir]
+```
+
+This script copies dummy config files to `[dir]/get/`, `[dir]/post/`, `[dir]/put/`, and `[dir]/delete/`.
 
 ### Demo
 
