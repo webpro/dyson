@@ -12,7 +12,7 @@ Node server for dynamic, fake JSON.
 npm install dyson
 ```
 
-See [installation notes](#Installation). Check out some [demo services](http://dyson.jit.su).
+See [installation notes](#installation). Check out some [demo services](http://dyson.jit.su).
 
 [![Build Status](https://img.shields.io/travis/webpro/dyson.svg?style=flat)](https://travis-ci.org/webpro/dyson)
 [![npm package](https://img.shields.io/npm/v/dyson.svg?style=flat)](https://www.npmjs.com/package/dyson)
