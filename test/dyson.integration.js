@@ -156,7 +156,7 @@ describe('dyson', function() {
 
         it('should respond with a 204 for an OPTIONS request', function(done) {
 
-            request(app).options('/').expect(204).end(function(err, res) {
+            request(app).options('/cache').expect(204).end(function(err, res) {
                 res.headers['access-control-allow-methods'].should.equal('GET,HEAD,PUT,PATCH,POST,DELETE');
                 res.headers['access-control-allow-credentials'].should.equal('true');
                 // The next actual value is 'undefined', should be req.header('Origin') (probably an issue with supertest)
