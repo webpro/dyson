@@ -226,12 +226,12 @@ describe('dyson.response', function() {
                     configDefaults.generate.call(service, req, res, next);
 
                     sinon.assert.calledWithExactly(
-                      service.template, 
-                      sinon.match.same(req.params), 
-                      sinon.match.same(req.query), 
-                      sinon.match.same(req.body), 
-                      sinon.match.same(req.cookies), 
-                      sinon.match.same(req.headers));
+                        service.template,
+                        sinon.match.same(req.params),
+                        sinon.match.same(req.query),
+                        sinon.match.same(req.body),
+                        sinon.match.same(req.cookies),
+                        sinon.match.same(req.headers));
 
                 });
             });
@@ -273,12 +273,12 @@ describe('dyson.response', function() {
                     configDefaults.generate.call(service, req, res, next);
 
                     sinon.assert.calledWithExactly(
-                      service.template,
-                      sinon.match.same(req.params),
-                      sinon.match.same(req.query),
-                      sinon.match.same(req.body),
-                      sinon.match.same(req.cookies),
-                      sinon.match.same(req.headers));
+                        service.template,
+                        sinon.match.same(req.params),
+                        sinon.match.same(req.query),
+                        sinon.match.same(req.body),
+                        sinon.match.same(req.cookies),
+                        sinon.match.same(req.headers));
 
                 });
             });
