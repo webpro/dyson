@@ -1,5 +1,7 @@
-var dyson = require('../lib/dyson'),
+var sinon = require('sinon'),
+    dyson = require('../lib/dyson'),
     when = require('when'),
+    util = require('../lib/util'),
     configDefaults = require('../lib/response');
 
 describe('dyson.response', function() {
@@ -116,6 +118,169 @@ describe('dyson.response', function() {
                 actual.should.eql(expected);
                 done();
 
+            });
+        });
+    });
+
+    describe('.generate', function() {
+
+        describe('with option exposeRequest', function() {
+
+            var services, req, res, next;
+
+            before(function() {
+
+                services = {
+                    truthy: {
+                        path: '/true',
+                        exposeRequest: true,
+                        template: sinon.spy()
+                    },
+                    falsy: {
+                        path: '/false',
+                        exposeRequest: false,
+                        template: sinon.spy()
+                    },
+                    undef: {
+                        path: '/undefined',
+                        exposeRequest: true,
+                        template: sinon.spy()
+                    }
+                };
+
+                req = {
+                    params: {},
+                    query: {},
+                    body: {},
+                    cookies: {},
+                    headers: {}
+                };
+
+                res = {};
+
+                next = function() {};
+
+            });
+
+            describe('set to true', function() {
+
+                var service;
+
+                before(function() {
+
+                    util.options.set({
+                        exposeRequest: true
+                    });
+
+                    service = {
+                        path: '/container',
+                        template: sinon.spy(),
+                        container: {
+                            foo: sinon.spy()
+                        }
+                    };
+
+                });
+
+                it('should expose request to template', function() {
+
+                    configDefaults.generate.call(service, req, res, next);
+
+                    sinon.assert.calledWithExactly(service.template, req);
+
+                });
+
+                it('should expose request to container', function() {
+
+                    configDefaults.generate.call(service, req, res, next);
+
+                    sinon.assert.calledWithExactly(service.container.foo, req);
+
+                });
+            });
+
+            describe('globally falsy', function() {
+
+                before(function() {
+
+                    util.options.set({
+                        exposeRequest: false
+                    });
+
+                });
+
+                it('should expose request to templates if local option is truthy', function() {
+
+                    var service = services.truthy;
+
+                    configDefaults.generate.call(service, req, res, next);
+
+                    sinon.assert.calledWithExactly(service.template, req);
+
+                });
+
+                it('should not expose request to templates if local option is falsy', function() {
+
+                    var service = services.falsy;
+
+                    configDefaults.generate.call(service, req, res, next);
+
+                    sinon.assert.calledWithExactly(
+                      service.template, 
+                      sinon.match.same(req.params), 
+                      sinon.match.same(req.query), 
+                      sinon.match.same(req.body), 
+                      sinon.match.same(req.cookies), 
+                      sinon.match.same(req.headers));
+
+                });
+            });
+
+            describe('globally truthy', function() {
+
+                before(function() {
+
+                    util.options.set({
+                        exposeRequest: true
+                    });
+
+                });
+
+                it('should expose request to templates if local option is truthy', function() {
+
+                    var service = services.truthy;
+
+                    configDefaults.generate.call(service, req, res, next);
+
+                    sinon.assert.calledWithExactly(service.template, req);
+
+                });
+
+                it('should expose request to templates if local option is undefined', function() {
+
+                    var service = services.undef;
+
+                    configDefaults.generate.call(service, req, res, next);
+
+                    sinon.assert.calledWithExactly(service.template, req);
+
+                });
+
+                it('should not expose request to templates if local option is false', function() {
+
+                    var service = services.falsy;
+
+                    configDefaults.generate.call(service, req, res, next);
+
+                    sinon.assert.calledWithExactly(
+                      service.template,
+                      sinon.match.same(req.params),
+                      sinon.match.same(req.query),
+                      sinon.match.same(req.body),
+                      sinon.match.same(req.cookies),
+                      sinon.match.same(req.headers));
+
+                });
             });
         });
     });
