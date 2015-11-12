@@ -194,7 +194,7 @@ describe('dyson.response', function() {
 
                     configDefaults.generate.call(service, req, res, next);
 
-                    sinon.assert.calledWithExactly(service.container.foo, req);
+                    sinon.assert.calledWithExactly(service.container.foo, req, sinon.match.object);
 
                 });
             });
