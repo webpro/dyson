@@ -40,8 +40,8 @@ describe('dyson', function() {
 
             spy.callCount.should.equal(1);
             spy.firstCall.args[0].should.equal(config.get[0].path);
-            spy.firstCall.args[2].should.equal(config.get[0].callback);
-            spy.firstCall.args[3].should.equal(config.get[0].render);
+            spy.firstCall.args.should.containEql(config.get[0].callback);
+            spy.firstCall.args.should.containEql(config.get[0].render);
 
             app.get.restore();
 
@@ -65,8 +65,8 @@ describe('dyson', function() {
 
             spy.callCount.should.equal(1);
             spy.firstCall.args[0].should.equal(config.post[0].path);
-            spy.firstCall.args[2].should.equal(config.post[0].callback);
-            spy.firstCall.args[3].should.equal(config.post[0].render);
+            spy.firstCall.args.should.containEql(config.post[0].callback);
+            spy.firstCall.args.should.containEql(config.post[0].render);
 
             app.post.restore();
 
