@@ -36,6 +36,7 @@ This is where dyson comes in. Get a full fake server for your application up and
 * Supports to proxy non-configured endpoints to actual services
 * Supports GET, POST, PUT, DELETE, PATCH (and OPTIONS)
 * Supports CORS
+* Supports delayed responses
 * Includes dummy image generator
     * Use any external or local image service (included)
     * Supports base64 encoded image strings
@@ -85,7 +86,8 @@ The default values for the configuration objects:
 
 ``` javascript
 {
-    cache: true,
+    cache: false,
+    delay: false,
     proxy: false,
     size: function() {
         return _.random(2,10);
@@ -97,6 +99,7 @@ The default values for the configuration objects:
 ```
 
 * `cache:true` means that multiple requests to the same path will result in the same response
+* `delay:number` will delay the response with `number` milliseconds (or between `[n, m]` milliseconds)
 * `proxy:false` means that requests to this file can be skipped and sent to the configured proxy
 * `size:function` is the number of objects in the collection
 * `collection:true` will return a collection
@@ -262,7 +265,8 @@ Optionally, you can put a `dyson.json` file next to the configuration folders (i
 	"multiRequest": ",",
 	"proxy": true,
 	"proxyHost": "http://dyson.jit.su",
-	"proxyPort": 8080
+	"proxyPort": 8080,
+	"proxyDelay": [200, 800]
 }
 ```
 
