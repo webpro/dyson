@@ -248,16 +248,6 @@ This starts the services configured in `[dir]` at [localhost:3000](http://localh
 
 You can also provide an alternative port number by just adding it as a second argument (e.g. `dyson path/ 8181`).
 
-### `dyson init`
-
-For convenience, you could generate some dummy templates to get started inside a project directory:
-
-``` bash
-dyson init [dir]
-```
-
-This script copies dummy config files to `[dir]/get/`, `[dir]/post/`, `[dir]/put/`, and `[dir]/delete/`.
-
 ### Demo
 
 For a demo project, see [webpro/dyson-demo](https://github.com/webpro/dyson-demo). This demo is also [running at nodejitsu](http://dyson.nodejitsu.com).
