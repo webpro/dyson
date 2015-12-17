@@ -206,7 +206,7 @@ This can be completely overridden with the `status` property, e.g.:
     path: '/feature/:foo?',
     status: function(req, res) {
         if(req.params.foo === '999') {
-            res.send(404).body('Feature not found');
+            res.status(404).send('Feature not found');
         }
     }
 }
