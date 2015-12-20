@@ -214,6 +214,24 @@ This can be completely overridden with the `status` property, e.g.:
 
 Would result in a `404` when requesting `/feature/999`.
 
+## JSONP
+
+Override the `render` method of the Express middleware in the endpoint definition. In the example below, depending on the existence of the `callback` parameter, either raw JSON response is returned or it is wrapped with the provided callback:
+
+``` javascript
+{
+    render: function (req, res) {
+        var callback = req.query.callback;
+        if (callback) {
+            res.append('Content-Type', 'application/javascript');
+            res.send(callback + '(' + JSON.stringify(res.body) + ');');
+        } else {
+            res.send(res.body);
+        }
+    }
+}
+```
+
 ## Installation
 
 The recommended way to install dyson is to install it locally and put it in your `package.json`:
