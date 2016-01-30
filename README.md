@@ -279,6 +279,7 @@ Optionally, you can put a `dyson.json` file next to the configuration folders (i
 ```
 
 * Setting `multiRequest` to `false` disables the [combined requests](#combined-requests) feature.
+* Setting `bodyParserJsonLimit` or `bodyParserUrlencodedLimit` to `1mb` increases the limit to 1mb from the bodyParser's default of 100kb.
 * By default, the `proxy` is set to `false`
 
 ## Development & run tests
