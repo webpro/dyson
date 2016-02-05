@@ -226,6 +226,25 @@ Override the `render` method of the Express middleware in the endpoint definitio
 }
 ```
 
+## HTTPS
+
+If you want to run dyson over https:// you have to provide a self-signed (or authority-signed) certificate into the `options.https` the same way it's required for NodeJS HTTPS to work:
+
+``` javascript
+var fs = require('fs');
+
+dyson.bootstrap({
+	configDir: __dirname + '/dummy',
+	port: 3001,
+	https: {
+    		key: fs.readFileSync(__dirname + '/certs/sample.key'),
+    		crt: fs.readFileSync(__dirname + '/certs/sample.crt')
+	}
+});
+```
+
+*Note*: if running HTTPS on port 443, it will require `sudo` privileges.
+
 ## Installation
 
 The recommended way to install dyson is to install it locally and put it in your `package.json`:
