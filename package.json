@@ -51,7 +51,7 @@
     "url": "https://github.com/webpro/dyson"
   },
   "engines": {
-    "node": ">=0.10"
+    "node": ">=0.12"
   },
   "preferGlobal": true,
   "license": "MIT"
