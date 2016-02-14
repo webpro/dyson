@@ -245,6 +245,44 @@ dyson.bootstrap({
 
 *Note*: if running HTTPS on port 443, it will require `sudo` privileges.
 
+## Custom middleware
+
+If you need some custom middleware before or after the endpoints are registered, dyson can be initialized programmatically. Then you can use `appBefore` or `appAfter` to install middleware before or after the dyson services are registered, for example:
+
+```
+var dyson = require('dyson'),
+    path = require('path');
+
+var options = {
+    configDir: path.join(__dirname, 'services'),
+    port: 8765
+};
+
+var configs = dyson.getConfigurations(options);
+var appBefore = dyson.createServer(options);
+var appAfter = dyson.registerServices(appBefore, options, configs);
+
+console.log('Dyson listening at port', options.port);
+```
+
+Dyson configuration can also be installed into any Express server:
+
+```
+var express = require('express'),
+    dyson = require('./lib/dyson'),
+    path = require('path');
+
+var options = {
+    configDir: path.join(__dirname, 'services')
+};
+
+var myApp = express();
+var configs = dyson.getConfigurations(options);
+dyson.registerServices(myApp, options, configs);
+myApp.listen(8765);
+```
+
+
 ## Installation
 
 The recommended way to install dyson is to install it locally and put it in your `package.json`:

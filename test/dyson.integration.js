@@ -14,7 +14,7 @@ describe('dyson', function() {
 
         before(function() {
 
-            app = dyson.initExpress();
+            app = dyson.createServer(options);
 
             configs = {
                 'get': [
