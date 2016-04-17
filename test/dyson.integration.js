@@ -110,7 +110,7 @@ describe('dyson', function() {
         it('should respond with a collection', function(done) {
 
             request(app).get('/collection').expect(200).end(function(err, res) {
-                res.body.should.be.an.Array.and.have.length(2);
+                res.body.should.be.an.Array().and.have.length(2);
                 done();
             });
 
@@ -119,7 +119,7 @@ describe('dyson', function() {
         it('should respond with a collection (function)', function(done) {
 
             request(app).get('/collection-as-function').expect(200).end(function(err, res) {
-                res.body.should.be.an.Array.and.have.length(2);
+                res.body.should.be.an.Array().and.have.length(2);
                 done();
             });
 
@@ -128,7 +128,7 @@ describe('dyson', function() {
         it('should respond with a collection (function, negative)', function(done) {
 
             request(app).get('/collection-as-function-negative').expect(200).end(function(err, res) {
-                res.body.should.be.an.Object.and.have.property('id');
+                res.body.should.be.an.Object().and.have.property('id');
                 done();
             });
 
@@ -148,7 +148,7 @@ describe('dyson', function() {
             util.options.set({multiRequest: ','});
 
             request(app).get('/combined/1,2,3').expect(200).end(function(err, res) {
-                res.body.should.be.an.Array.and.have.length(3);
+                res.body.should.be.an.Array().and.have.length(3);
                 done();
             });
 

@@ -60,7 +60,7 @@ describe('dyson.response', function() {
             ];
 
             configDefaults.setValues(template).then(function(actual) {
-                actual.should.be.an.Array;
+                actual.should.be.an.Array();
                 actual.should.eql(expected);
                 done();
 
