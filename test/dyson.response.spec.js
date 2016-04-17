@@ -156,7 +156,9 @@ describe('dyson.response', function() {
                     headers: {}
                 };
 
-                res = {};
+                res = {
+                    locals:{}
+                };
 
                 next = function() {};
 
@@ -172,7 +174,7 @@ describe('dyson.response', function() {
                         exposeRequest: true
                     });
 
-                    service = {
+                    res.locals.config = {
                         path: '/container',
                         template: sinon.spy(),
                         container: {
@@ -184,17 +186,17 @@ describe('dyson.response', function() {
 
                 it('should expose request to template', function() {
 
-                    configDefaults.generate.call(service, req, res, next);
+                    configDefaults.generate(req, res, next);
 
-                    sinon.assert.calledWithExactly(service.template, req);
+                    sinon.assert.calledWithExactly(res.locals.config.template, req);
 
                 });
 
                 it('should expose request to container', function() {
 
-                    configDefaults.generate.call(service, req, res, next);
+                    configDefaults.generate(req, res, next);
 
-                    sinon.assert.calledWithExactly(service.container.foo, req, sinon.match.object);
+                    sinon.assert.calledWithExactly(res.locals.config.container.foo, req, sinon.match.object);
 
                 });
             });
@@ -211,22 +213,22 @@ describe('dyson.response', function() {
 
                 it('should expose request to templates if local option is truthy', function() {
 
-                    var service = services.truthy;
+                    res.locals.config = services.truthy;
 
-                    configDefaults.generate.call(service, req, res, next);
+                    configDefaults.generate(req, res, next);
 
-                    sinon.assert.calledWithExactly(service.template, req);
+                    sinon.assert.calledWithExactly(res.locals.config.template, req);
 
                 });
 
                 it('should not expose request to templates if local option is falsy', function() {
 
-                    var service = services.falsy;
+                    res.locals.config = services.falsy;
 
-                    configDefaults.generate.call(service, req, res, next);
+                    configDefaults.generate(req, res, next);
 
                     sinon.assert.calledWithExactly(
-                        service.template,
+                        res.locals.config.template,
                         sinon.match.same(req.params),
                         sinon.match.same(req.query),
                         sinon.match.same(req.body),
@@ -248,32 +250,30 @@ describe('dyson.response', function() {
 
                 it('should expose request to templates if local option is truthy', function() {
 
-                    var service = services.truthy;
+                    res.locals.config = services.truthy;
 
-                    configDefaults.generate.call(service, req, res, next);
+                    configDefaults.generate(req, res, next);
 
-                    sinon.assert.calledWithExactly(service.template, req);
+                    sinon.assert.calledWithExactly(res.locals.config.template, req);
 
                 });
 
                 it('should expose request to templates if local option is undefined', function() {
 
-                    var service = services.undef;
+                    configDefaults.generate(req, res, next);
 
-                    configDefaults.generate.call(service, req, res, next);
-
-                    sinon.assert.calledWithExactly(service.template, req);
+                    sinon.assert.calledWithExactly(res.locals.config.template, req);
 
                 });
 
                 it('should not expose request to templates if local option is false', function() {
 
-                    var service = services.falsy;
+                    res.locals.config = services.falsy;
 
-                    configDefaults.generate.call(service, req, res, next);
+                    configDefaults.generate(req, res, next);
 
                     sinon.assert.calledWithExactly(
-                        service.template,
+                        res.locals.config.template,
                         sinon.match.same(req.params),
                         sinon.match.same(req.query),
                         sinon.match.same(req.body),
