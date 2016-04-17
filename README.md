@@ -6,7 +6,7 @@ Node server for dynamic, fake JSON.
 npm install dyson
 ```
 
-See [installation notes](#installation). Check out some [demo services](http://dyson.jit.su).
+See [installation notes](#installation). Check out some [demo services](https://dyson-demo-npzwhgjdor.now.sh).
 
 [![Build Status](https://img.shields.io/travis/webpro/dyson.svg?style=flat)](https://travis-ci.org/webpro/dyson)
 [![npm package](https://img.shields.io/npm/v/dyson.svg?style=flat)](https://www.npmjs.com/package/dyson)
@@ -319,7 +319,7 @@ You can also provide an alternative port number by just adding it as a second ar
 
 ### Demo
 
-For a demo project, see [webpro/dyson-demo](https://github.com/webpro/dyson-demo). This demo is also [running at nodejitsu](http://dyson.nodejitsu.com).
+For a demo project, see [webpro/dyson-demo](https://github.com/webpro/dyson-demo). This demo was also installed with [now.sh](https://zeit.co/now/) to [dyson-demo-npzwhgjdor.now.sh](https://dyson-demo-npzwhgjdor.now.sh).
 
 ## Project Configuration
 
