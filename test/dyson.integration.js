@@ -74,6 +74,13 @@ describe('dyson', function() {
                     {
                         path: '/require-para',
                         requireParameters: ['name']
+                    },
+                    {
+                        path: '/delay',
+                        delay: 200,
+                        template: {
+                            id: _.uniqueId
+                        }
                     }
                 ]
             };
@@ -177,5 +184,15 @@ describe('dyson', function() {
             });
 
         });
+
+        it('should delay the response', function(done) {
+            var start = _.now();
+            request(app).get('/delay').expect(function(err, res) {
+                var delayed = _.now() - start;
+                delayed.should.be.aboveOrEqual(200);
+            }).end(done);
+
+        });
+
     })
 });
