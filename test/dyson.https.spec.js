@@ -10,16 +10,21 @@ var key = fs.readFileSync(path.join(__dirname, 'fixtures', 'key.pem')),
 
 describe('dyson.https', function() {
 
-    var app = dyson.bootstrap({
-        configDir: path.join(__dirname, '..', 'dummy'),
-        port: 8765,
-        https: {
-            key: key,
-            crt: cert
-        }
-    });
-
     describe('request', function(){
+
+        var app;
+
+        before(function() {
+            app = dyson.bootstrap({
+                configDir: path.join(__dirname, '..', 'dummy'),
+                port: 8765,
+                https: {
+                    key: key,
+                    crt: cert
+                }
+            });
+        });
+
         it('should respond with correct body', function(done){
             request(app).get('/dummy/1').ca(cert).expect(200, {"id": 1, "name": "Lars", "status": "OK"}, done);
         });

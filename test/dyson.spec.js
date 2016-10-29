@@ -39,9 +39,7 @@ describe('dyson', function() {
             dyson.registerServices(app, options, config);
 
             spy.callCount.should.equal(1);
-            spy.firstCall.args[0].should.equal(config.get[0].path);
-            spy.firstCall.args.should.containEql(config.get[0].callback);
-            spy.firstCall.args.should.containEql(config.get[0].render);
+            spy.firstCall.args[0].should.be.type('function');
 
             app.get.restore();
 
@@ -69,6 +67,30 @@ describe('dyson', function() {
             spy.firstCall.args.should.containEql(config.post[0].render);
 
             app.post.restore();
+
+        });
+
+        it('should automatically add OPTIONS route to Express', function() {
+
+            var spy = sinon.spy(app, 'options');
+
+            var config = {
+                get: [
+                    {
+                        path: '/cors-enabled-endpoint',
+                        callback: function() {},
+                        render: function() {}
+                    }
+                ]
+            };
+
+            dyson.registerServices(app, options, config);
+            
+            spy.callCount.should.equal(1);
+            spy.firstCall.args[0].should.equal(config.get[0].path);
+            spy.firstCall.args[1].should.be.type('function');
+
+            app.options.restore();
 
         });
     });
