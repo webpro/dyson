@@ -194,5 +194,22 @@ describe('dyson', function() {
 
         });
 
+        it('status', function(done) {
+
+            var config = {
+                path: '/status-418',
+                template: {
+                    foo: 1
+                },
+                status: function(req, res) {
+                    res.status(202);
+                }
+            };
+
+            dyson.registerServices(app, options, {get: defaults.assign(config, 'get')});
+
+            request(app).get('/status-418').expect(202, {"foo": 1}, done);
+
+        });
     })
 });
