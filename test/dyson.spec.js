@@ -39,7 +39,9 @@ describe('dyson', function() {
             dyson.registerServices(app, options, config);
 
             spy.callCount.should.equal(1);
-            spy.firstCall.args[0].should.be.type('function');
+            spy.firstCall.args[0].should.equal(config.get[0].path);
+            spy.firstCall.args.should.containEql(config.get[0].callback);
+            spy.firstCall.args.should.containEql(config.get[0].render);
 
             app.get.restore();
 

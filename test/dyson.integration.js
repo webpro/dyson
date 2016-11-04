@@ -9,7 +9,7 @@ describe('dyson', function() {
     describe('.registerServices [integration]', function() {
 
         var app,
-            options = {},
+            options = {port:3000},
             configs;
 
         before(function() {
