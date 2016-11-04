@@ -354,6 +354,7 @@ npm test
 * [Our Ember.js Toolchain](http://nebulab.it/blog/our-ember-js-toolchain)
 * [Dyson, construye un servidor de pruebas que devuelva fake JSON para simular una API](http://www.genbetadev.com/herramientas/dyson-construye-un-servidor-de-pruebas-que-devuelva-fake-json-para-simular-una-api)
 * [Mockear la capa back con Dyson](http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=DysonFakeJSON)
+* [Serve JSONP in Dyson](https://grysz.com/2015/12/01/serve-jsonp-in-dyson/)
 
 ## License
 
