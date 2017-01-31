@@ -36,6 +36,7 @@
     "when": "3.7.7"
   },
   "devDependencies": {
+    "cross-env": "^3.1.4",
     "dyson-generators": "0.1.1",
     "dyson-image": "0.1.3",
     "mocha": "2.4.5",
