@@ -8,9 +8,9 @@ npm install dyson
 
 See [installation notes](#installation). Check out some [demo services](https://dyson-demo-npzwhgjdor.now.sh).
 
-[![Build Status](https://img.shields.io/travis/webpro/dyson.svg?style=flat)](https://travis-ci.org/webpro/dyson)
+[![Build Status](https://img.shields.io/travis/m3fawner/dyson.svg?style=flat)](https://travis-ci.org/webpro/dyson)
 [![npm package](https://img.shields.io/npm/v/dyson.svg?style=flat)](https://www.npmjs.com/package/dyson)
-[![dependencies](https://img.shields.io/david/webpro/dyson.svg?style=flat)](https://david-dm.org/webpro/dyson)
+[![dependencies](https://img.shields.io/david/m3fawner/dyson.svg?style=flat)](https://david-dm.org/webpro/dyson)
 ![npm version](https://img.shields.io/node/v/dyson.svg?style=flat)
 
 ## Introduction
