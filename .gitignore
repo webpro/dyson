@@ -1,2 +1,6 @@
 _site
 node_modules
+test/delete
+test/get
+test/post
+test/put
