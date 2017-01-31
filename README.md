@@ -51,9 +51,7 @@ Configure endpoints using simple objects:
     path: '/user/:id',
     method: 'GET',
     template: {
-        id: function(params, query, body) {
-            return params.id;
-        },
+        id: (params, query, body) =>params.id,
         name: g.name,
         address: {
             zip: g.zipUS,
@@ -67,12 +65,12 @@ The `path` string is the usual argument provided to [Express](http://expressjs.c
 
 The `template` object may contain properties of the following types:
 
-* function: the function will be invoked with arguments _(params, query, body, cookies)_
+* function: the function will be invoked with arguments _(params, query, body, cookies, headers)_
 * string, boolean, number, array: returned as-is
 * object: will be recursively iterated
 * promise: if the function is a promise, it will be replaced with the resolving value
 
-Note: the `template` can also be a _function_ returning the actual data. The template function itself is also invoked with arguments _(params, query, body, cookies)_.
+Note: the `template` can also be a _function_ returning the actual data. The template function itself is also invoked with arguments _(params, query, body, cookies, headers)_.
 
 ## Images
 
@@ -89,9 +87,7 @@ The default values for the configuration objects:
     cache: false,
     delay: false,
     proxy: false,
-    size: function() {
-        return _.random(2,10);
-    },
+    size: () => _.random(2,10),
     collection: false,
     callback: response.generate,
     render: response.render
@@ -127,7 +123,6 @@ npm install dyson-generators --save-dev
 
 Please refer to the project pages for usage and examples (here's one [using dyson-generators](https://github.com/webpro/dyson/blob/master/dummy/get/fake.js)).
 
-
 ## Containers
 
 Containers can help if you need to send along some meta data, or wrap the response data in a specific way. Just use the `container` object, and return the `data` where you want it. Functions in the `container` object are invoked with arguments _(params, query, data)_:
@@ -137,16 +132,14 @@ Containers can help if you need to send along some meta data, or wrap the respon
     path: '/users',
     template: user.template,
     container: {
-        meta: function(params, query, data) {
+        meta: (params, query, data) => ({
             userCount: data.length
-        },
+        }),
         data: {
             all: [],
             the: {
                 way: {
-                    here: function(params, query, data) {
-                        return data;
-                    }
+                    here: (params, query, data) => data
                 }
             }
         }
@@ -158,8 +151,8 @@ And an example response:
 
 ``` javascript
 {
-    "meta": {
-        "userCount": 2
+    meta: {
+        userCount: 2
     },
     data: {
         all: [],
@@ -167,12 +160,12 @@ And an example response:
             way: {
                 here: [
                     {
-                        "id": 412,
-                        "name": "John"
+                        id: 412,
+                        name: 'John'
                     },
                     {
-                        "id": 218,
-                        "name": "Olivia"
+                        id: 218,
+                        name: 'Olivia'
                     }
                 ]
             }
@@ -198,7 +191,7 @@ This can be completely overridden with the `status` property, e.g.:
 ``` javascript
 {
     path: '/feature/:foo?',
-    status: function(req, res) {
+    status: (req, res) => {
         if(req.params.foo === '999') {
             res.status(404).send('Feature not found');
         }
@@ -214,11 +207,11 @@ Override the `render` method of the Express middleware in the endpoint definitio
 
 ``` javascript
 {
-    render: function (req, res) {
-        var callback = req.query.callback;
+    render: (req, res) => {
+        const callback = req.query.callback;
         if (callback) {
             res.append('Content-Type', 'application/javascript');
-            res.send(callback + '(' + JSON.stringify(res.body) + ');');
+            res.send(`${callback}(${JSON.stringify(res.body)});`);
         } else {
             res.send(res.body);
         }
@@ -231,15 +224,15 @@ Override the `render` method of the Express middleware in the endpoint definitio
 If you want to run dyson over https:// you have to provide a self-signed (or authority-signed) certificate into the `options.https` the same way it's required for NodeJS HTTPS to work:
 
 ``` javascript
-var fs = require('fs');
+const fs = require('fs');
 
 dyson.bootstrap({
-	configDir: __dirname + '/dummy',
-	port: 3001,
-	https: {
-    		key: fs.readFileSync(__dirname + '/certs/sample.key'),
-    		crt: fs.readFileSync(__dirname + '/certs/sample.crt')
-	}
+    configDir: `${__dirname}/dummy`,
+    port: 3001,
+    https: {
+        key: fs.readFileSync(`${__dirname}'/certs/sample.key`),
+        crt: fs.readFileSync(`${__dirname}/certs/sample.crt`)
+    }
 });
 ```
 
@@ -249,26 +242,26 @@ dyson.bootstrap({
 
 If you need some custom middleware before or after the endpoints are registered, dyson can be initialized programmatically. Then you can use `appBefore` or `appAfter` to install middleware before or after the dyson services are registered, for example:
 
-```
-var dyson = require('dyson'),
+``` javascript
+const dyson = require('dyson'),
     path = require('path');
 
-var options = {
+const options = {
     configDir: path.join(__dirname, 'services'),
     port: 8765
 };
 
-var configs = dyson.getConfigurations(options);
-var appBefore = dyson.createServer(options);
-var appAfter = dyson.registerServices(appBefore, options, configs);
+const configs = dyson.getConfigurations(options),
+    appBefore = dyson.createServer(options),
+    appAfter = dyson.registerServices(appBefore, options, configs);
 
-console.log('Dyson listening at port', options.port);
+console.log(`Dyson listening at port ${options.port}`);
 ```
 
 Dyson configuration can also be installed into any Express server:
 
-```
-var express = require('express'),
+``` javascript
+const express = require('express'),
     dyson = require('./lib/dyson'),
     path = require('path');
 
@@ -281,7 +274,6 @@ var configs = dyson.getConfigurations(options);
 dyson.registerServices(myApp, options, configs);
 myApp.listen(8765);
 ```
-
 
 ## Installation
 
@@ -325,13 +317,13 @@ For a demo project, see [webpro/dyson-demo](https://github.com/webpro/dyson-demo
 
 Optionally, you can put a `dyson.json` file next to the configuration folders (inside `[dir]`). It enables to configure some behavior of dyson:
 
-``` javascript
+``` json
 {
-	"multiRequest": ",",
-	"proxy": true,
-	"proxyHost": "http://dyson.jit.su",
-	"proxyPort": 8080,
-	"proxyDelay": [200, 800]
+    "multiRequest": ",",
+    "proxy": true,
+    "proxyHost": "http://dyson.jit.su",
+    "proxyPort": 8080,
+    "proxyDelay": [200, 800]
 }
 ```
 
