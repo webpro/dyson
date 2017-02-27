@@ -20,7 +20,7 @@ describe('dyson.config.loader', function() {
 
             var configs = loader.load(configDir);
 
-            configs.get.should.have.length(3);
+            configs.get.should.have.length(4);
 
             configs.get[2].should.have.property('path').and.equal('/dummy-three');
 
