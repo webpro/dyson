@@ -124,7 +124,7 @@ describe('dyson.response', function() {
 
     describe('.generate', function() {
 
-        describe('with option exposeRequest', function() {
+        describe.skip('with option exposeRequest', function() {
 
             var services, req, res, next;
 
