@@ -24,7 +24,7 @@ describe('dyson.https', () => {
     });
 
     after(() => {
-      app.get('server').close();
+      app.get('dyson_server').close();
     });
 
     it('should respond with correct body', done => {

@@ -240,7 +240,8 @@ dyson.bootstrap({
 
 ## Custom middleware
 
-If you need some custom middleware before or after the endpoints are registered, dyson can be initialized programmatically. Then you can use `appBefore` or `appAfter` to install middleware before or after the dyson services are registered, for example:
+If you need some custom middleware before or after the endpoints are registered, dyson can be initialized programmatically.
+Then you can use `appBefore` or `appAfter` to install middleware before or after the dyson services are registered. An example:
 
 ``` javascript
 const dyson = require('dyson'),

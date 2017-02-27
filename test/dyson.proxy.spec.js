@@ -25,8 +25,8 @@ describe('dyson.proxy', () => {
     });
 
     after(() => {
-      proxy.get('server').close();
-      app.get('server').close();
+      proxy.get('dyson_server').close();
+      app.get('dyson_server').close();
     });
 
     it('should respond with correct body', done => {

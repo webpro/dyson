@@ -91,7 +91,7 @@ describe('dyson', () => {
     });
 
     after(() => {
-      app.get('server').close();
+      app.get('dyson_server').close();
     });
 
     it('should respond with a cached response', done => {
@@ -153,7 +153,7 @@ describe('dyson', () => {
 
     it('should respond with a collection (combined request)', done => {
 
-      const options = app.get('options');
+      const options = app.get('dyson_options');
       options.multiRequest = ',';
       app.set('options', options);
 
