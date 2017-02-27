@@ -25,6 +25,10 @@ describe('dyson.https', function() {
             });
         });
 
+        after(() => {
+            app.get('server').close();
+        });
+
         it('should respond with correct body', function(done){
             request(app).get('/dummy/1').ca(cert).expect(200, {"id": 1, "name": "Lars", "status": "OK"}, done);
         });

@@ -91,6 +91,10 @@ describe('dyson', function() {
 
         });
 
+        after(() => {
+            app.get('server').close();
+        });
+
         it('should respond with a cached response', function(done) {
 
             request(app).get('/cache').end(function(err, res) {
