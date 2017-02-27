@@ -1,14 +1,14 @@
-var loader = require('../lib/loader');
+const loader = require('../lib/loader');
 
-var configDir = __dirname + '/dummy';
+const configDir = __dirname + '/dummy';
 
-describe('dyson.config.loader', function() {
+describe('dyson.config.loader', () => {
 
-  describe('.load', function() {
+  describe('.load', () => {
 
-    it('should return configuration for each method found', function() {
+    it('should return configuration for each method found', () => {
 
-      var configs = loader.load(configDir);
+      const configs = loader.load(configDir);
 
       configs.should.be.an.Object().and.have.keys('delete', 'get', 'post', 'put', 'patch', 'options');
 
@@ -16,9 +16,9 @@ describe('dyson.config.loader', function() {
 
     });
 
-    it('should return configurations from nested directories', function() {
+    it('should return configurations from nested directories', () => {
 
-      var configs = loader.load(configDir);
+      const configs = loader.load(configDir);
 
       configs.get.should.have.length(4);
 

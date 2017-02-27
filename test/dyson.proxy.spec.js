@@ -1,12 +1,12 @@
-var path = require('path'),
+const path = require('path'),
   dyson = require('../lib/dyson'),
   request = require('supertest');
 
-describe('dyson.proxy', function() {
+describe('dyson.proxy', () => {
 
-  describe('request', function() {
+  describe('request', () => {
 
-    var proxy,
+    let proxy,
       app;
 
     before(() => {
@@ -29,7 +29,7 @@ describe('dyson.proxy', function() {
       app.get('server').close();
     });
 
-    it('should respond with correct body', function(done) {
+    it('should respond with correct body', done => {
       request(proxy).get('/proxy').expect(200, {isProxy: true}, done);
     });
   });

@@ -1,37 +1,37 @@
-var dyson = require('../lib/dyson'),
+const dyson = require('../lib/dyson'),
   request = require('supertest'),
   express = require('express'),
   sinon = require('sinon');
 
-describe('dyson', function() {
+describe('dyson', () => {
 
-  var app = express(),
+  const app = express(),
     options = {};
 
-  describe('.registerServices', function() {
+  describe('.registerServices', () => {
 
-    before(function() {
+    before(() => {
       dyson.registerServices(app, options, {
         get: [
           {
             path: '/',
-            callback: function() {},
-            render: function() {}
+            callback: () => {},
+            render: () => {}
           }
         ]
       });
     });
 
-    it('should add GET route to Express', function() {
+    it('should add GET route to Express', () => {
 
-      var spy = sinon.spy(app, 'get');
+      const spy = sinon.spy(app, 'get');
 
-      var config = {
+      const config = {
         get: [
           {
             path: '/endpoint',
-            callback: function() {},
-            render: function() {}
+            callback: () => {},
+            render: () => {}
           }
         ]
       };
@@ -47,16 +47,16 @@ describe('dyson', function() {
 
     });
 
-    it('should add POST route to Express', function() {
+    it('should add POST route to Express', () => {
 
-      var spy = sinon.spy(app, 'post');
+      const spy = sinon.spy(app, 'post');
 
-      var config = {
+      const config = {
         post: [
           {
             path: '/endpoint',
-            callback: function() {},
-            render: function() {}
+            callback: () => {},
+            render: () => {}
           }
         ]
       };
@@ -72,16 +72,16 @@ describe('dyson', function() {
 
     });
 
-    it('should automatically add OPTIONS route to Express', function() {
+    it('should automatically add OPTIONS route to Express', () => {
 
-      var spy = sinon.spy(app, 'options');
+      const spy = sinon.spy(app, 'options');
 
-      var config = {
+      const config = {
         get: [
           {
             path: '/cors-enabled-endpoint',
-            callback: function() {},
-            render: function() {}
+            callback: () => {},
+            render: () => {}
           }
         ]
       };
@@ -97,26 +97,26 @@ describe('dyson', function() {
     });
   });
 
-  describe('routes', function() {
+  describe('routes', () => {
 
-    before(function() {
+    before(() => {
 
-      var render = function(req, res) {
+      const render = (req, res) => {
         res.status(200).send(res.body);
       };
 
-      var configs = {
+      const configs = {
         get: [
           {
             path: '/user/:id',
             template: {
-              id: function(params) {
+              id: params => {
                 return params.id;
               },
               name: 'John'
             },
-            callback: function(req, res, next) {
-              var template = configs.get[0].template;
+            callback: (req, res, next) => {
+              const template = configs.get[0].template;
               res.body = {
                 id: template.id(req.params),
                 name: template.name
@@ -129,7 +129,7 @@ describe('dyson', function() {
         post: [
           {
             path: '/user',
-            callback: function(req, res, next) {
+            callback: (req, res, next) => {
               res.body = {saved: true};
               next();
             },
@@ -142,13 +142,13 @@ describe('dyson', function() {
 
     });
 
-    it('should respond with body based on template and custom callback', function(done) {
+    it('should respond with body based on template and custom callback', done => {
 
       request(app).get('/user/1').expect(200, {'id': 1, 'name': 'John'}, done);
 
     });
 
-    it('should respond with body based on callback', function(done) {
+    it('should respond with body based on callback', done => {
 
       request(app).post('/user').expect(200, {'saved': true}, done);
 

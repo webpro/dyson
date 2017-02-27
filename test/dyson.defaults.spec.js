@@ -1,12 +1,12 @@
-var defaults = require('../lib/defaults');
+const defaults = require('../lib/defaults');
 
-describe('dyson.config.defaults', function() {
+describe('dyson.config.defaults', () => {
 
-  describe('.assign', function() {
+  describe('.assign', () => {
 
-    it('should apply defaults (and not overwrite existing values)', function() {
+    it('should apply defaults (and not overwrite existing values)', () => {
 
-      var config = {
+      const config = {
         path: '/test',
         template: {}
       };
@@ -23,9 +23,9 @@ describe('dyson.config.defaults', function() {
 
     });
 
-    it('should bind config methods to the config', function() {
+    it('should bind config methods to the config', () => {
 
-      var config = {
+      const config = {
         path: '/test',
         template: {},
         callback: function() {

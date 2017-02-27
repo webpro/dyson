@@ -1,24 +1,24 @@
-var sinon = require('sinon'),
+const sinon = require('sinon'),
   when = require('when'),
   util = require('../lib/util'),
   configDefaults = require('../lib/response');
 
-describe('dyson.response', function() {
+describe('dyson.response', () => {
 
-  describe('.setValues', function() {
+  describe('.setValues', () => {
 
-    it('should return a promise', function() {
+    it('should return a promise', () => {
 
-      var actual = configDefaults.setValues({});
+      const actual = configDefaults.setValues({});
 
       actual.should.have.property('then');
       actual.then.should.be.a.Function;
     });
 
-    it('should render data based on template', function(done) {
+    it('should render data based on template', done => {
 
-      var template = {
-        myFunction: function() {
+      const template = {
+        myFunction: () => {
           return 'my function';
         },
         myString: 'my string',
@@ -27,7 +27,7 @@ describe('dyson.response', function() {
         myArray: [1, 2, 3]
       };
 
-      var expected = {
+      const expected = {
         myFunction: 'my function',
         myString: 'my string',
         myBoolean: true,
@@ -35,30 +35,30 @@ describe('dyson.response', function() {
         myArray: [1, 2, 3]
       };
 
-      configDefaults.setValues(template).then(function(actual) {
+      configDefaults.setValues(template).then(actual => {
         actual.should.eql(expected);
         done();
 
       });
     });
 
-    it('should return an array', function(done) {
+    it('should return an array', done => {
 
-      var template = [
-        function() {
+      const template = [
+        () => {
           return 'my function';
         },
         2,
                 {}
       ];
 
-      var expected = [
+      const expected = [
         'my function',
         2,
                 {}
       ];
 
-      configDefaults.setValues(template).then(function(actual) {
+      configDefaults.setValues(template).then(actual => {
         actual.should.be.an.Array();
         actual.should.eql(expected);
         done();
@@ -66,12 +66,12 @@ describe('dyson.response', function() {
       });
     });
 
-    it('should parse template objects iteratively', function(done) {
+    it('should parse template objects iteratively', done => {
 
-      var template = {
+      const template = {
         myObject: {
           myNestedObject: {
-            myDeepFunction: function() {
+            myDeepFunction: () => {
               return 'my other function';
             },
             myDeepString: 'my other string'
@@ -79,7 +79,7 @@ describe('dyson.response', function() {
         }
       };
 
-      var expected = {
+      const expected = {
         myObject: {
           myNestedObject: {
             myDeepFunction: 'my other function',
@@ -88,7 +88,7 @@ describe('dyson.response', function() {
         }
       };
 
-      configDefaults.setValues(template).then(function(actual) {
+      configDefaults.setValues(template).then(actual => {
 
         actual.should.eql(expected);
         done();
@@ -96,23 +96,23 @@ describe('dyson.response', function() {
       });
     });
 
-    it('should replace a promise with its resolved value', function(done) {
+    it('should replace a promise with its resolved value', done => {
 
-      var template = {
-        myPromise: function() {
-          var deferred = when.defer();
-          setTimeout(function() {
+      const template = {
+        myPromise: () => {
+          const deferred = when.defer();
+          setTimeout(() => {
             deferred.resolve('my promise');
           }, 10);
           return deferred.promise;
         }
       };
 
-      var expected = {
+      const expected = {
         myPromise: 'my promise'
       };
 
-      configDefaults.setValues(template).then(function(actual) {
+      configDefaults.setValues(template).then(actual => {
 
         actual.should.eql(expected);
         done();
@@ -121,13 +121,13 @@ describe('dyson.response', function() {
     });
   });
 
-  describe('.generate', function() {
+  describe('.generate', () => {
 
-    describe.skip('with option exposeRequest', function() {
+    describe.skip('with option exposeRequest', () => {
 
-      var services, req, res, next;
+      let services, req, res, next;
 
-      before(function() {
+      before(() => {
 
         services = {
           truthy: {
@@ -159,13 +159,13 @@ describe('dyson.response', function() {
           locals:{}
         };
 
-        next = function() {};
+        next = () => {};
 
       });
 
-      describe('set to true', function() {
+      describe('set to true', () => {
 
-        before(function() {
+        before(() => {
 
           util.options.set({
             exposeRequest: true
@@ -181,7 +181,7 @@ describe('dyson.response', function() {
 
         });
 
-        it('should expose request to template', function() {
+        it('should expose request to template', () => {
 
           configDefaults.generate(req, res, next);
 
@@ -189,7 +189,7 @@ describe('dyson.response', function() {
 
         });
 
-        it('should expose request to container', function() {
+        it('should expose request to container', () => {
 
           configDefaults.generate(req, res, next);
 
@@ -198,9 +198,9 @@ describe('dyson.response', function() {
         });
       });
 
-      describe('globally falsy', function() {
+      describe('globally falsy', () => {
 
-        before(function() {
+        before(() => {
 
           util.options.set({
             exposeRequest: false
@@ -208,7 +208,7 @@ describe('dyson.response', function() {
 
         });
 
-        it('should expose request to templates if local option is truthy', function() {
+        it('should expose request to templates if local option is truthy', () => {
 
           res.locals.config = services.truthy;
 
@@ -218,7 +218,7 @@ describe('dyson.response', function() {
 
         });
 
-        it('should not expose request to templates if local option is falsy', function() {
+        it('should not expose request to templates if local option is falsy', () => {
 
           res.locals.config = services.falsy;
 
@@ -235,9 +235,9 @@ describe('dyson.response', function() {
         });
       });
 
-      describe('globally truthy', function() {
+      describe('globally truthy', () => {
 
-        before(function() {
+        before(() => {
 
           util.options.set({
             exposeRequest: true
@@ -245,7 +245,7 @@ describe('dyson.response', function() {
 
         });
 
-        it('should expose request to templates if local option is truthy', function() {
+        it('should expose request to templates if local option is truthy', () => {
 
           res.locals.config = services.truthy;
 
@@ -255,7 +255,7 @@ describe('dyson.response', function() {
 
         });
 
-        it('should expose request to templates if local option is undefined', function() {
+        it('should expose request to templates if local option is undefined', () => {
 
           configDefaults.generate(req, res, next);
 
@@ -263,7 +263,7 @@ describe('dyson.response', function() {
 
         });
 
-        it('should not expose request to templates if local option is false', function() {
+        it('should not expose request to templates if local option is false', () => {
 
           res.locals.config = services.falsy;
 

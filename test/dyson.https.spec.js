@@ -1,18 +1,18 @@
-var fs = require('fs'),
+const fs = require('fs'),
   path = require('path'),
   dyson = require('../lib/dyson'),
   request = require('supertest');
 
-var key = fs.readFileSync(path.join(__dirname, 'fixtures', 'key.pem')),
+const key = fs.readFileSync(path.join(__dirname, 'fixtures', 'key.pem')),
   cert = fs.readFileSync(path.join(__dirname, 'fixtures', 'cert.pem'));
 
-describe('dyson.https', function() {
+describe('dyson.https', () => {
 
-  describe('request', function(){
+  describe('request', () => {
 
-    var app;
+    let app;
 
-    before(function() {
+    before(() => {
       app = dyson.bootstrap({
         configDir: path.join(__dirname, '..', 'dummy'),
         port: 8765,
@@ -27,7 +27,7 @@ describe('dyson.https', function() {
       app.get('server').close();
     });
 
-    it('should respond with correct body', function(done){
+    it('should respond with correct body', done => {
       request(app).get('/dummy/1').ca(cert).expect(200, {
         id: 1,
         name: 'Lars',

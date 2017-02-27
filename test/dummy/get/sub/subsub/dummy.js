@@ -2,7 +2,7 @@ module.exports = {
   path: '/dummy-three',
   proxy: false,
   template: {
-    id: function(params) {
+    id: params => {
       return params.id || 1;
     },
     name: 'Dummy three',
