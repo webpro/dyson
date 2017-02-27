@@ -47,8 +47,8 @@
   },
   "scripts": {
     "test": "make test",
-    "lint": "eslint lib",
-    "fix": "eslint lib --fix"
+    "lint": "eslint lib test",
+    "fix": "eslint lib test --fix"
   },
   "repository": {
     "type": "git",
