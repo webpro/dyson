@@ -152,7 +152,9 @@ describe('dyson', function() {
 
         it('should respond with a collection (combined request)', function(done) {
 
-            util.options.set({multiRequest: ','});
+            var options = app.get('options');
+            options.multiRequest = ',';
+            app.set('options', options);
 
             request(app).get('/combined/1,2,3').expect(200).end(function(err, res) {
                 res.body.should.be.an.Array().and.have.length(3);
