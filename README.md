@@ -47,7 +47,7 @@ This is where dyson comes in. Get a full fake server for your application up and
 Configure endpoints using simple objects:
 
 ``` javascript
-{
+module.exports = {
     path: '/user/:id',
     method: 'GET',
     template: {
@@ -83,7 +83,7 @@ This service is a proxy to [Dynamic Dummy Image Generator](http://dummyimage.com
 The default values for the configuration objects:
 
 ``` javascript
-{
+module.exports = {
     cache: false,
     delay: false,
     proxy: false,
@@ -128,7 +128,7 @@ Please refer to the project pages for usage and examples (here's one [using dyso
 Containers can help if you need to send along some meta data, or wrap the response data in a specific way. Just use the `container` object, and return the `data` where you want it. Functions in the `container` object are invoked with arguments _(params, query, data)_:
 
 ``` javascript
-{
+module.exports = {
     path: '/users',
     template: user.template,
     container: {
@@ -149,28 +149,28 @@ Containers can help if you need to send along some meta data, or wrap the respon
 
 And an example response:
 
-``` javascript
+``` json
 {
-    meta: {
-        userCount: 2
-    },
-    data: {
-        all: [],
-        the: {
-            way: {
-                here: [
-                    {
-                        id: 412,
-                        name: 'John'
-                    },
-                    {
-                        id: 218,
-                        name: 'Olivia'
-                    }
-                ]
-            }
-        }
+  "meta": {
+    "userCount": 2
+  },
+  "data": {
+    "all": [],
+    "the": {
+      "way": {
+        "here": [
+          {
+            "id": 412,
+            "name": "John"
+          },
+          {
+            "id": 218,
+            "name": "Olivia"
+          }
+        ]
+      }
     }
+  }
 }
 ```
 
@@ -189,7 +189,7 @@ By default, all responses are sent with a status code `200` (and the `Content-Ty
 This can be completely overridden with the `status` property, e.g.:
 
 ``` javascript
-{
+module.exports = {
     path: '/feature/:foo?',
     status: (req, res) => {
         if(req.params.foo === '999') {
@@ -206,7 +206,7 @@ Would result in a `404` when requesting `/feature/999`.
 Override the `render` method of the Express middleware in the endpoint definition. In the example below, depending on the existence of the `callback` parameter, either raw JSON response is returned or it is wrapped with the provided callback:
 
 ``` javascript
-{
+module.exports = {
     render: (req, res) => {
         const callback = req.query.callback;
         if (callback) {
@@ -287,8 +287,12 @@ npm install dyson
 Then you can use it from an `npm-script` in `package.json` using e.g. `npm run mocks`:
 
 ``` json
-"scripts": {
+{
+  "name": "my-package",
+  "version": "1.0.0",
+  "scripts": {
     "mocks": "dyson stubs"
+  }
 }
 ```
 
