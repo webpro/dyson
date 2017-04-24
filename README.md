@@ -186,15 +186,16 @@ The `,` delimiter can be [configured](project-configuration) (or disabled).
 
 By default, all responses are sent with a status code `200` (and the `Content-Type: application/json` header).
 
-This can be completely overridden with the `status` property, e.g.:
+This can be overridden with your own `status` middleware, e.g.:
 
 ``` javascript
 module.exports = {
     path: '/feature/:foo?',
-    status: (req, res) => {
+    status: (req, res, next) => {
         if(req.params.foo === '999') {
-            res.status(404).send('Feature not found');
+            res.status(404);
         }
+        next();
     }
 }
 ```
