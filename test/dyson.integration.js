@@ -204,8 +204,9 @@ describe('dyson', () => {
         template: {
           foo: 1
         },
-        status: (req, res) => {
+        status: (req, res, next) => {
           res.status(202);
+          next();
         }
       };
 

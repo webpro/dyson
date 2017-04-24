@@ -10,15 +10,16 @@ describe('dyson', () => {
 
   describe('.registerServices', () => {
 
+    const dummyConfig = {
+      path: '/',
+      status: () => {},
+      callback: () => {},
+      render: () => {}
+    };
+
     before(() => {
       dyson.registerServices(app, options, {
-        get: [
-          {
-            path: '/',
-            callback: () => {},
-            render: () => {}
-          }
-        ]
+        get: [dummyConfig]
       });
     });
 
@@ -27,19 +28,14 @@ describe('dyson', () => {
       const spy = sinon.spy(app, 'get');
 
       const config = {
-        get: [
-          {
-            path: '/endpoint',
-            callback: () => {},
-            render: () => {}
-          }
-        ]
+        get: [dummyConfig]
       };
 
       dyson.registerServices(app, options, config);
 
       spy.callCount.should.equal(1);
       spy.firstCall.args[0].should.equal(config.get[0].path);
+      spy.firstCall.args.should.containEql(config.get[0].status);
       spy.firstCall.args.should.containEql(config.get[0].callback);
       spy.firstCall.args.should.containEql(config.get[0].render);
 
@@ -52,13 +48,7 @@ describe('dyson', () => {
       const spy = sinon.spy(app, 'post');
 
       const config = {
-        post: [
-          {
-            path: '/endpoint',
-            callback: () => {},
-            render: () => {}
-          }
-        ]
+        post: [dummyConfig]
       };
 
       dyson.registerServices(app, options, config);
@@ -77,17 +67,11 @@ describe('dyson', () => {
       const spy = sinon.spy(app, 'options');
 
       const config = {
-        get: [
-          {
-            path: '/cors-enabled-endpoint',
-            callback: () => {},
-            render: () => {}
-          }
-        ]
+        get: [dummyConfig]
       };
 
       dyson.registerServices(app, options, config);
-            
+
       spy.callCount.should.equal(1);
       spy.firstCall.args[0].should.equal(config.get[0].path);
       spy.firstCall.args[1].should.be.type('function');
@@ -115,6 +99,7 @@ describe('dyson', () => {
               },
               name: 'John'
             },
+            status: (req, res, next) => next(),
             callback: (req, res, next) => {
               const template = configs.get[0].template;
               res.body = {
@@ -129,6 +114,7 @@ describe('dyson', () => {
         post: [
           {
             path: '/user',
+            status: (req, res, next) => next(),
             callback: (req, res, next) => {
               res.body = {saved: true};
               next();
