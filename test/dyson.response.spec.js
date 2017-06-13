@@ -49,13 +49,13 @@ describe('dyson.response', () => {
           return 'my function';
         },
         2,
-                {}
+        {}
       ];
 
       const expected = [
         'my function',
         2,
-                {}
+        {}
       ];
 
       configDefaults.setValues(template).then(actual => {
