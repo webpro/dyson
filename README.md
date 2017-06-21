@@ -180,7 +180,7 @@ Basic support for "combined" requests is available, by means of a comma separate
 
 For example, a request to `/user/5,13` will result in an array of the responses from `/user/5` and `/user/13`.
 
-The `,` delimiter can be [configured](project-configuration) (or disabled).
+The `,` delimiter can be [configured](#project-configuration) (or disabled).
 
 ## Status codes
 
@@ -242,7 +242,7 @@ dyson.bootstrap({
 ## Custom middleware
 
 If you need some custom middleware before or after the endpoints are registered, dyson can be initialized programmatically.
-Then you can use `appBefore` or `appAfter` to install middleware before or after the dyson services are registered. An example:
+Then you can use the Express server instance (`appBefore` or `appAfter` in the example below) to install middleware before or after the dyson services are registered. An example:
 
 ``` javascript
 const dyson = require('dyson'),
