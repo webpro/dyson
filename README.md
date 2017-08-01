@@ -336,6 +336,17 @@ Optionally, you can put a `dyson.json` file next to the configuration folders (i
 * Setting `bodyParserJsonLimit` or `bodyParserUrlencodedLimit` to `1mb` increases the limit to 1mb from the bodyParser's default of 100kb.
 * By default, the `proxy` is set to `false`
 
+## Watch/auto-restart
+
+If you want to automatically restart dyson when you change your configuration objects, you can add [nodemon](https://nodemon.io) as a `devDependency`. Say your configuration files are in the `./api` folder, you can put this in your `package.json`:
+
+```
+"scripts": {
+  "api": "dyson api",
+  "watch": "nodemon --watch api --exec dyson api"
+}
+```
+
 ## Development & run tests
 
 ``` bash
