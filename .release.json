@@ -1,0 +1,13 @@
+{
+  "dist": {
+    "repo": "git@github.com:webpro/dyson.git#gh-pages",
+    "stageDir": "tmp",
+    "baseDir": "tmp",
+    "files": "",
+    "pkgFiles": [],
+    "beforeStageCommand": "!cat index.yml ../README.md > index.md"
+  },
+  "npm": {
+    "forcePublishSourceRepo": true
+  }
+}

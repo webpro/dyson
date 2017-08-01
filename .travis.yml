@@ -4,17 +4,5 @@ node_js:
   - "6.9.2"
   - "7.4.0"
 
-env:
-  global:
-    - GHPAGES=".gh-pages"
-    - secure: eo9Bm/Kk2ftRky5uG0ucmHWzSRruHfB/mXqFUolkR9vzOrrKKnxm4a5pWnW2mGsh93u9M6mXc9zya0QsFiu0Z1+aWm+gk875U2kyEeIjPm+vyOUs0r3TWsJ5zAtbl8ZJ2C3XjwYi4DSP31YCDLW8fH6c7Ia86QoBl6rh2L32+64=
-
-after_script:
-  - "git config --global user.email \"travis@travis-ci.org\" && git config --global user.name \"travis-ci\""
-  - "git clone --branch=gh-pages https://${GH_TOKEN}@github.com/webpro/dyson.git $GHPAGES"
-  - "cat $GHPAGES/index.yml README.md > $GHPAGES/index.md"
-  - "cd $GHPAGES && git add index.md && git commit -m \"Update docs\" && git push origin gh-pages"
-  - "rm -rf $GHPAGES"
-
 notifications:
   email: "lars@webpro.nl"
