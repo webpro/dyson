@@ -4,11 +4,8 @@ const sinon = require('sinon'),
   configDefaults = require('../lib/response');
 
 describe('dyson.response', () => {
-
   describe('.setValues', () => {
-
     it('should return a promise', () => {
-
       const actual = configDefaults.setValues({});
 
       actual.should.have.property('then');
@@ -16,7 +13,6 @@ describe('dyson.response', () => {
     });
 
     it('should render data based on template', done => {
-
       const template = {
         myFunction: () => {
           return 'my function';
@@ -38,12 +34,10 @@ describe('dyson.response', () => {
       configDefaults.setValues(template).then(actual => {
         actual.should.eql(expected);
         done();
-
       });
     });
 
     it('should return an array', done => {
-
       const template = [
         () => {
           return 'my function';
@@ -52,22 +46,16 @@ describe('dyson.response', () => {
         {}
       ];
 
-      const expected = [
-        'my function',
-        2,
-        {}
-      ];
+      const expected = ['my function', 2, {}];
 
       configDefaults.setValues(template).then(actual => {
         actual.should.be.an.Array();
         actual.should.eql(expected);
         done();
-
       });
     });
 
     it('should parse template objects iteratively', done => {
-
       const template = {
         myObject: {
           myNestedObject: {
@@ -89,15 +77,12 @@ describe('dyson.response', () => {
       };
 
       configDefaults.setValues(template).then(actual => {
-
         actual.should.eql(expected);
         done();
-
       });
     });
 
     it('should replace a promise with its resolved value', done => {
-
       const template = {
         myPromise: () => {
           const deferred = when.defer();
@@ -113,22 +98,17 @@ describe('dyson.response', () => {
       };
 
       configDefaults.setValues(template).then(actual => {
-
         actual.should.eql(expected);
         done();
-
       });
     });
   });
 
   describe('.generate', () => {
-
     describe.skip('with option exposeRequest', () => {
-
       let services, req, res, next;
 
       before(() => {
-
         services = {
           truthy: {
             path: '/true',
@@ -156,17 +136,14 @@ describe('dyson.response', () => {
         };
 
         res = {
-          locals:{}
+          locals: {}
         };
 
         next = () => {};
-
       });
 
       describe('set to true', () => {
-
         before(() => {
-
           util.options.set({
             exposeRequest: true
           });
@@ -178,48 +155,37 @@ describe('dyson.response', () => {
               foo: sinon.spy()
             }
           };
-
         });
 
         it('should expose request to template', () => {
-
           configDefaults.generate(req, res, next);
 
           sinon.assert.calledWithExactly(res.locals.config.template, req);
-
         });
 
         it('should expose request to container', () => {
-
           configDefaults.generate(req, res, next);
 
           sinon.assert.calledWithExactly(res.locals.config.container.foo, req, sinon.match.object);
-
         });
       });
 
       describe('globally falsy', () => {
-
         before(() => {
-
           util.options.set({
             exposeRequest: false
           });
-
         });
 
         it('should expose request to templates if local option is truthy', () => {
-
           res.locals.config = services.truthy;
 
           configDefaults.generate(req, res, next);
 
           sinon.assert.calledWithExactly(res.locals.config.template, req);
-
         });
 
         it('should not expose request to templates if local option is falsy', () => {
-
           res.locals.config = services.falsy;
 
           configDefaults.generate(req, res, next);
@@ -236,35 +202,27 @@ describe('dyson.response', () => {
       });
 
       describe('globally truthy', () => {
-
         before(() => {
-
           util.options.set({
             exposeRequest: true
           });
-
         });
 
         it('should expose request to templates if local option is truthy', () => {
-
           res.locals.config = services.truthy;
 
           configDefaults.generate(req, res, next);
 
           sinon.assert.calledWithExactly(res.locals.config.template, req);
-
         });
 
         it('should expose request to templates if local option is undefined', () => {
-
           configDefaults.generate(req, res, next);
 
           sinon.assert.calledWithExactly(res.locals.config.template, req);
-
         });
 
         it('should not expose request to templates if local option is false', () => {
-
           res.locals.config = services.falsy;
 
           configDefaults.generate(req, res, next);

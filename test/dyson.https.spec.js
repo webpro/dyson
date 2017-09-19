@@ -7,9 +7,7 @@ const key = fs.readFileSync(path.join(__dirname, 'fixtures', 'key.pem')),
   cert = fs.readFileSync(path.join(__dirname, 'fixtures', 'cert.pem'));
 
 describe('dyson.https', () => {
-
   describe('request', () => {
-
     let app;
 
     before(() => {
@@ -28,11 +26,18 @@ describe('dyson.https', () => {
     });
 
     it('should respond with correct body', done => {
-      request(app).get('/dummy/1').ca(cert).expect(200, {
-        id: 1,
-        name: 'Lars',
-        status: 'OK'
-      }, done);
+      request(app)
+        .get('/dummy/1')
+        .ca(cert)
+        .expect(
+          200,
+          {
+            id: 1,
+            name: 'Lars',
+            status: 'OK'
+          },
+          done
+        );
     });
   });
 });

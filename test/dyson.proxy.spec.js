@@ -3,11 +3,8 @@ const path = require('path'),
   request = require('supertest');
 
 describe('dyson.proxy', () => {
-
   describe('request', () => {
-
-    let proxy,
-      app;
+    let proxy, app;
 
     before(() => {
       proxy = dyson.bootstrap({
@@ -30,7 +27,9 @@ describe('dyson.proxy', () => {
     });
 
     it('should respond with correct body', done => {
-      request(proxy).get('/proxy').expect(200, {isProxy: true}, done);
+      request(proxy)
+        .get('/proxy')
+        .expect(200, { isProxy: true }, done);
     });
   });
 });
