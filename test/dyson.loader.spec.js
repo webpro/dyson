@@ -7,7 +7,7 @@ describe('dyson.config.loader', () => {
     it('should return configuration for each method found', () => {
       const configs = loader.load(configDir);
 
-      configs.should.be.an.Object().and.have.keys('delete', 'get', 'post', 'put', 'patch', 'options');
+      configs.should.be.an.Object().and.have.keys('delete', 'get', 'post', 'put', 'patch', 'options', 'head');
 
       configs.get[0].should.have.property('path');
     });

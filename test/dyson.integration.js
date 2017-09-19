@@ -228,5 +228,15 @@ describe('dyson', () => {
         .get('/status-418')
         .expect(202, { foo: 1 }, done);
     });
+
+    it('head', done => {
+      const config = {
+        path: '/head',
+        method: 'HEAD'
+      };
+
+      dyson.registerServices(app, options, { get: defaults.assign(config, 'get') });
+      request(app).head('/head').expect(200, done);
+    });
   });
 });
