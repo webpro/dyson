@@ -6,8 +6,5 @@
     "files": "",
     "pkgFiles": [],
     "beforeStageCommand": "!cat index.yml ../README.md > index.md"
-  },
-  "npm": {
-    "forcePublishSourceRepo": true
   }
 }
