@@ -32,6 +32,10 @@
     "type": "git",
     "url": "https://github.com/webpro/dyson"
   },
+  "files": [
+    "bin",
+    "lib"
+  ],
   "engines": {
     "node": ">=6"
   },
