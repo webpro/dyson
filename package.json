@@ -23,6 +23,11 @@
   "bin": {
     "dyson": "./bin/dyson.js"
   },
+  "scripts": {
+    "test": "ava test/*.js",
+    "lint": "eslint lib test",
+    "format": "prettier --write \"{lib,test}/**/*.js\""
+  },
   "dependencies": {
     "body-parser": "1.17.2",
     "cookie-parser": "1.4.3",
@@ -35,22 +40,17 @@
     "when": "3.7.8"
   },
   "devDependencies": {
-    "cross-env": "5.0.2",
+    "@babel/plugin-syntax-object-rest-spread": "7.0.0-beta.32",
+    "ava": "0.23.0",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
     "dyson-generators": "0.1.1",
     "dyson-image": "0.1.3",
     "eslint": "4.7.1",
     "eslint-config-prettier": "2.5.0",
     "eslint-plugin-prettier": "2.3.1",
-    "mocha": "3.5.0",
     "prettier": "1.7.0",
-    "should": "8.4.0",
-    "sinon": "2.4.1",
+    "sinon": "4.1.2",
     "supertest": "3.0.0"
-  },
-  "scripts": {
-    "test": "make test",
-    "lint": "eslint lib test",
-    "prettier": "prettier --write \"{lib,test}/**/*.js\""
   },
   "repository": {
     "type": "git",
@@ -58,6 +58,17 @@
   },
   "engines": {
     "node": ">=6"
+  },
+  "ava": {
+    "babel": {
+      "presets": [
+        "@ava/stage-4",
+        "@ava/transform-test-files"
+      ],
+      "plugins": [
+        "transform-object-rest-spread"
+      ]
+    }
   },
   "license": "MIT"
 }
