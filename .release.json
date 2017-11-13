@@ -5,6 +5,6 @@
     "baseDir": "tmp",
     "files": "",
     "pkgFiles": [],
-    "beforeStageCommand": "!cat index.yml ../README.md > index.md"
+    "beforeStageCommand": "cat index.yml ../README.md > index.md"
   }
 }

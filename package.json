@@ -28,11 +28,18 @@
     "lint": "eslint lib test",
     "format": "prettier --write \"{lib,test}/**/*.js\""
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webpro/dyson"
+  },
+  "engines": {
+    "node": ">=6"
+  },
   "dependencies": {
     "body-parser": "1.17.2",
     "cookie-parser": "1.4.3",
     "cors": "2.8.4",
-    "express": "4.15.3",
+    "express": "4.16.2",
     "lodash": "4.17.4",
     "request": "2.81.0",
     "require-directory": "2.1.1",
@@ -50,13 +57,6 @@
     "prettier": "1.7.0",
     "sinon": "4.1.2",
     "supertest": "3.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/webpro/dyson"
-  },
-  "engines": {
-    "node": ">=6"
   },
   "ava": {
     "babel": {

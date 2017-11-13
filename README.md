@@ -27,20 +27,20 @@ This is where dyson comes in. Get a full fake server for your application up and
 
 * Easy configuration, extensive options
 * Dynamic responses
-  * Responses can use request data (e.g. to simulate different login scenarios based on username):
+  * Response templates or properties can be functions based on request (`req.*`):
     * Request path
     * GET/POST parameters
     * Cookies
   * Respond with different status code for specific requests (e.g. 404 for `?id=999`)
-  * Includes random data generators
-* Supports to proxy non-configured endpoints to actual services
-* Supports GET, POST, PUT, DELETE, PATCH (and OPTIONS)
-* Supports CORS
-* Supports delayed responses
+* Proxy non-configured endpoints to actual services
+* CORS
+* GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS
+* Delayed responses
+* Includes random data generators
 * Includes dummy image generator
   * Use any external or local image service (included)
   * Supports base64 encoded image strings
-* Supports required parameter validation
+* Required parameter validation
 
 ## Endpoint Configuration
 
@@ -65,10 +65,10 @@ The `path` string is the usual argument provided to [Express](http://expressjs.c
 
 The `template` object may contain properties of the following types:
 
-* function: the function will be invoked with arguments _(params, query, body, cookies, headers)_
-* string, boolean, number, array: returned as-is
-* object: will be recursively iterated
-* promise: if the function is a promise, it will be replaced with the resolving value
+* A `Function` will be invoked with arguments _(params, query, body, cookies, headers)_
+* Primitives of type `String`, `Boolean`, `Number`, `Array` are returned as-is
+* An `Object` will be recursively iterated.
+* A `Promise` will be resolved (and replaced with the resolved value).
 
 Note: the `template` can also be a _function_ returning the actual data. The template function itself is also invoked with arguments _(params, query, body, cookies, headers)_.
 
