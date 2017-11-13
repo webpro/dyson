@@ -36,8 +36,7 @@
     "lodash": "4.17.4",
     "request": "2.81.0",
     "require-directory": "2.1.1",
-    "serve-favicon": "2.4.3",
-    "when": "3.7.8"
+    "serve-favicon": "2.4.3"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "7.0.0-beta.32",
