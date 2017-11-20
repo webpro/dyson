@@ -1,5 +1,5 @@
 import test from 'ava';
-import { assign } from '../lib/defaults';
+import assign from '../lib/defaults';
 
 test('assert should apply defaults (and not overwrite existing values)', t => {
   const config = {

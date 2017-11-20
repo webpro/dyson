@@ -1,5 +1,4 @@
 import test from 'ava';
-import dyson from '../lib/dyson';
 import _ from 'lodash';
 import request from 'supertest';
 import { getService } from './_helpers';
@@ -148,7 +147,6 @@ test('should delay the response', async t => {
 });
 
 test('should support status function', async t => {
-  let id = 0;
   const app = getService({
     path: '/status-418',
     status: (req, res, next) => {
