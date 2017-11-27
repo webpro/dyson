@@ -26,7 +26,7 @@
   "scripts": {
     "test": "ava test/*.js",
     "lint": "eslint lib test",
-    "format": "prettier --write \"{lib,test}/**/*.js\""
+    "format": "prettier --write \"{bin,lib,test}/**/*.js\""
   },
   "repository": {
     "type": "git",
