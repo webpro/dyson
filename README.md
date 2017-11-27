@@ -2,45 +2,68 @@
 
 Node server for dynamic, fake JSON.
 
-``` bash
-npm install dyson
+## Introduction
+
+Dyson allows you to define JSON endpoints based on a simple `path` + `template` object:
+
+``` javascript
+# my-stubs/users.js
+module.exports = {
+  path: '/users/:userId',
+  template: {
+    id: params => Number(params.userId),
+    name: () => faker.name.findName(),
+    email: () => faker.internet.email(),
+    status: (params, query) => query.status,
+    lorem: true
+  }
+};
 ```
 
-See [installation notes](#installation). Check out some [demo services](https://dyson-demo-npzwhgjdor.now.sh).
+``` bash
+$ dyson ./my-stubs
+$ curl http://localhost:3000/users/1?status=active
+```
+
+``` json
+{
+  "id": 1,
+  "name": "Josie Greenfelder",
+  "email": "Raoul_Aufderhar@yahoo.com",
+  "status": "active",
+  "lorem": true
+}
+```
+
+When developing client-side applications, often either static JSON files, or an actual server, backend, datastore, or API, is used. Sometimes static files are too static, and sometimes an actual server is not available, not accessible, or too tedious to set up.
+
+This is where dyson comes in. Get a full fake server for your application up and running in minutes.
+
+* [Installation notes](#installation)
+* [Demo](https://dyson-demo-npzwhgjdor.now.sh)
 
 [![Build Status](https://img.shields.io/travis/webpro/dyson.svg?style=flat)](https://travis-ci.org/webpro/dyson)
 [![npm package](https://img.shields.io/npm/v/dyson.svg?style=flat)](https://www.npmjs.com/package/dyson)
 [![dependencies](https://img.shields.io/david/webpro/dyson.svg?style=flat)](https://david-dm.org/webpro/dyson)
 ![npm version](https://img.shields.io/node/v/dyson.svg?style=flat)
 
-## Introduction
-
-Dyson allows you to define JSON endpoints based on a simple `template` object:
-
-![input-output](http://webpro.github.com/dyson/input-output.png)
-
-When developing client-side applications, for data usually either static JSON files are used, or an actual server, backend, datastore, API, you name it. Sometimes static files are too static, and sometimes an actual server is not available, not accessible, or too tedious to setup.
-
-This is where dyson comes in. Get a full fake server for your application up and running in minutes.
-
 ## Overview
 
-* Easy configuration, extensive options
-* Dynamic responses
-  * Response templates or properties can be functions based on request (`req.*`):
-    * Request path
-    * GET/POST parameters
-    * Cookies
-  * Respond with different status code for specific requests (e.g. 404 for `?id=999`)
-* Proxy non-configured endpoints to actual services
+* Dynamic responses, based on
+  * Request path
+  * GET/POST parameters
+  * Query parameters
+  * Cookies
+* HTTP Methods: GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS
+* Dynamic HTTP status codes
 * CORS
-* GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS
+* Proxy (e.g. fallback to actual services)
 * Delayed responses
+* Required parameter validation
 * Includes random data generators
 * Includes dummy image generator
   * Use any external or local image service (included)
   * Supports base64 encoded image strings
-* Required parameter validation
 
 ## Endpoint Configuration
 
@@ -65,18 +88,12 @@ The `path` string is the usual argument provided to [Express](http://expressjs.c
 
 The `template` object may contain properties of the following types:
 
-* A `Function` will be invoked with arguments _(params, query, body, cookies, headers)_
+* A `Function` will be invoked with arguments `(params, query, body, cookies, headers)`.
 * Primitives of type `String`, `Boolean`, `Number`, `Array` are returned as-is
 * An `Object` will be recursively iterated.
-* A `Promise` will be resolved (and replaced with the resolved value).
+* A `Promise` will be replaced with its resolved value.
 
-Note: the `template` can also be a _function_ returning the actual data. The template function itself is also invoked with arguments _(params, query, body, cookies, headers)_.
-
-## Images
-
-In addition to configured endpoints, dyson registers a [dummy image service](http://github.com/webpro/dyson-image) at `/image`. E.g. requesting `/image/300x200` serves an image with given dimensions.
-
-This service is a proxy to [Dynamic Dummy Image Generator](http://dummyimage.com/) by [Russell Heimlich](http://twitter.com/kingkool68).
+Note: the `template` itself can also be a _function_ returning the actual data. The template function itself is also invoked with arguments `(params, query, body, cookies, headers)`.
 
 ## Defaults
 
@@ -94,16 +111,16 @@ module.exports = {
 };
 ```
 
-* `cache:true` means that multiple requests to the same path will result in the same response
-* `delay:number` will delay the response with `number` milliseconds (or between `[n, m]` milliseconds)
-* `proxy:false` means that requests to this file can be skipped and sent to the configured proxy
-* `size:function` is the number of objects in the collection
-* `collection:true` will return a collection
-* `callback:function`
-  * the provided default function is doing the hard work (but can be overridden)
+* `cache: true` means that multiple requests to the same path will result in the same response
+* `delay: n` will delay the response with `n` milliseconds (or between `[n, m]` milliseconds)
+* `proxy: false` means that requests to this file can be skipped and sent to the configured proxy
+* `size: fn` is the number of objects in the collection
+* `collection: true` will return a collection
+* `callback: fn`
+  * the provided default function is doing the hard work (can be overridden)
   * used as middleware in Express
   * must set `res.body` and call `next()` to render response
-* `render:function`
+* `render: fn`
   * the default function to render the response (basically `res.send(200, res.body);`)
   * used as middleware in Express
 
@@ -121,11 +138,9 @@ Just install the generator(s) in your project to use them in your templates:
 npm install dyson-generators --save-dev
 ```
 
-Please refer to the project pages for usage and examples (here's one [using dyson-generators](https://github.com/webpro/dyson/blob/master/dummy/get/fake.js)).
-
 ## Containers
 
-Containers can help if you need to send along some meta data, or wrap the response data in a specific way. Just use the `container` object, and return the `data` where you want it. Functions in the `container` object are invoked with arguments _(params, query, data)_:
+Containers can help if you need to send along some meta data, or wrap the response data in a specific way. Just use the `container` object, and return the `data` where you want it. Functions in the `container` object are invoked with arguments `(params, query, data)`:
 
 ``` javascript
 module.exports = {
@@ -199,6 +214,12 @@ module.exports = {
 
 Would result in a `404` when requesting `/feature/999`.
 
+## Images
+
+In addition to configured endpoints, dyson registers a [dummy image service](http://github.com/webpro/dyson-image) at `/image`. E.g. requesting `/image/300x200` serves an image with given dimensions.
+
+This service is a proxy to [Dynamic Dummy Image Generator](http://dummyimage.com/) by [Russell Heimlich](http://twitter.com/kingkool68).
+
 ## JSONP
 
 Override the `render` method of the Express middleware in the endpoint definition. In the example below, depending on the existence of the `callback` parameter, either raw JSON response is returned or it is wrapped with the provided callback:
@@ -219,12 +240,12 @@ module.exports = {
 
 ## HTTPS
 
-If you want to run dyson over https:// you have to provide a self-signed (or authority-signed) certificate into the `options.https` the same way it's required for NodeJS HTTPS to work:
+If you want to run dyson over SSL you have to provide a (authority-signed or self-signed) certificate into the `options.https` the same way it's required for NodeJS built-in `https` module. Example:
 
 ``` javascript
 const fs = require('fs');
 
-dyson.bootstrap({
+const app = dyson.createServer({
   configDir: `${__dirname}/dummy`,
   port: 3001,
   https: {
@@ -234,7 +255,7 @@ dyson.bootstrap({
 });
 ```
 
-*Note*: if running HTTPS on port 443, it will require `sudo` privileges.
+**Note**: if running SSL on port 443, it will require `sudo` privileges.
 
 ## Custom middleware
 
@@ -281,17 +302,17 @@ myApp.listen(8765);
 The recommended way to install dyson is to install it locally and put it in your `package.json`:
 
 ``` bash
-npm install dyson
+npm install dyson --save-dev
 ```
 
-Then you can use it from an `npm-script` in `package.json` using e.g. `npm run mocks`:
+Then you can use it from `scripts in `package.json` using e.g. `npm run mocks`:
 
 ``` json
 {
   "name": "my-package",
   "version": "1.0.0",
   "scripts": {
-    "mocks": "dyson stubs"
+    "mocks": "dyson mocks/"
   }
 }
 ```
@@ -304,7 +325,11 @@ npm install -g dyson
 
 ### Project
 
-You can put your configuration files anywhere, but either the configuration must have the `method` property set or the configuration file must be inside a directory representing the method (e.g. `stubs/get/sub/endpoint.js`). Then start the server:
+You can put your configuration files anywhere. The HTTP method is based on:
+
+* The `method` property in the configuration itself.
+* The folder, or an ancestor folder, containing the configuration is an HTTP method. For example `mocks/post/sub/endpoint.js` will be an endpoint listening to `POST` requests.
+* Defaults to `GET`.
 
 ``` bash
 dyson [dir]
@@ -316,7 +341,8 @@ You can also provide an alternative port number by just adding it as a second ar
 
 ### Demo
 
-For a demo project, see [webpro/dyson-demo](https://github.com/webpro/dyson-demo). This demo was also installed with [now.sh](https://zeit.co/now/) to [dyson-demo-npzwhgjdor.now.sh](https://dyson-demo-npzwhgjdor.now.sh).
+* For a demo project, see [webpro/dyson-demo](https://github.com/webpro/dyson-demo).
+* This demo was also installed with [now.sh](https://zeit.co/now/) to [dyson-demo-npzwhgjdor.now.sh](https://dyson-demo-npzwhgjdor.now.sh).
 
 ## Project Configuration
 
@@ -342,8 +368,8 @@ If you want to automatically restart dyson when you change your configuration ob
 
 ```
 "scripts": {
-  "api": "dyson api",
-  "watch": "nodemon --watch api --exec dyson api"
+  "mocks": "dyson mocks/",
+  "watch": "nodemon --watch mocks --exec dyson mocks"
 }
 ```
 
