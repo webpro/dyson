@@ -238,6 +238,22 @@ module.exports = {
 }
 ```
 
+## FILE UPLOAD
+Ex: return file name<br/>
+formDataName = 'file'
+
+``` javascript
+module.exports = {
+  render: (req, res) => {
+    if (callback) {
+      res.send({fileName: req.files.file.name});
+    } else {
+      res.send(res.body);
+    }
+  }
+}
+```
+
 ## HTTPS
 
 If you want to run dyson over SSL you have to provide a (authority-signed or self-signed) certificate into the `options.https` the same way it's required for NodeJS built-in `https` module. Example:

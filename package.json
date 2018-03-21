@@ -44,6 +44,7 @@
     "cookie-parser": "1.4.3",
     "cors": "2.8.4",
     "express": "4.16.2",
+    "express-fileupload": "0.4.0",
     "lodash": "4.17.4",
     "request": "2.81.0",
     "require-directory": "2.1.1",
