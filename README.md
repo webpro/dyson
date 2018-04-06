@@ -305,7 +305,7 @@ The recommended way to install dyson is to install it locally and put it in your
 npm install dyson --save-dev
 ```
 
-Then you can use it from `scripts in `package.json` using e.g. `npm run mocks`:
+Then you can use it from `scripts` in `package.json` using e.g. `npm run mocks`:
 
 ``` json
 {
