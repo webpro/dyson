@@ -42,10 +42,10 @@
   "dependencies": {
     "body-parser": "1.18.3",
     "cookie-parser": "1.4.3",
-    "cors": "2.8.4",
-    "express": "4.16.3",
-    "lodash": "4.17.10",
-    "request": "2.87.0",
+    "cors": "2.8.5",
+    "express": "4.16.4",
+    "lodash": "4.17.11",
+    "request": "2.88.0",
     "require-directory": "2.1.1",
     "serve-favicon": "2.5.0"
   },
@@ -55,12 +55,12 @@
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "dyson-generators": "0.2.0",
     "dyson-image": "0.2.0",
-    "eslint": "4.7.1",
-    "eslint-config-prettier": "2.9.0",
-    "eslint-plugin-prettier": "2.6.1",
-    "prettier": "1.13.7",
-    "sinon": "4.1.2",
-    "supertest": "3.1.0"
+    "eslint": "5.9.0",
+    "eslint-config-prettier": "3.3.0",
+    "eslint-plugin-prettier": "3.0.0",
+    "prettier": "1.15.2",
+    "sinon": "7.1.1",
+    "supertest": "3.3.0"
   },
   "ava": {
     "babel": {
