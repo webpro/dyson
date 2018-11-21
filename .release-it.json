@@ -1,4 +1,7 @@
 {
+  "github": {
+    "release": true
+  },
   "dist": {
     "repo": "git@github.com:webpro/dyson.git#gh-pages",
     "stageDir": "tmp",
