@@ -32,6 +32,8 @@
     "type": "git",
     "url": "https://github.com/webpro/dyson"
   },
+  "homepage": "https://github.com/webpro/dyson#readme",
+  "bugs": "https://github.com/webpro/dyson/issues",
   "files": [
     "bin",
     "lib"
