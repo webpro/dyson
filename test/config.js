@@ -153,13 +153,13 @@ test('should support status function', async t => {
       res.status(418);
       next();
     },
-    template: []
+    template: ['foo', 'bar']
   });
 
   const res = await request(app).get('/status-418');
 
   t.is(res.status, 418);
-  t.deepEqual(res.body, []);
+  t.deepEqual(res.body, ['foo', 'bar']);
 });
 
 test('should support HEAD requests', async t => {
