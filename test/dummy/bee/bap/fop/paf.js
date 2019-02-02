@@ -3,6 +3,6 @@ module.exports = {
   method: 'PATCH',
   proxy: false,
   template: {
-    status: 'OK'
+    dummy: 'OK'
   }
 };

@@ -6,6 +6,6 @@ module.exports = {
       return params.id || 1;
     },
     name: 'Dummy two',
-    status: 'OK'
+    dummy: 'OK'
   }
 };

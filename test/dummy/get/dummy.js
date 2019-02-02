@@ -5,6 +5,6 @@ module.exports = {
   template: {
     id: params => Number(params.id || 1),
     name: g.name,
-    status: 'OK'
+    dummy: 'OK'
   }
 };
