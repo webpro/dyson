@@ -21,7 +21,7 @@ test('should add GET route to Express', t => {
   t.true(spy.lastCall.args.includes(config.render));
 });
 
-test('should add GET route to Express', t => {
+test('should add POST route to Express', t => {
   const app = getService();
   const spy = sinon.spy(app, 'post');
   const config = {
