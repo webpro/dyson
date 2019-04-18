@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "body-parser": "1.18.3",
-    "cookie-parser": "1.4.3",
+    "cookie-parser": "1.4.4",
     "cors": "2.8.5",
     "express": "4.16.4",
     "lodash": "4.17.11",
@@ -53,26 +53,28 @@
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "7.2.0",
-    "ava": "0.25.0",
+    "ava": "1.4.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "dyson-generators": "0.2.0",
     "dyson-image": "0.2.0",
-    "eslint": "5.10.0",
-    "eslint-config-prettier": "3.3.0",
-    "eslint-plugin-prettier": "3.0.0",
-    "prettier": "1.15.3",
-    "sinon": "7.2.2",
-    "supertest": "3.3.0"
+    "eslint": "5.16.0",
+    "eslint-config-prettier": "4.1.0",
+    "eslint-plugin-prettier": "3.0.1",
+    "prettier": "1.17.0",
+    "sinon": "7.3.2",
+    "supertest": "4.0.2"
   },
   "ava": {
     "babel": {
-      "presets": [
-        "@ava/stage-4",
-        "@ava/transform-test-files"
-      ],
-      "plugins": [
-        "transform-object-rest-spread"
-      ]
+      "testOptions": {
+        "presets": [
+          "@ava/stage-4",
+          "@ava/transform-test-files"
+        ],
+        "plugins": [
+          "transform-object-rest-spread"
+        ]
+      }
     }
   },
   "license": "MIT"
