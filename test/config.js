@@ -19,6 +19,34 @@ test('should return cached response', async t => {
   t.deepEqual(cachedRes.body, res.body);
 });
 
+test('should not cache the response with a different method', async t => {
+  let id = 0;
+  const app = getService([
+    {
+      path: '/cache',
+      cache: false,
+      method: 'GET',
+      template: {
+        id: () => id++
+      }
+    },
+    {
+      path: '/cache',
+      cache: false,
+      method: 'POST',
+      template: {
+        id: () => id++
+      }
+    }
+  ]);
+
+  const res = await request(app).get('/cache');
+  const cachedRes = await request(app).post('/cache');
+
+  t.is(cachedRes.status, 200);
+  t.notDeepEqual(cachedRes.body, res.body);
+});
+
 test('should return uncached response', async t => {
   let id = 0;
   const app = getService({
