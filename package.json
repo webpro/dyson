@@ -43,11 +43,11 @@
     "node": ">=6"
   },
   "dependencies": {
-    "body-parser": "1.18.3",
+    "body-parser": "1.19.0",
     "cookie-parser": "1.4.4",
     "cors": "2.8.5",
-    "express": "4.16.4",
-    "lodash": "4.17.11",
+    "express": "4.17.1",
+    "lodash": "4.17.14",
     "request": "2.88.0",
     "require-directory": "2.1.1",
     "serve-favicon": "2.5.0"
@@ -58,11 +58,11 @@
     "bron": "1.0.2",
     "dyson-generators": "0.2.0",
     "dyson-image": "0.2.0",
-    "eslint": "5.16.0",
-    "eslint-config-prettier": "4.1.0",
-    "eslint-plugin-prettier": "3.0.1",
-    "prettier": "1.17.0",
-    "release-it": "^11.0.0-beta.0",
+    "eslint": "6.0.1",
+    "eslint-config-prettier": "6.0.0",
+    "eslint-plugin-prettier": "3.1.0",
+    "prettier": "1.18.2",
+    "release-it": "12.3.3",
     "sinon": "7.3.2",
     "supertest": "4.0.2"
   },
