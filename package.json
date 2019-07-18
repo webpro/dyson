@@ -24,7 +24,7 @@
     "dyson": "./bin/dyson.js"
   },
   "scripts": {
-    "test": "ava test/*.js",
+    "test": "bron test/*.js",
     "lint": "eslint lib test",
     "format": "prettier --write \"{bin,lib,test}/**/*.js\"",
     "release": "release-it"
@@ -54,8 +54,8 @@
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "7.2.0",
-    "ava": "1.4.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "bron": "1.0.2",
     "dyson-generators": "0.2.0",
     "dyson-image": "0.2.0",
     "eslint": "5.16.0",

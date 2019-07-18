@@ -1,17 +1,18 @@
-import test from 'ava';
-import sinon from 'sinon';
-import request from 'supertest';
-import { assembleResponse } from '../lib/response';
-import { getService } from './_helpers';
+const test = require('bron');
+const assert = require('assert').strict;
+const sinon = require('sinon');
+const request = require('supertest');
+const { assembleResponse } = require('../lib/response');
+const { getService } = require('./_helpers');
 
-test('should return a promise', async t => {
+test('should return a promise', async () => {
   const awaitResponse = assembleResponse({});
-  t.is(typeof awaitResponse.then, 'function');
-  t.deepEqual(await awaitResponse, {});
+  assert.equal(typeof awaitResponse.then, 'function');
+  assert.deepEqual(await awaitResponse, {});
 });
 
-test('should render data based on template', async t => {
-  t.deepEqual(
+test('should render data based on template', async () => {
+  assert.deepEqual(
     await assembleResponse({
       myFunction: () => {
         return 'my function';
@@ -31,8 +32,8 @@ test('should render data based on template', async t => {
   );
 });
 
-test('should return an array', async t => {
-  t.deepEqual(
+test('should return an array', async () => {
+  assert.deepEqual(
     await assembleResponse([
       () => {
         return 'my function';
@@ -44,8 +45,8 @@ test('should return an array', async t => {
   );
 });
 
-test('should parse template objects recursively', async t => {
-  t.deepEqual(
+test('should parse template objects recursively', async () => {
+  assert.deepEqual(
     await assembleResponse({
       myObject: {
         myNestedObject: {
@@ -67,8 +68,8 @@ test('should parse template objects recursively', async t => {
   );
 });
 
-test('should replace a promise with its resolved value', async t => {
-  t.deepEqual(
+test('should replace a promise with its resolved value', async () => {
+  assert.deepEqual(
     await assembleResponse({
       myPromiseFn: () => Promise.resolve('my promise'),
       myPromise: Promise.resolve('my promise')
@@ -80,7 +81,7 @@ test('should replace a promise with its resolved value', async t => {
   );
 });
 
-test('should expose request to template', async t => {
+test('should expose request to template', async () => {
   const spy = sinon.spy();
   const app = getService({
     path: '/foo',
@@ -93,14 +94,14 @@ test('should expose request to template', async t => {
 
   await request(app).get('/foo');
 
-  t.true(spy.callCount === 2);
-  t.is(spy.firstCall.args[0], spy.secondCall.args[0]);
+  assert(spy.callCount === 2);
+  assert.equal(spy.firstCall.args[0], spy.secondCall.args[0]);
 
   const req = spy.firstCall.args[0];
 
-  t.true('params' in req);
-  t.true('query' in req);
-  t.true('body' in req);
-  t.true('cookies' in req);
-  t.true('headers' in req);
+  assert('params' in req);
+  assert('query' in req);
+  assert('body' in req);
+  assert('cookies' in req);
+  assert('headers' in req);
 });

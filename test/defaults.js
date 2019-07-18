@@ -1,7 +1,8 @@
-import test from 'ava';
-import assign from '../lib/defaults';
+const test = require('bron');
+const assert = require('assert').strict;
+const assign = require('../lib/defaults');
 
-test('assert should apply defaults (and not overwrite existing values)', t => {
+test('assert should apply defaults (and not overwrite existing values)', () => {
   const config = {
     path: '/test',
     template: {}
@@ -9,15 +10,15 @@ test('assert should apply defaults (and not overwrite existing values)', t => {
 
   assign(config, 'get');
 
-  t.is(config.path, '/test');
-  t.is(config.cache, true);
-  t.is(config.collection, false);
-  t.is(typeof config.size, 'function');
-  t.is(typeof config.callback, 'function');
-  t.deepEqual(config.template, {});
+  assert.equal(config.path, '/test');
+  assert.equal(config.cache, true);
+  assert.equal(config.collection, false);
+  assert.equal(typeof config.size, 'function');
+  assert.equal(typeof config.callback, 'function');
+  assert.deepEqual(config.template, {});
 });
 
-test('assert should bind config methods to the config', t => {
+test('assert should bind config methods to the config', () => {
   let counter = 0;
 
   const config = {
@@ -37,6 +38,6 @@ test('assert should bind config methods to the config', t => {
 
   const c = config.callback().render();
 
-  t.is(counter, 2);
-  t.is(c, config);
+  assert.equal(counter, 2);
+  assert.deepEqual(c, config);
 });
