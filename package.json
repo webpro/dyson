@@ -47,7 +47,7 @@
     "cookie-parser": "1.4.4",
     "cors": "2.8.5",
     "express": "4.17.1",
-    "lodash": "4.17.14",
+    "lodash": "4.17.15",
     "request": "2.88.0",
     "require-directory": "2.1.1",
     "serve-favicon": "2.5.0"
@@ -55,15 +55,15 @@
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "7.2.0",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
-    "bron": "1.0.2",
+    "bron": "1.1.0",
     "dyson-generators": "0.2.0",
     "dyson-image": "0.2.0",
-    "eslint": "6.0.1",
-    "eslint-config-prettier": "6.0.0",
-    "eslint-plugin-prettier": "3.1.0",
+    "eslint": "6.5.1",
+    "eslint-config-prettier": "6.3.0",
+    "eslint-plugin-prettier": "3.1.1",
     "prettier": "1.18.2",
-    "release-it": "12.3.3",
-    "sinon": "7.3.2",
+    "release-it": "12.4.1",
+    "sinon": "7.5.0",
     "supertest": "4.0.2"
   },
   "ava": {
