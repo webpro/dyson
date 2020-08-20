@@ -26,9 +26,7 @@ test('https request should respond with correct body', async () => {
 
   const app = getService(config, options);
 
-  const res = await request(app)
-    .get('/secure')
-    .ca(cert);
+  const res = await request(app).get('/secure').ca(cert);
 
   assert.equal(res.status, 200);
   assert.deepEqual(res.body, {

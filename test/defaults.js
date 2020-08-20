@@ -24,11 +24,11 @@ test('assert should bind config methods to the config', () => {
   const config = {
     path: '/test',
     template: {},
-    callback: function() {
+    callback: function () {
       counter++;
       return this;
     },
-    render: function() {
+    render: function () {
       counter++;
       return this;
     }
