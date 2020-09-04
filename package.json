@@ -58,26 +58,13 @@
     "bron": "1.1.1",
     "dyson-generators": "0.2.1",
     "dyson-image": "0.2.1",
-    "eslint": "7.7.0",
+    "eslint": "7.8.1",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-prettier": "3.1.4",
-    "prettier": "2.0.5",
-    "release-it": "13.6.8",
+    "prettier": "2.1.1",
+    "release-it": "14.0.1",
     "sinon": "9.0.3",
     "supertest": "4.0.2"
-  },
-  "ava": {
-    "babel": {
-      "testOptions": {
-        "presets": [
-          "@ava/stage-4",
-          "@ava/transform-test-files"
-        ],
-        "plugins": [
-          "transform-object-rest-spread"
-        ]
-      }
-    }
   },
   "license": "MIT"
 }
