@@ -40,7 +40,7 @@
     "lib"
   ],
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
