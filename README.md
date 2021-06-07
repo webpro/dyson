@@ -260,6 +260,50 @@ const app = dyson.createServer({
 
 **Note**: if running SSL on port 443, it will require `sudo` privileges.
 
+## GraphQL
+
+If you want dyson to support GraphQL endpoints, you can build your own logic with the `render` override, or use [`dyson-graphql`](https://github.com/WealthWizardsEngineering/dyson-graphql). Example:
+
+```bash
+npm install dyson-graphql --save-dev
+```
+
+```javascript
+const dysonGraphQl = require("dyson-graphql");
+
+const schema = `
+  type User {
+    id: Int!
+    name: String!
+  }
+
+  type Query {
+    currentUser: User!
+  }
+
+  type Mutation {
+    createUser(name: String!): User!
+    updateUser(id: Int!, name: String!): User!
+  }
+`;
+
+module.exports = {
+  path: '/graphql',
+  method: 'POST',
+  render: dysonGraphQl(schema)
+    .query('currentUser', { id: 987, name: 'Jane Smart' })
+    .mutation("createUser", ({ name }) => ({ id: 456, name }))
+    .mutation("updateUser", ({ id, name }) => {
+      if (id < 1000) {
+        return { id, name };
+      }
+
+      throw new Error('Can\'t update user');
+    })
+    .build()
+};
+```
+
 ## Custom middleware
 
 If you need some custom middleware before or after the endpoints are registered, dyson can be initialized programmatically.
