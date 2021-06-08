@@ -78,9 +78,9 @@ module.exports = {
     name: g.name,
     address: {
       zip: g.zipUS,
-      city: g.city,
-    },
-  },
+      city: g.city
+    }
+  }
 };
 ```
 
@@ -107,7 +107,7 @@ module.exports = {
   size: () => _.random(2, 10),
   collection: false,
   callback: response.generate,
-  render: response.render,
+  render: response.render
 };
 ```
 
@@ -148,17 +148,17 @@ module.exports = {
   template: user.template,
   container: {
     meta: (params, query, data) => ({
-      userCount: data.length,
+      userCount: data.length
     }),
     data: {
       all: [],
       the: {
         way: {
-          here: (params, query, data) => data,
-        },
-      },
-    },
-  },
+          here: (params, query, data) => data
+        }
+      }
+    }
+  }
 };
 ```
 
@@ -211,7 +211,7 @@ module.exports = {
       res.status(404);
     }
     next();
-  },
+  }
 };
 ```
 
@@ -237,24 +237,25 @@ module.exports = {
     } else {
       res.send(res.body);
     }
-  },
+  }
 };
 ```
 
-## FILE UPLOAD
+## File Upload
+
 Ex: return file name<br/>
 formDataName = 'file'
 
-``` javascript
+```javascript
 module.exports = {
   render: (req, res) => {
     if (callback) {
-      res.send({fileName: req.files.file.name});
+      res.send({ fileName: req.files.file.name });
     } else {
       res.send(res.body);
     }
   }
-}
+};
 ```
 
 ## HTTPS
@@ -269,8 +270,8 @@ const app = dyson.createServer({
   port: 3001,
   https: {
     key: fs.readFileSync(`${__dirname}'/certs/sample.key`),
-    crt: fs.readFileSync(`${__dirname}/certs/sample.crt`),
-  },
+    crt: fs.readFileSync(`${__dirname}/certs/sample.crt`)
+  }
 });
 ```
 
@@ -285,7 +286,7 @@ npm install dyson-graphql --save-dev
 ```
 
 ```javascript
-const dysonGraphQl = require("dyson-graphql");
+const dysonGraphQl = require('dyson-graphql');
 
 const schema = `
   type User {
@@ -308,13 +309,13 @@ module.exports = {
   method: 'POST',
   render: dysonGraphQl(schema)
     .query('currentUser', { id: 987, name: 'Jane Smart' })
-    .mutation("createUser", ({ name }) => ({ id: 456, name }))
-    .mutation("updateUser", ({ id, name }) => {
+    .mutation('createUser', ({ name }) => ({ id: 456, name }))
+    .mutation('updateUser', ({ id, name }) => {
       if (id < 1000) {
         return { id, name };
       }
 
-      throw new Error('Can\'t update user');
+      throw new Error("Can't update user");
     })
     .build()
 };
@@ -331,7 +332,7 @@ const path = require('path');
 
 const options = {
   configDir: path.join(__dirname, 'services'),
-  port: 8765,
+  port: 8765
 };
 
 const configs = dyson.getConfigurations(options);
@@ -349,7 +350,7 @@ const dyson = require('./lib/dyson');
 const path = require('path');
 
 const options = {
-  configDir: path.join(__dirname, 'services'),
+  configDir: path.join(__dirname, 'services')
 };
 
 const myApp = express();
