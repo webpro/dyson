@@ -11,7 +11,7 @@ const [dir, port] = process.argv.slice(2);
 const showHelpAndExit = () => {
   console.info(`dyson v${pkg.version}`);
   console.info('Usage: dyson <dir> [port]');
-  process.exit(1);
+  process.exit(0);
 };
 
 if (dir) {

@@ -6,7 +6,7 @@ Node server for dynamic, fake JSON.
 
 Dyson allows you to define JSON endpoints based on a simple `path` + `template` object:
 
-``` javascript
+```javascript
 # my-stubs/users.js
 module.exports = {
   path: '/users/:userId',
@@ -20,12 +20,12 @@ module.exports = {
 };
 ```
 
-``` bash
+```bash
 $ dyson ./my-stubs
 $ curl http://localhost:3000/users/1?status=active
 ```
 
-``` json
+```json
 {
   "id": 1,
   "name": "Josie Greenfelder",
@@ -39,8 +39,8 @@ When developing client-side applications, often either static JSON files, or an 
 
 This is where dyson comes in. Get a full fake server for your application up and running in minutes.
 
-* [Installation notes](#installation)
-* [Demo](https://dyson-demo-npzwhgjdor.now.sh)
+- [Installation notes](#installation)
+- [Demo](https://dyson-demo.herokuapp.com)
 
 [![Build Status](https://img.shields.io/travis/webpro/dyson.svg?style=flat)](https://travis-ci.org/webpro/dyson)
 [![npm package](https://img.shields.io/npm/v/dyson.svg?style=flat)](https://www.npmjs.com/package/dyson)
@@ -49,49 +49,49 @@ This is where dyson comes in. Get a full fake server for your application up and
 
 ## Overview
 
-* Dynamic responses, based on
-  * Request path
-  * GET/POST parameters
-  * Query parameters
-  * Cookies
-* HTTP Methods: GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS
-* Dynamic HTTP status codes
-* CORS
-* Proxy (e.g. fallback to actual services)
-* Delayed responses
-* Required parameter validation
-* Includes random data generators
-* Includes dummy image generator
-  * Use any external or local image service (included)
-  * Supports base64 encoded image strings
+- Dynamic responses, based on
+  - Request path
+  - GET/POST parameters
+  - Query parameters
+  - Cookies
+- HTTP Methods: GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS
+- Dynamic HTTP status codes
+- CORS
+- Proxy (e.g. fallback to actual services)
+- Delayed responses
+- Required parameter validation
+- Includes random data generators
+- Includes dummy image generator
+  - Use any external or local image service (included)
+  - Supports base64 encoded image strings
 
 ## Endpoint Configuration
 
 Configure endpoints using simple objects:
 
-``` javascript
+```javascript
 module.exports = {
   path: '/user/:id',
   method: 'GET',
   template: {
-    id: (params, query, body) =>params.id,
+    id: (params, query, body) => params.id,
     name: g.name,
     address: {
       zip: g.zipUS,
-      city: g.city
-    }
-  }
-}
+      city: g.city,
+    },
+  },
+};
 ```
 
 The `path` string is the usual argument provided to [Express](http://expressjs.com/api.html#app.VERB), as in `app.get(path, callback);`.
 
 The `template` object may contain properties of the following types:
 
-* A `Function` will be invoked with arguments `(params, query, body, cookies, headers)`.
-* Primitives of type `String`, `Boolean`, `Number`, `Array` are returned as-is
-* An `Object` will be recursively iterated.
-* A `Promise` will be replaced with its resolved value.
+- A `Function` will be invoked with arguments `(params, query, body, cookies, headers)`.
+- Primitives of type `String`, `Boolean`, `Number`, `Array` are returned as-is
+- An `Object` will be recursively iterated.
+- A `Promise` will be replaced with its resolved value.
 
 Note: the `template` itself can also be a _function_ returning the actual data. The template function itself is also invoked with arguments `(params, query, body, cookies, headers)`.
 
@@ -99,42 +99,42 @@ Note: the `template` itself can also be a _function_ returning the actual data. 
 
 The default values for the configuration objects:
 
-``` javascript
+```javascript
 module.exports = {
   cache: false,
   delay: false,
   proxy: false,
-  size: () => _.random(2,10),
+  size: () => _.random(2, 10),
   collection: false,
   callback: response.generate,
-  render: response.render
+  render: response.render,
 };
 ```
 
-* `cache: true` means that multiple requests to the same path will result in the same response
-* `delay: n` will delay the response with `n` milliseconds (or between `[n, m]` milliseconds)
-* `proxy: false` means that requests to this file can be skipped and sent to the configured proxy
-* `size: fn` is the number of objects in the collection
-* `collection: true` will return a collection
-* `callback: fn`
-  * the provided default function is doing the hard work (can be overridden)
-  * used as middleware in Express
-  * must set `res.body` and call `next()` to render response
-* `render: fn`
-  * the default function to render the response (basically `res.send(200, res.body);`)
-  * used as middleware in Express
+- `cache: true` means that multiple requests to the same path will result in the same response
+- `delay: n` will delay the response with `n` milliseconds (or between `[n, m]` milliseconds)
+- `proxy: false` means that requests to this file can be skipped and sent to the configured proxy
+- `size: fn` is the number of objects in the collection
+- `collection: true` will return a collection
+- `callback: fn`
+  - the provided default function is doing the hard work (can be overridden)
+  - used as middleware in Express
+  - must set `res.body` and call `next()` to render response
+- `render: fn`
+  - the default function to render the response (basically `res.send(200, res.body);`)
+  - used as middleware in Express
 
 ## Fake data generators
 
 You can use _anything_ to generate data. Here are some suggestions:
 
-* [Faker.js](https://github.com/marak/Faker.js/)
-* [Chance.js](http://chancejs.com/)
-* [dyson-generators](http://github.com/webpro/dyson-generators)
+- [Faker.js](https://github.com/marak/Faker.js/)
+- [Chance.js](http://chancejs.com/)
+- [dyson-generators](http://github.com/webpro/dyson-generators)
 
 Just install the generator(s) in your project to use them in your templates:
 
-``` bash
+```bash
 npm install dyson-generators --save-dev
 ```
 
@@ -142,29 +142,29 @@ npm install dyson-generators --save-dev
 
 Containers can help if you need to send along some meta data, or wrap the response data in a specific way. Just use the `container` object, and return the `data` where you want it. Functions in the `container` object are invoked with arguments `(params, query, data)`:
 
-``` javascript
+```javascript
 module.exports = {
   path: '/users',
   template: user.template,
   container: {
     meta: (params, query, data) => ({
-      userCount: data.length
+      userCount: data.length,
     }),
     data: {
       all: [],
       the: {
         way: {
-          here: (params, query, data) => data
-        }
-      }
-    }
-  }
-}
+          here: (params, query, data) => data,
+        },
+      },
+    },
+  },
+};
 ```
 
 And an example response:
 
-``` json
+```json
 {
   "meta": {
     "userCount": 2
@@ -173,13 +173,16 @@ And an example response:
     "all": [],
     "the": {
       "way": {
-        "here": [{
-          "id": 412,
-          "name": "John"
-        }, {
-          "id": 218,
-          "name": "Olivia"
-        }]
+        "here": [
+          {
+            "id": 412,
+            "name": "John"
+          },
+          {
+            "id": 218,
+            "name": "Olivia"
+          }
+        ]
       }
     }
   }
@@ -200,16 +203,16 @@ By default, all responses are sent with a status code `200` (and the `Content-Ty
 
 This can be overridden with your own `status` middleware, e.g.:
 
-``` javascript
+```javascript
 module.exports = {
   path: '/feature/:foo?',
   status: (req, res, next) => {
-    if(req.params.foo === '999') {
+    if (req.params.foo === '999') {
       res.status(404);
     }
     next();
-  }
-}
+  },
+};
 ```
 
 Would result in a `404` when requesting `/feature/999`.
@@ -224,7 +227,7 @@ This service is a proxy to [Dynamic Dummy Image Generator](http://dummyimage.com
 
 Override the `render` method of the Express middleware in the endpoint definition. In the example below, depending on the existence of the `callback` parameter, either raw JSON response is returned or it is wrapped with the provided callback:
 
-``` javascript
+```javascript
 module.exports = {
   render: (req, res) => {
     const callback = req.query.callback;
@@ -234,8 +237,8 @@ module.exports = {
     } else {
       res.send(res.body);
     }
-  }
-}
+  },
+};
 ```
 
 ## FILE UPLOAD
@@ -258,7 +261,7 @@ module.exports = {
 
 If you want to run dyson over SSL you have to provide a (authority-signed or self-signed) certificate into the `options.https` the same way it's required for NodeJS built-in `https` module. Example:
 
-``` javascript
+```javascript
 const fs = require('fs');
 
 const app = dyson.createServer({
@@ -266,25 +269,69 @@ const app = dyson.createServer({
   port: 3001,
   https: {
     key: fs.readFileSync(`${__dirname}'/certs/sample.key`),
-    crt: fs.readFileSync(`${__dirname}/certs/sample.crt`)
-  }
+    crt: fs.readFileSync(`${__dirname}/certs/sample.crt`),
+  },
 });
 ```
 
 **Note**: if running SSL on port 443, it will require `sudo` privileges.
+
+## GraphQL
+
+If you want dyson to support GraphQL endpoints, you can build your own logic with the `render` override, or use [`dyson-graphql`](https://github.com/WealthWizardsEngineering/dyson-graphql). Example:
+
+```bash
+npm install dyson-graphql --save-dev
+```
+
+```javascript
+const dysonGraphQl = require("dyson-graphql");
+
+const schema = `
+  type User {
+    id: Int!
+    name: String!
+  }
+
+  type Query {
+    currentUser: User!
+  }
+
+  type Mutation {
+    createUser(name: String!): User!
+    updateUser(id: Int!, name: String!): User!
+  }
+`;
+
+module.exports = {
+  path: '/graphql',
+  method: 'POST',
+  render: dysonGraphQl(schema)
+    .query('currentUser', { id: 987, name: 'Jane Smart' })
+    .mutation("createUser", ({ name }) => ({ id: 456, name }))
+    .mutation("updateUser", ({ id, name }) => {
+      if (id < 1000) {
+        return { id, name };
+      }
+
+      throw new Error('Can\'t update user');
+    })
+    .build()
+};
+```
 
 ## Custom middleware
 
 If you need some custom middleware before or after the endpoints are registered, dyson can be initialized programmatically.
 Then you can use the Express server instance (`appBefore` or `appAfter` in the example below) to install middleware before or after the dyson services are registered. An example:
 
-``` javascript
+```javascript
 const dyson = require('dyson');
 const path = require('path');
 
 const options = {
   configDir: path.join(__dirname, 'services'),
-  port: 8765
+  port: 8765,
 };
 
 const configs = dyson.getConfigurations(options);
@@ -296,13 +343,13 @@ console.log(`Dyson listening at port ${options.port}`);
 
 Dyson configuration can also be installed into any Express server:
 
-``` javascript
+```javascript
 const express = require('express');
 const dyson = require('./lib/dyson');
 const path = require('path');
 
 const options = {
-  configDir: path.join(__dirname, 'services')
+  configDir: path.join(__dirname, 'services'),
 };
 
 const myApp = express();
@@ -317,13 +364,13 @@ myApp.listen(8765);
 
 The recommended way to install dyson is to install it locally and put it in your `package.json`:
 
-``` bash
+```bash
 npm install dyson --save-dev
 ```
 
-Then you can use it from `scripts in `package.json` using e.g. `npm run mocks`:
+Then you can use it from `scripts` in `package.json` using e.g. `npm run mocks`:
 
-``` json
+```json
 {
   "name": "my-package",
   "version": "1.0.0",
@@ -335,7 +382,7 @@ Then you can use it from `scripts in `package.json` using e.g. `npm run mocks`:
 
 You can also install dyson globally to start it from anywhere:
 
-``` bash
+```bash
 npm install -g dyson
 ```
 
@@ -343,11 +390,11 @@ npm install -g dyson
 
 You can put your configuration files anywhere. The HTTP method is based on:
 
-* The `method` property in the configuration itself.
-* The folder, or an ancestor folder, containing the configuration is an HTTP method. For example `mocks/post/sub/endpoint.js` will be an endpoint listening to `POST` requests.
-* Defaults to `GET`.
+- The `method` property in the configuration itself.
+- The folder, or an ancestor folder, containing the configuration is an HTTP method. For example `mocks/post/sub/endpoint.js` will be an endpoint listening to `POST` requests.
+- Defaults to `GET`.
 
-``` bash
+```bash
 dyson [dir]
 ```
 
@@ -357,14 +404,14 @@ You can also provide an alternative port number by just adding it as a second ar
 
 ### Demo
 
-* For a demo project, see [webpro/dyson-demo](https://github.com/webpro/dyson-demo).
-* This demo was also installed with [now.sh](https://zeit.co/now/) to [dyson-demo-npzwhgjdor.now.sh](https://dyson-demo-npzwhgjdor.now.sh).
+- For a demo project, see [webpro/dyson-demo](https://github.com/webpro/dyson-demo).
+- This demo was also installed with [Heroku](https://www.heroku.com) to [dyson-demo.herokuapp.com](https://dyson-demo.herokuapp.com).
 
 ## Project Configuration
 
 Optionally, you can put a `dyson.json` file next to the configuration folders (inside `[dir]`). It enables to configure some behavior of dyson:
 
-``` json
+```json
 {
   "multiRequest": ",",
   "proxy": true,
@@ -374,9 +421,9 @@ Optionally, you can put a `dyson.json` file next to the configuration folders (i
 }
 ```
 
-* Setting `multiRequest` to `false` disables the [combined requests](#combined-requests) feature.
-* Setting `bodyParserJsonLimit` or `bodyParserUrlencodedLimit` to `1mb` increases the limit to 1mb from the bodyParser's default of 100kb.
-* By default, the `proxy` is set to `false`
+- Setting `multiRequest` to `false` disables the [combined requests](#combined-requests) feature.
+- Setting `bodyParserJsonLimit` or `bodyParserUrlencodedLimit` to `1mb` increases the limit to 1mb from the bodyParser's default of 100kb.
+- By default, the `proxy` is set to `false`
 
 ## Watch/auto-restart
 
@@ -391,7 +438,7 @@ If you want to automatically restart dyson when you change your configuration ob
 
 ## Development & run tests
 
-``` bash
+```bash
 git clone git@github.com:webpro/dyson.git
 cd dyson
 npm install
@@ -400,14 +447,14 @@ npm test
 
 ## Articles about dyson
 
-* [Stubbing Network Calls (Api) Using Dyson for Emberjs Apps](http://nepalonrails.com/blog/2014/03/stubbing-network-calls-api-using-dyson-for-emberjs-apps/)
-* [Our Ember.js Toolchain](http://nebulab.it/blog/our-ember-js-toolchain)
-* [Dyson, construye un servidor de pruebas que devuelva fake JSON para simular una API](http://www.genbetadev.com/herramientas/dyson-construye-un-servidor-de-pruebas-que-devuelva-fake-json-para-simular-una-api)
-* [Mockear la capa back con Dyson](http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=DysonFakeJSON)
-* [Serve JSONP in Dyson](https://grysz.com/2015/12/01/serve-jsonp-in-dyson/)
-* Videos
-	* [Dyson - HTTP Service mocking](https://www.youtube.com/watch?v=aoSk5Bak-KM)
-	* [How to implement HTTP Mock Services into Webpack - Dyson](https://www.youtube.com/watch?v=tfCQOcz9oi4)
+- [Stubbing Network Calls (Api) Using Dyson for Emberjs Apps](http://nepalonrails.herokuapp.com/blog/2014/03/stubbing-network-calls-api-using-dyson-for-emberjs-apps/)
+- [Our Ember.js Toolchain](http://nebulab.it/blog/our-ember-js-toolchain)
+- [Dyson, construye un servidor de pruebas que devuelva fake JSON para simular una API](http://www.genbetadev.com/herramientas/dyson-construye-un-servidor-de-pruebas-que-devuelva-fake-json-para-simular-una-api)
+- [Mockear la capa back con Dyson](https://www.adictosaltrabajo.com/2014/08/27/dyson-fake-json/)
+- [Serve JSONP in Dyson](https://grysz.com/2015/12/01/serve-jsonp-in-dyson/)
+- Videos
+  _ [Dyson - HTTP Service mocking](https://www.youtube.com/watch?v=aoSk5Bak-KM)
+  _ [How to implement HTTP Mock Services into Webpack - Dyson](https://www.youtube.com/watch?v=tfCQOcz9oi4)
 
 ## License
 

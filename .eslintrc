@@ -4,15 +4,17 @@
     "es6": true
   },
   "parserOptions": {
-    "ecmaVersion": 8,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true      
-    }
+    "ecmaVersion": 9,
+    "sourceType": "module"
   },
   "extends": ["eslint:recommended", "prettier"],
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": ["error", { "singleQuote": true, "printWidth": 120 }]
+    "prettier/prettier": ["error", {
+      "singleQuote": true,
+      "printWidth": 120,
+      "trailingComma": "none",
+      "arrowParens": "avoid"
+    }]
   }
 }

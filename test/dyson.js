@@ -1,9 +1,10 @@
-import test from 'ava';
-import sinon from 'sinon';
-import dyson from '../lib/dyson';
-import { getService } from './_helpers';
+const test = require('bron');
+const assert = require('assert').strict;
+const sinon = require('sinon');
+const dyson = require('../lib/dyson');
+const getService = require('./_helpers').getService;
 
-test('should add GET route to Express', t => {
+test('should add GET route to Express', () => {
   const app = getService();
   const spy = sinon.spy(app, 'get');
   const config = {
@@ -15,13 +16,13 @@ test('should add GET route to Express', t => {
 
   dyson.registerServices(app, {}, config);
 
-  t.is(spy.lastCall.args[0], '/');
-  t.true(spy.lastCall.args.includes(config.status));
-  t.true(spy.lastCall.args.includes(config.callback));
-  t.true(spy.lastCall.args.includes(config.render));
+  assert.equal(spy.lastCall.args[0], '/');
+  assert(spy.lastCall.args.includes(config.status));
+  assert(spy.lastCall.args.includes(config.callback));
+  assert(spy.lastCall.args.includes(config.render));
 });
 
-test('should add GET route to Express', t => {
+test('should add POST route to Express', () => {
   const app = getService();
   const spy = sinon.spy(app, 'post');
   const config = {
@@ -31,10 +32,10 @@ test('should add GET route to Express', t => {
 
   dyson.registerServices(app, {}, config);
 
-  t.is(spy.firstCall.args[0], '/');
+  assert.equal(spy.firstCall.args[0], '/');
 });
 
-test('should add OPTIONS route to Express', t => {
+test('should add OPTIONS route to Express', () => {
   const app = getService();
   const spy = sinon.spy(app, 'options');
   const config = {
@@ -44,6 +45,6 @@ test('should add OPTIONS route to Express', t => {
 
   dyson.registerServices(app, {}, config);
 
-  t.is(spy.firstCall.args[0], '/');
-  t.is(typeof spy.firstCall.args[1], 'function');
+  assert.equal(spy.firstCall.args[0], '/');
+  assert.equal(typeof spy.firstCall.args[1], 'function');
 });

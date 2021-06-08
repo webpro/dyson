@@ -1,8 +1,9 @@
-import test from 'ava';
-import request from 'supertest';
-import { getService } from './_helpers';
+const test = require('bron');
+const assert = require('assert').strict;
+const request = require('supertest');
+const getService = require('./_helpers').getService;
 
-test('should proxy', async t => {
+test('should proxy', async () => {
   const config = {
     path: '/proxy',
     method: 'GET',
@@ -28,8 +29,8 @@ test('should proxy', async t => {
 
   const res = await request(proxy).get('/proxy');
 
-  t.is(res.status, 200);
-  t.deepEqual(res.body, {
+  assert.equal(res.status, 200);
+  assert.deepEqual(res.body, {
     isProxy: true
   });
 });
